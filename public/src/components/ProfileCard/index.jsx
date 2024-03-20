@@ -5,6 +5,9 @@ import FileUploadModal from "../FileUploadModal";
 import axios from "axios";
 import { HiOutlinePencil } from "react-icons/hi";
 import { getProfilePost, getSignature , setAvatarImage } from "../../utils/APIRoutes";
+import {addConnection} from "../../utils/APIRoutes"
+import {checkConnection} from "../../utils/APIRoutes"
+import {remConnection} from "../../utils/APIRoutes"
 
 export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurrentUser } ){
     const [user,setUser] = useState(undefined);
@@ -13,12 +16,40 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
     const [image, setImage] = useState(null);
     const [imgUrl,setImgUrl] = useState(undefined);
     const [modalOpen,setModalOpen] = useState(false);
+    const [connected,isconnected]= useState(false);
+   
+    useEffect( () => {   
+      const fetch = async() => {
+      if(guestUser!=undefined){
+      const data=await axios.post(`${checkConnection}/${currentUser._id}`, { e:guestUser._id} );
+       if(data.data==true){
+        isconnected(true);
+      }
+    }
+    }
+
+      fetch();
+
+    },[user]);
 
     const handleImageChange = (e) => {
       const selectedImage = e.target.files[0];
       setImage(selectedImage);
     };
   
+    
+    const remConn =async(e) => {
+      const data= await axios.post(`${remConnection}/${currentUser._id}`, { e } );
+      //console.log(data);
+   isconnected(false);
+    }
+
+    const addConn =async (e) => {
+      const data= await axios.post(`${addConnection}/${currentUser._id}`, { e } );
+      //console.log(data);
+   isconnected(true);
+    }
+
     const uploadFile = async (type,timestamp,signature) => {
       const data = new FormData();
       data.append("file", image);
@@ -127,6 +158,9 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
               <img className="profile-image" src={user ? user.avatarImage :process.env.REACT_APP_DEFAULT_AVATAR_IMAGE} onClick={()=>setModalOpen(true)}/>
               {user && <h3 className="userName">{user.username}</h3>}
               {user && user.headline && <p className="heading">{user.headline}</p>}
+
+              {user && (editButton) ?  <></> : 
+              ((connected) ? <button class="connected-button"  onClick={() => remConn(guestUser._id)} >Connected</button> : <button class="connect-button" onClick={() => addConn(guestUser._id) }>Connect</button>) }
 
               {user && (user.city || user.country) && (
                 <p className="location">

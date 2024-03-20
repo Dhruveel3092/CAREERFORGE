@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import SearchBar from "./components/SearchBar";
 import Home from "./pages/Home";
 import ProfilePage from "./pages/ProfilePage";
+import ConnectionsComponent from "./components/ConnectionsComponent";
+import NotConnected from "./components/NotConnected";
 import Post from "./pages/Post";
 
 export default function App() {
@@ -19,6 +21,8 @@ export default function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<SearchBar />} />  
         <Route path="/home" element={<Home />} />
+        <Route path="/connections/connection" element={<ConnectionsComponent />} />
+        <Route path="/connections/addfriend" element={<NotConnected />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/posts/:postId" element={<Post />} />
       </Routes>

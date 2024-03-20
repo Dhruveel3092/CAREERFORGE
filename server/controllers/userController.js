@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 const Post = require("../models/postModel");
 const bcrypt = require("bcrypt");
+const { connections } = require("mongoose");
+const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
@@ -56,12 +58,109 @@ module.exports.getAllUsers = async (req, res, next) => {
       "username",
       "avatarImage",
       "_id",
+      "connections"
     ]);
     return res.json(users);
   } catch (ex) {
     next(ex);
   }
 };
+
+module.exports.getConnectedUsers = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const data = await User.findOne({_id:id});
+    const user=[];
+    await Promise.all(data.connections.map(async (u) => {
+      const df = await User.findOne({ _id: u });
+      user.push(df); 
+    }));
+
+    //console.log(user);
+    return res.json(user);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.notConnectedUsers = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const data = await User.findOne({_id:id});
+   // console.log(data.connections[0].toString());
+
+    const connectionsArray = data.connections.map(connection =>  connection.toString());
+    connectionsArray.push(id)
+    const user = await User.find({ _id: { $nin: connectionsArray} }).select([
+      "email",
+      "username",
+      "avatarImage",
+      "_id",
+      "connections"
+    ]);
+    console.log(user);
+    return res.json(user);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.remConnection = async(req,res,next) => {
+  
+  try{
+  const {id} = req.params;
+  const {e}=req.body;
+  const data = await User.findOne({_id:id});
+  data.connections = data.connections.filter(user => user!=e);
+  await data.save();
+  return res.json(data);
+  }catch(error){
+    next(error);
+  }
+}
+
+
+
+
+module.exports.addConnection = async(req,res,next) => {
+  
+  try{
+    const {id } = req.params;
+    const {e}=req.body;  
+    const data = await User.findOne({_id:id});
+    data.connections.push(e);
+    console.log(data.connections)
+    await data.save();
+    return res.json(data);
+  }catch(error){
+    console.log(error);
+    next(error);
+  }
+}
+
+module.exports.checkConnection = async(req,res,next) => {
+  
+  try{
+    const {id} = req.params;
+  const guestUser=req.body.e;
+   
+  if(guestUser){
+   // console.log(guestUser['username']);
+    const data = await User.findOne({_id:id});
+    let isconnected=false;
+    if(data.connections.length>0){
+    data.connections.map((user)=>{ 
+      console.log(guestUser);     
+    if(user!=undefined &&  user==guestUser) isconnected=true;
+    })
+  }
+    return res.json(isconnected);
+  }
+  }catch(error){
+    next(error);
+  }
+}
+
 
 module.exports.SearchUsers = async (req, res, next) => {
   const { query } = req.query;

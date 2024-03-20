@@ -5,6 +5,9 @@ import axios from 'axios';
 import Logout from "../Logout";
 import SearchModal from "../Search_Modal";
 import { SearchUsers } from '../../utils/APIRoutes';
+import { Link, useLocation } from "react-router-dom";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import {
   AiOutlineHome,
   AiOutlineUserSwitch,
@@ -19,8 +22,22 @@ export default function Topbar( { currentUser } ) {
   const [currentUserImage,setCurrentUserImage] = useState(undefined);
   const [modalOpen,setModalOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [filteredData, setFilteredData] = useState(undefined);
   const navigate = useNavigate();
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  }; 
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  function handleNavAndClose() {
+    handleMenuClose();
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,9 +91,37 @@ export default function Topbar( { currentUser } ) {
           <span className="icon-name">Home</span>
         </div>
         <div className="icon-container">
-          <AiOutlineUserSwitch size={30} className="react-icon" />
-          <span className="icon-name">Connections</span>
+          <AiOutlineUserSwitch size={30} className="react-icon" onClick={handleMenuOpen} />
+          <span className="icon-name">Connec tions</span>
         </div>
+        
+        <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/connections/connection"
+                >
+                  Connections
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/connections/addfriend"
+                >
+                  Add friend
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/pending"
+                >
+                  New Request
+                </MenuItem>
+              </Menu>
         <div className="icon-container">
           <BsBriefcase size={30} className="react-icon" />
           <span className="icon-name">Jobs</span>

@@ -19,7 +19,12 @@ const {
   addComment,
   deletePost,
   deleteComment,
-  getPostById
+  getPostById,
+  addConnection,
+  checkConnection,
+  remConnection,
+  getConnectedUsers,
+  notConnectedUsers
 } = require("../controllers/userController");
 
 
@@ -32,6 +37,12 @@ router.post("/uploadPost/:id",uploadPost);
 router.post("/updateProfile/:id",updateProfile);
 router.post("/getSignature",getSignature);
 router.post("/setAvatarImage",setAvatarImage);
+router.post("/addConnection/:id",addConnection);
+router.post("/checkConnection/:id",checkConnection);
+router.post("/remConnection/:id",remConnection);
+router.get("/notConnectedUsers/:id",notConnectedUsers);
+router.get("/getConnectedUsers/:id",getConnectedUsers);
+router.get("/getAllUser/:id",getAllUsers);
 router.post("/addReaction",addReaction);
 router.post("/removeReaction",removeReaction);
 router.post("/addComment",addComment);

@@ -35,9 +35,9 @@ const userSchema = new mongoose.Schema({
   aboutMe : {
     type:String,
   },
-  // connections : [{
-  //     type:mongoose.Schema.Types.ObjectId, ref:'User',required:true,
-  // }],
+  connections : [{
+      type:mongoose.Schema.Types.ObjectId, ref:'User',required:true,
+  }],
   posts : [{
       type:mongoose.Schema.Types.ObjectId, ref:'Post',required:true,
   }],
