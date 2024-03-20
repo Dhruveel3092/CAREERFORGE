@@ -72,21 +72,24 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
   };
 
   const addComment = async () => {
-    const { data } =  await axios.post(addComments,{ postId,userId,inputComment,timeStamp : Date.now() });
-    console.log(data);
-    let  newComments = [{
-                                user:{ 
-                                 _id:currentUser?._id,
-                                 username:currentUser?.username,
-                                 avatarImage:currentUser?.avatarImage,
-                                 headline:currentUser?.headline,
-                                },
-                                comment : inputComment,
-                                timeStamp : Date.now(),
-                            },...comments];
-    setComments(newComments);
-    setCommentsToShow(commentsToShow+1);
-    setInputComment("");
+    if(inputComment)
+    {
+      const { data } =  await axios.post(addComments,{ postId,userId,inputComment,timeStamp : Date.now() });
+      console.log(data);
+      let  newComments = [{
+                                  user:{ 
+                                  _id:currentUser?._id,
+                                  username:currentUser?.username,
+                                  avatarImage:currentUser?.avatarImage,
+                                  headline:currentUser?.headline,
+                                  },
+                                  comment : inputComment,
+                                  timeStamp : Date.now(),
+                              },...comments];
+      setComments(newComments);
+      setCommentsToShow(commentsToShow+1);
+      setInputComment("");
+    }
   };
 
   const handleLoadMoreComments = () => {
