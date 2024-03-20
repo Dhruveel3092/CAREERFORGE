@@ -1,0 +1,72 @@
+.topbar-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 50px; /* Adjusted topbar height */
+  background-color: #0077B5;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  height: 60px;
+}
+
+.app-logo {
+  height: 24px;
+  margin-right: 400px; /* Adjust spacing between app logo and icons */
+  cursor: pointer;
+}
+
+.react-icons {
+  display: flex;
+  align-items: center;
+}
+
+.react-icon {
+  margin-bottom: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.react-icon:hover {
+  color: #000000;
+}
+
+.login-button,
+.signup-button {
+  background-color: transparent; /* Transparent background */
+  border: none; /* No border */
+  font-size: 17px; /* Font size */
+  font-weight: bold; /* Bold font weight */
+  color: #0095f6; /* Instagram's blue color */
+  cursor: pointer; /* Pointer cursor */
+  margin-left: 20px; /* Margin between buttons */
+  outline: none; /* No outline */
+  transition: color 0.3s ease; /* Smooth color transition */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.login-button:hover,
+.signup-button:hover {
+  color: #000000; /* Darker shade of blue on hover */
+}
+
+.login-button{
+  background-color: #fff;
+  color: #0095f6;
+}
+
+.signup-button{
+  color: #fff;
+}
+
+@media (max-width: 1073px) {
+  .topbar-main {
+    padding: 6px 20px; /* Adjusted padding for smaller screens */
+  }
+
+  .app-logo {
+    margin-right: 20px; /* Adjust spacing for smaller screens */
+  }
+}
+

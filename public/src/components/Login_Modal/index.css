@@ -1,0 +1,33 @@
+.login-buttons,
+.signup-buttons {
+  border: none; /* No border */
+  font-size: 17px; /* Font size */
+  font-weight: bold; /* Bold font weight */
+  cursor: pointer; /* Pointer cursor */
+  margin-left: 20px; /* Margin between buttons */
+  outline: none; /* No outline */
+  transition: color 0.3s ease; /* Smooth color transition */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.login-buttons:hover,
+.signup-buttons:hover {
+  color: #000000; /* Darker shade of blue on hover */
+}
+
+.login-buttons{
+  background-color: #fff;
+  color: #0095f6;
+}
+
+.signup-buttons{
+  color: #fff;
+  background-color: #0095f6;
+}
+
+.button-description {
+    font-size: 12px;
+    color: #000000;
+    margin-top: 5px;
+  }
