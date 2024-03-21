@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../components/Topbar/index";
 import PostStatus from "../components/postUpdate";
 import styled, { createGlobalStyle } from "styled-components";
 import axios from "axios";
+import { io } from "socket.io-client";
+import { host } from "../utils/APIRoutes"; 
 import { getAllPost } from "../utils/APIRoutes";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useWindowScroll } from "@uidotdev/usehooks";
 
 export default function Home() {
+  const socket = useRef();
   const [{ x, y }, scrollTo] = useWindowScroll();
   const [currentUser, setCurrentUser] = useState(undefined);
   const [allPosts,setAllPosts] = useState([]);
@@ -60,13 +63,22 @@ export default function Home() {
   //   }
   // }
 
+  // useEffect(() => {
+  //   // console.log(window.innerHeight , document.documentElement.scrollTop ,
+  //   //   document.documentElement.scrollHeight )
+  //   console.log(x,y);
+  //   // window.addEventListener("scroll",handleInfiniteScroll);
+  //   // return () => window.removeEventListener("scroll",handleInfiniteScroll);
+  // },[x,y])
+
   useEffect(() => {
-    // console.log(window.innerHeight , document.documentElement.scrollTop ,
-    //   document.documentElement.scrollHeight )
-    console.log(x,y);
-    // window.addEventListener("scroll",handleInfiniteScroll);
-    // return () => window.removeEventListener("scroll",handleInfiniteScroll);
-  },[x,y])
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
+     // socket.emit("setup", currentUser._id);
+    }
+  }, [currentUser]);
+
 
   return (
     <>

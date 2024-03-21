@@ -41,10 +41,15 @@ io.on("connection", (socket) => {
     onlineUsers.set(userId, socket.id);
   });
 
-  socket.on("send-msg", (data) => {
+  socket.on("send-msg", async (data) => {
+    try{
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data);
     }
+  }catch (error) {
+    console.error('Error saving notification:', error.message);
+  }
   }); 
+  
 });

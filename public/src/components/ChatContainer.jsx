@@ -5,13 +5,14 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import musicaudio from "./ting_iphone.mp3";
 
 export default function ChatContainer({ currentChat, socket ,reArrangeContact}) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const navigate = useNavigate();
-  // const audio=new Audio('ting_iphone.mp3');
+
   useEffect(() => {
     const fetchData = async () =>{
       const data = await JSON.parse(
@@ -67,7 +68,9 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
         // {
         //   setArrivalMessage({ fromSelf: false, message: data.msg });
         // }
-        // audio.play();
+        const audio=new Audio(musicaudio);
+        audio.play();
+      
         setArrivalMessage({ fromSelf: false, message: data.msg });
         
         reArrangeContact(data.from);
