@@ -59,9 +59,10 @@ const userSchema = new mongoose.Schema({
   website : {
     type : String,
   },
-  skills : {
-    type : String,
-  },
+  skills : [{
+      skillsName:{type: String,required:true},
+      endorsements:[{type:mongoose.Schema.Types.ObjectId, ref:'User' , required:true}],
+  }],
   college : {
     type : String,
   },
@@ -86,10 +87,6 @@ const userSchema = new mongoose.Schema({
   // }],
   // languages : [{
   //     type:String,
-  // }],
-  // skills : [{
-  //     skillsName:{type: String,required:true},
-  //     endorsements:[{type:mongoose.Schema.Types.ObjectId, ref:'User' , required:true}],
   // }],
   });
 
