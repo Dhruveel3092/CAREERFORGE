@@ -1,10 +1,14 @@
 const User = require("../models/userModel");
 const Post = require("../models/postModel");
 const bcrypt = require("bcrypt");
+const connectSchema = require("../models/connectSchema.js");
+const Connection = connectSchema;
 const { connections } = require("mongoose");
+const Notification = require('../models/notifiSchema');
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
+
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
@@ -66,6 +70,21 @@ module.exports.getAllUsers = async (req, res, next) => {
   }
 };
 
+exports.pending = async (req, res) => {
+  try {
+    const newuser = req.body.newUser;
+
+    const connections = await connectSchema.find({ receiverEmail: newuser });
+
+    res.send(connections);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching pending connections" });
+  }
+};
+
 module.exports.getConnectedUsers = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -121,19 +140,137 @@ module.exports.remConnection = async(req,res,next) => {
 
 
 
+exports.sendconnect = async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  res.status(200).json(data);
+
+
+  const newUser = data.newUser;
+  const otheruser = data.otheruser;
+  const receiver = await User.findOne({ email: otheruser });
+  const sender = await User.findOne({ email: newUser });
+
+  const receiverid = receiver._id;
+  const a = await Connection.find({
+    senderEmail: newUser,
+    receiverEmail: otheruser,
+  });
+  if (a.length == 0) {
+    const prd = new Connection({
+      senderEmail: newUser,
+      receiverEmail: otheruser,
+      isConnected: false,
+      connectionTime: Date.now(),
+      username:sender.username,
+      headline:sender.headline,
+      avatarImage:sender.avatarImage,
+    });
+
+    prd
+      .save()
+      .then((doc) => {
+        console.log(doc);
+      })
+
+      .catch((err) => {
+        console.error(err);
+      });
+     // let io=req.app.settings.io;
+      //console.log(io,"io");
+      let sendUserSocket = onlineUsers.get(receiver._id.toString());
+      let fg=`${sender.username} sent you a friend request`;
+    
+      let newNotification= new Notification({ 'user': receiver._id, 'message': fg }); 
+      await newNotification.save();
+      req.app.settings.io.to(sendUserSocket).emit("newNotification", newNotification);
+    // await sendNotification(
+    //   receiverid,
+    //   `${sender.username} sent you a friend request`,
+    //   `/pending`,
+    //   "connect",
+    //   res
+    // );
+  }
+};
+
+
 
 module.exports.addConnection = async(req,res,next) => {
   
   try{
-    const {id } = req.params;
-    const {e}=req.body;  
-    const data = await User.findOne({_id:id});
-    data.connections.push(e);
-    console.log(data.connections)
-    await data.save();
-    return res.json(data);
+    const {id} = req.params;
+    const {newUser}=req.body;  
+    const con = await Connection.findOne({
+      senderEmail: id,
+      receiverEmail: newUser,
+    });
+  
+    
+    if (!con) {
+      return res.status(404).json({ error: "Connection not found" });
+    }
+    
+    con.isConnected = true;
+    await con.save();
+    const senderUser = await User.findOne({ email: id });
+    const receiverUser = await User.findOne({ email: newUser });
+    if (!senderUser || !receiverUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    senderUser.connections.push(receiverUser._id);
+    await senderUser.save();
+    //console.log(onlineUsers);
+    //console.log(senderUser._id);
+    let sendUserSocket = onlineUsers.get(senderUser._id.toString());
+    let fg=`${receiverUser.username} accepted your connection request`;
+    //let io=req.app.settings.io;
+    let newNotification= new Notification({ 'user': senderUser._id, 'message': fg }); 
+    await newNotification.save();
+    //console.log(onlineUsers.get(senderUser._id.toString()))
+    req.app.settings.io.to(sendUserSocket).emit("newNotification", newNotification);
+
+    // await sendNotification(
+    //   senderUser._id,
+    //   `${receiverUser.username} accepted your connection request`,
+    //   `/profilepage/${receiverEmail}`,
+    //   "connect",
+    //   res
+    // );
+   
+      // Delete the connection from the connectSchema
+      await Connection.findOneAndDelete({
+        senderEmail: id,
+        receiverEmail: newUser,
+      });
+    //console.log(data.connections)
+  
+    return  res.json({ message: "Request accepted successfully" });
   }catch(error){
     console.log(error);
+    next(error);
+  }
+}
+
+
+module.exports.checkRequest = async(req,res,next) => {
+  
+  try{
+   const {id} = req.params;
+  const receiver=req.body.e;
+   let f=false;
+  if(receiver){
+   // console.log(guestUser['username']);
+   const a = await Connection.find({
+    senderEmail: id,
+    receiverEmail: receiver,
+  });
+  if (a.length != 0) {
+    f=true
+  }
+}
+  return res.json(f);
+  }catch(error){
     next(error);
   }
 }

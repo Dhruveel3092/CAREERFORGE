@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import app_logo from "../../assets/app_logo.png";
 import axios from 'axios';
 import Logout from "../Logout";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import SearchModal from "../Search_Modal";
 import { SearchUsers } from '../../utils/APIRoutes';
 import { Link, useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import socket from "../socket";
 import notificationSound from '../ting_iphone.mp3';
+import {getnotifi} from "../../utils/APIRoutes"
 
 import {
   AiOutlineHome,
@@ -22,6 +23,9 @@ import {
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import "./index.css";
+
+
+toast.configure();
 
 export default function Topbar( { currentUser } ) {
   const [currentUserImage,setCurrentUserImage] = useState(undefined);
@@ -82,11 +86,13 @@ export default function Topbar( { currentUser } ) {
     //Listen for new notifications
     
     socket.on("newNotification", (notifi) => {
-      toast.success('New Notification Check it', {
-        position: toast.POSITION.TOP_CENTER
-      })
+      
       const audio=new Audio(notificationSound);
      audio.play().catch(console.warn);
+    
+     toast.success('New Notification Check it', {
+      position: toast.POSITION.TOP_RIGHT
+    })
       setNotifications((prevNotifications) => [notifi, ...prevNotifications]);
     });
 
@@ -99,7 +105,7 @@ export default function Topbar( { currentUser } ) {
       if(currentUser!=undefined){
         
       try {
-        const response = await axios.post(`http://localhost:8080/api/auth/get`, {
+        const response = await axios.post(getnotifi, {
           userid: currentUser._id, // Replace with the actual user ID or get it dynamically
         });
         console.log(response.data.notifications);

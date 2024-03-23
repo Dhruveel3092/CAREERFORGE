@@ -35,7 +35,7 @@ function ConnectionsComponent() {
 
 
     const  getCurrentUser= async(e) => {
-      navigate(`/profile/${e}`);
+      navigate(`/profile/${e.username}`);
     }
     
     useEffect(()=>{

@@ -45,7 +45,7 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
     socket.emit("send-msg", {
-      cat:"from",
+      cat:" from ",
       naf:data.username,
       to: currentChat._id,
       from: data._id,

@@ -8,7 +8,6 @@ const app = express();
 const socket = require("socket.io");
 const Notification = require('./models/notifiSchema');
 require("dotenv").config();
-
 app.use(cors());
 app.use(express.json());
 
@@ -27,9 +26,12 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
+
 const server = app.listen(8080, () =>
   console.log(`Server started on 8080`)
 ); 
+
+
 const io = socket(server, {
   cors: {
     origin: allowedOrigin,
@@ -39,8 +41,10 @@ const io = socket(server, {
 
 global.onlineUsers = new Map();
 io.on("connection", (socket) => {
-  socket.on("add-user", (userId) => {
+  socket.on("add-user", async (userId) => {
+    if(onlineUsers.get(userId)==undefined){
     onlineUsers.set(userId, socket.id);
+    }
     //console.log(userId);
   });
 
@@ -63,3 +67,13 @@ io.on("connection", (socket) => {
   
 
 });
+app.set("io",io)
+// function IO(){
+//   if (!io) {
+//     throw new Error('Socket.io not initialized!');
+//   }
+//   return io;
+// }
+// module.exports = {
+//       IO,
+//     };
