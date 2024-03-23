@@ -4,14 +4,18 @@ import Topbar from "../components/Topbar/index";
 import PostStatus from "../components/postUpdate";
 import styled, { createGlobalStyle } from "styled-components";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { io } from "socket.io-client";
 import { host } from "../utils/APIRoutes"; 
 import { getAllPost } from "../utils/APIRoutes";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useWindowScroll } from "@uidotdev/usehooks";
+import socket from "../components/socket";
+import notificationSound from './ting_iphone.mp3';
 
 export default function Home() {
-  const socket = useRef();
+  //const socket = useRef();
   const [{ x, y }, scrollTo] = useWindowScroll();
   const [currentUser, setCurrentUser] = useState(undefined);
   const [allPosts,setAllPosts] = useState([]);
@@ -30,8 +34,10 @@ export default function Home() {
           )
         );
       }
+
     };
 
+    
     fetchData();
   }, []);
 
@@ -70,15 +76,29 @@ export default function Home() {
   //   // window.addEventListener("scroll",handleInfiniteScroll);
   //   // return () => window.removeEventListener("scroll",handleInfiniteScroll);
   // },[x,y])
+ 
+ 
+  // useEffect(() => {
+  //   if (currentUser) {
+      
+  //     socket.emit("add-user", currentUser._id);
+  //    // socket.emit("setup", currentUser._id);
+  //   }
+  // }, [currentUser]);
+ 
+  // useEffect(() => {
 
-  useEffect(() => {
-    if (currentUser) {
-      socket.current = io(host);
-      socket.current.emit("add-user", currentUser._id);
-     // socket.emit("setup", currentUser._id);
-    }
-  }, [currentUser]);
+  //   //Listen for new notifications
+    
+  //   socket.on("newNotification", (data) => {
+  //     toast.success('New Notification Check it', {
+  //       position: toast.POSITION.TOP_CENTER
+  //     });
+  //     document.getElementById('notification').play();
+  //   });
 
+    
+  // }, [currentUser]);
 
   return (
     <>

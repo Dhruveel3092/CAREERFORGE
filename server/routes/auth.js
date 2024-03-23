@@ -27,9 +27,15 @@ const {
   notConnectedUsers
 } = require("../controllers/userController");
 
+const{
+  getnotif
+}=require('../controllers/notifController');
+ 
+
 
 const router = require("express").Router();
 
+router.post("/get",getnotif);
 router.post("/login", login);
 router.post("/register", register);
 router.post("/setavatar/:id", setAvatar);

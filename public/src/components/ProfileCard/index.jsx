@@ -46,7 +46,7 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
 
     const addConn =async (e) => {
       const data= await axios.post(`${addConnection}/${currentUser._id}`, { e } );
-      //console.log(data);
+     
    isconnected(true);
     }
 
