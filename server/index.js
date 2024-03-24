@@ -42,9 +42,9 @@ const io = socket(server, {
 global.onlineUsers = new Map();
 io.on("connection", (socket) => {
   socket.on("add-user", async (userId) => {
-    if(onlineUsers.get(userId)==undefined){
+   
     onlineUsers.set(userId, socket.id);
-    }
+
     //console.log(userId);
   });
 
@@ -52,12 +52,12 @@ io.on("connection", (socket) => {
     try{
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      const fg=data.msg + data.cat + data.naf;
-       console.log(fg);
-      const newNotification = new Notification({ 'user': data.to, 'message': fg });
-      await newNotification.save();
+//       const fg=data.msg + data.cat + data.naf;
+//        console.log(fg);
+//       const newNotification = new Notification({ 'user': data.to, 'message': fg });
+//       await newNotification.save();
       
-     socket.to(sendUserSocket).emit("newNotification",newNotification);
+// socket.to(sendUserSocket).emit("newNotification",newNotification);i=1;
       socket.to(sendUserSocket).emit("msg-recieve", data);
     }
   }catch (error) {
@@ -65,15 +65,24 @@ io.on("connection", (socket) => {
   }
   });
   
+  socket.on("send-noti", async(data)=>{
+try{
+  const sendUserSocket = onlineUsers.get(data.to);
+  if (sendUserSocket) {
+    const fg=data.msg + data.cat + data.naf;
+     console.log(fg);
+    const newNotification = new Notification({ 'user': data.to, 'message': fg });
+    await newNotification.save();
+    
+socket.to(sendUserSocket).emit("newNotification",newNotification);
+  }
+}catch(error){
+  console.error('Error saving notification:', error.message);
+}
+
+
+  })
+  
 
 });
 app.set("io",io)
-// function IO(){
-//   if (!io) {
-//     throw new Error('Socket.io not initialized!');
-//   }
-//   return io;
-// }
-// module.exports = {
-//       IO,
-//     };

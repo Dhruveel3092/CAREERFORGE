@@ -537,7 +537,16 @@ module.exports.getSignature = async (req, res, next) => {
 module.exports.addReaction = async(req,res,next) => {
   try{
     const {userId , postId , reactionType } = req.body;
+
     const data = await Post.findOne({_id:postId});
+    let sendUserSocket = onlineUsers.get(data.user.toString());
+    let u=await User.find({_id:userId});
+
+    let fg=`${u[0].username} reacted ${reactionType} on your post`;
+
+    let newNotification= new Notification({ 'user': data.user, 'message': fg }); 
+    await newNotification.save();
+    req.app.settings.io.to(sendUserSocket).emit("newNotification", newNotification);
     data.reactions = data.reactions.filter(reaction => reaction.user != userId);
     data.reactions = [{user:userId,type:reactionType},...data.reactions];
     await data.save();
@@ -552,6 +561,7 @@ module.exports.removeReaction = async(req,res,next) => {
   try{
     const {userId , postId } = req.body;
     const data = await Post.findOne({_id:postId});
+    
     data.reactions = data.reactions.filter(reaction => reaction.user._id != userId);
     await data.save();
     return res.json(data.reactions);
@@ -564,7 +574,17 @@ module.exports.removeReaction = async(req,res,next) => {
 module.exports.addComment = async (req,res,next) => {
   try{
     const { userId,postId,inputComment,timestamp } = req.body;
+    
     const data = await Post.findOne({_id:postId});
+    let u=await User.find({_id:userId});
+     let sendUserSocket = onlineUsers.get(data.user.toString());
+
+     let fg=`${u[0].username} commented on your post`;
+
+     let newNotification= new Notification({ 'user': data.user, 'message': fg }); 
+     await newNotification.save();
+     req.app.settings.io.to(sendUserSocket).emit("newNotification", newNotification);
+
     data.comments = [{user:userId,comment:inputComment,timeStamp:timestamp},...data.comments];
     await data.save();
     return res.json(data.comments);

@@ -40,6 +40,7 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
     getCurrentChat();
   }, [currentChat]);
 
+
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
@@ -51,6 +52,14 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
       from: data._id,
       msg,
     });
+    socket.emit("send-noti", {
+      cat:" from ",
+      naf:data.username,
+      to: currentChat._id,
+      from: data._id,
+      msg,
+    });
+    
    
     reArrangeContact(currentChat._id);
     

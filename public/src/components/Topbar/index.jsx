@@ -13,7 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 import socket from "../socket";
 import notificationSound from '../ting_iphone.mp3';
 import {getnotifi} from "../../utils/APIRoutes"
-
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
 import {
   AiOutlineHome,
   AiOutlineUserSwitch,
@@ -24,7 +25,7 @@ import {
 import { BsBriefcase } from "react-icons/bs";
 import "./index.css";
 
-
+let n=0;
 toast.configure();
 
 export default function Topbar( { currentUser } ) {
@@ -37,6 +38,7 @@ export default function Topbar( { currentUser } ) {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
   const [sh,setsh]=useState(false);
+
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -89,13 +91,17 @@ export default function Topbar( { currentUser } ) {
       
       const audio=new Audio(notificationSound);
      audio.play().catch(console.warn);
-    
+    console.log(notifi,"l");
      toast.success('New Notification Check it', {
       position: toast.POSITION.TOP_RIGHT
     })
+    n++;
       setNotifications((prevNotifications) => [notifi, ...prevNotifications]);
+     
     });
-
+    return () => {
+      socket.off('newNotification');
+    };
     
   }, []);
 
@@ -118,10 +124,10 @@ export default function Topbar( { currentUser } ) {
   
     fetchNotifications();
   }, [currentUser]); // The empty dependency array ensures that this effect runs once when the component mounts
+
   function fun(){
-    setsh(old=>{
-      return(!old)
-    })
+    n=0;
+    setsh((old)=>(!old));
   }
 
   useEffect(() => {
@@ -193,8 +199,12 @@ export default function Topbar( { currentUser } ) {
           <span className="icon-name">Message</span>
         </div>
         <div className="icon-container">
-
-          <AiOutlineBell size={30} className="react-icon"  onClick={fun}/>
+        <NotificationBadge
+               // onClick={fun}
+                count={n}
+                effect={Effect.SCALE}
+              />
+       <AiOutlineBell size={30} className="react-icon"  onClick={fun}/>
           <span className="icon-name">Notification</span>
         </div>
        
@@ -311,7 +321,7 @@ export default function Topbar( { currentUser } ) {
                 tabIndex={0}
                 className="focus:outline-none text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500"
               >
-                Thats it for now :)
+                No Notifications for now :)
               </p>
               <hr className="w-full" />
             </div>
