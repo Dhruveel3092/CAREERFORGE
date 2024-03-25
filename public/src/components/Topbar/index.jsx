@@ -25,10 +25,11 @@ import {
 import { BsBriefcase } from "react-icons/bs";
 import "./index.css";
 
-let n=0;
-toast.configure();
 
+toast.configure();
+let n=0;
 export default function Topbar( { currentUser } ) {
+
   const [currentUserImage,setCurrentUserImage] = useState(undefined);
   const [modalOpen,setModalOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -38,6 +39,7 @@ export default function Topbar( { currentUser } ) {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
   const [sh,setsh]=useState(false);
+  const [notificationCount,setnotificationCount]=useState(0);
 
 
   const handleMenuOpen = (event) => {
@@ -70,6 +72,7 @@ export default function Topbar( { currentUser } ) {
     setQuery(inputValue);
   };
 
+
   const handleButtonClick = (name) => {
     setModalOpen(false);
     navigate(`/profile/${name}`);
@@ -86,25 +89,47 @@ export default function Topbar( { currentUser } ) {
   useEffect(() => {
 
     //Listen for new notifications
-    
+    const storedCount = localStorage.getItem('notificationCount');
+    if (storedCount) {
+      setnotificationCount(parseInt(storedCount, 10));
+    }
+
     socket.on("newNotification", (notifi) => {
-      
+
       const audio=new Audio(notificationSound);
      audio.play().catch(console.warn);
-    console.log(notifi,"l");
+   
      toast.success('New Notification Check it', {
       position: toast.POSITION.TOP_RIGHT
     })
     n++;
+   
+    setnotificationCount((p) => p+1);
+   
+    
+    // console.log(localStorage.getItem('notificationCount'),"free")
       setNotifications((prevNotifications) => [notifi, ...prevNotifications]);
+      localStorage.setItem('notificationCount', JSON.stringify(notificationCount+1));
      
     });
     return () => {
       socket.off('newNotification');
     };
     
-  }, []);
+  });
+  // useEffect(() => {
+  //   // Retrieve notification count from local storage when component mounts
+  //   const fetch =async()=>{
+  //   const storedCount = localStorage.getItem('notificationCount');
+  //   if (storedCount) {
+  //     setnotificationCount(parseInt(storedCount, 10));
 
+  //     console.log(localStorage.getItem('notificationCount'),"free")
+  //   }
+  // }
+  // fetch();
+  // },);
+  
   useEffect(() => {
     const fetchNotifications = async () => {
       
@@ -114,7 +139,7 @@ export default function Topbar( { currentUser } ) {
         const response = await axios.post(getnotifi, {
           userid: currentUser._id, // Replace with the actual user ID or get it dynamically
         });
-        console.log(response.data.notifications);
+       // console.log(response.data.notifications);
         setNotifications(response.data.notifications);
       } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -124,11 +149,19 @@ export default function Topbar( { currentUser } ) {
   
     fetchNotifications();
   }, [currentUser]); // The empty dependency array ensures that this effect runs once when the component mounts
+  
+
+
 
   function fun(){
-    n=0;
+  
+    
     setsh((old)=>(!old));
+    localStorage.removeItem('notificationCount');
+    setnotificationCount(0);
+   
   }
+
 
   useEffect(() => {
     if(currentUser){
@@ -201,7 +234,7 @@ export default function Topbar( { currentUser } ) {
         <div className="icon-container">
         <NotificationBadge
                // onClick={fun}
-                count={n}
+                count={ notificationCount}
                 effect={Effect.SCALE}
               />
        <AiOutlineBell size={30} className="react-icon"  onClick={fun}/>
