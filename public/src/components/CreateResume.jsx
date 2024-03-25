@@ -176,7 +176,7 @@ export default function CreateResume() {
                                                     <label for = "" class = "form-label">Title</label>
                                                     <input name = "exp_title" type = "text" class = "form-control exp_title" id = "" onkeyup="generateCV()" 
                                                     onChange={(e)=>{
-                                                        
+
                                                     }}/>
                                                     <span class="form-text"></span>
                                                 </div>
@@ -332,90 +332,7 @@ export default function CreateResume() {
             </div>
         </section>
 
-        <section id = "preview-sc" class = "print_area">
-            <div class = "container">
-                <div class = "preview-cnt">
-                    <div class = "preview-cnt-l bg-green text-white">
-                        <div class = "preview-blk">
-                            <div class = "preview-image">
-                                <img src = "" alt = "" id = "image_dsp"/> 
-                            </div>
-                            <div class = "preview-item preview-item-name">
-                                <span class = "preview-item-val fw-6" id = "fullname_dsp">{values['firstname']} {values['middlename']} {values['lastname']}</span>
-                            </div>
-                            <div class = "preview-item">
-                                <span class = "preview-item-val text-uppercase fw-6 ls-1" id = "designation_dsp">𝒅𝒆𝒔𝒊𝒈𝒏𝒂𝒕𝒊𝒐𝒏:{values['designation']}</span>
-                            </div>
-                        </div>
-
-                        <div class = "preview-blk">
-                            <div class = "preview-blk-title">
-                                <h3>about</h3>
-                            </div>
-                            <div class = "preview-blk-list">
-                                <div class = "preview-item">
-                                    <span class = "preview-item-val" id = "phoneno_dsp">𝑪𝒐𝒏𝒕𝒂𝒄𝒕:{values['phoneno']}</span>
-                                </div>
-                                <div class = "preview-item">
-                                    <span class = "preview-item-val" id = "email_dsp">𝑬𝒎𝒂𝒊𝒍:{values['email']}</span>
-                                </div>
-                                <div class = "preview-item">
-                                    <span class = "preview-item-val" id = "address_dsp">𝘼𝙙𝙙𝙧𝙚𝙨𝙨:{values['address']}</span>
-                                </div>
-                                <div class = "preview-item">
-                                    <span class = "preview-item-val" id = "summary_dsp">𝑺𝒖𝒎𝒎𝒂𝒓𝒚:{values['summary']}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class = "preview-blk">
-                            <div class = "preview-blk-title">
-                                <h3>skills</h3>
-                            </div>
-                            <div class = "skills-items preview-blk-list" id = "skills_dsp">
-                                {values['skill']}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class = "preview-cnt-r bg-white">
-                        <div class = "preview-blk">
-                            <div class = "preview-blk-title">
-                                <h3>Achievements</h3>
-                            </div>
-                            <div class = "achievements-items preview-blk-list" id = "achievements_dsp"></div>
-                        </div>
-
-                        <div class = "preview-blk">
-                            <div class = "preview-blk-title">
-                                <h3>educations</h3>
-                            </div>
-                            <div class = "educations-items preview-blk-list" id = "educations_dsp"></div>
-                        </div>
-
-                        <div class = "preview-blk">
-                            <div class = "preview-blk-title">
-                                <h3>experiences</h3>
-                            </div>
-                            <div class = "experiences-items preview-blk-list" id = "experiences_dsp"></div>
-                        </div>
-
-                        <div class = "preview-blk">
-                            <div class = "preview-blk-title">
-                                <h3>projects</h3>
-                            </div>
-                            <div class = "projects-items preview-blk-list" id = "projects_dsp"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class = "print-btn-sc">
-            <div class = "container">
-                <button type = "button" class = "print-btn btn btn-primary" onclick="printCV()">Print CV</button>
-            </div>
-        </section>
+       
         </div>
         </Container>
     </>
