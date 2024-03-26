@@ -84,6 +84,7 @@ const userSchema = new mongoose.Schema({
   languages : [{
       type:String,
   }],
+  
   });
 
 module.exports = mongoose.model("User", userSchema);

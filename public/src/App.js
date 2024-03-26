@@ -12,6 +12,7 @@ import NotConnected from "./components/NotConnected";
 import Post from "./pages/Post";
 import AllPosts from "./pages/AllPosts";
 import AllSkills from "./pages/AllSkills";
+import Pending from "./components/Pending";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/search" element={<SearchBar />} />  
         <Route path="/home" element={<Home />} />
         <Route path="/connections/connection" element={<ConnectionsComponent />} />
+        <Route path="/pending" element={<Pending />} />
         <Route path="/connections/addfriend" element={<NotConnected />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/posts/:postId" element={<Post />} />
