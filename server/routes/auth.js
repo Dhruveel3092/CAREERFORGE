@@ -11,7 +11,6 @@ const {
   updateProfile,
   checkUsernameValidity,
   getUserByName,
-  getProfilePost,
   getSignature,
   setAvatarImage,
   addReaction,
@@ -25,6 +24,12 @@ const {
   remConnection,
   getConnectedUsers,
   notConnectedUsers,
+  getAllPostsByUserId,
+  addSkill,
+  getProfileData,
+  addEndorsement,
+  removeEndorsement,
+  deleteSkill
   pending,
   sendconnect,
   checkRequest
@@ -52,6 +57,9 @@ router.post("/setAvatarImage",setAvatarImage);
 router.post("/addConnection/:id",addConnection);
 router.post("/checkConnection/:id",checkConnection);
 router.post("/remConnection/:id",remConnection);
+router.post("/addEndorsement",addEndorsement);
+router.post("/removeEndorsement",removeEndorsement);
+router.post("/addSkill",addSkill);
 router.get("/notConnectedUsers/:id",notConnectedUsers);
 router.get("/getConnectedUsers/:id",getConnectedUsers);
 router.get("/getAllUser/:id",getAllUsers);
@@ -62,12 +70,14 @@ router.get("/logout/:id", logOut);
 router.get("/SearchUsers/:id", SearchUsers);
 router.get("/getUserById/:id",getUserById);
 router.get("/getAllPost/:id/:page",getAllPost);
-router.get("/getProfilePost/:id",getProfilePost);
+router.get("/getProfileData/:id",getProfileData);
 router.get("/checkUsernameValidity/:username/:checkUsername",checkUsernameValidity);
 router.get("/getUserByName/:username",getUserByName);
 router.get("/getPostById/:postId",getPostById);
-router.delete("/deletePost/:id",deletePost);
+router.get("/getAllPostsByUserId/:userId",getAllPostsByUserId);
+router.delete("/deletePost/:postId/:userId",deletePost);
 router.delete("/deleteComment/:postId/:commentId",deleteComment);
+router.delete("/deleteSkill/:userId/:skillId",deleteSkill);
 
 
 

@@ -10,6 +10,8 @@ import ProfilePage from "./pages/ProfilePage";
 import ConnectionsComponent from "./components/ConnectionsComponent";
 import NotConnected from "./components/NotConnected";
 import Post from "./pages/Post";
+import AllPosts from "./pages/AllPosts";
+import AllSkills from "./pages/AllSkills";
 import Pending from "./components/Pending";
 
 export default function App() {
@@ -27,6 +29,8 @@ export default function App() {
         <Route path="/connections/addfriend" element={<NotConnected />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/posts/:postId" element={<Post />} />
+        <Route path="/allPosts/:username/:userId" element={<AllPosts />} />
+        <Route path="/allSkills/:username/:userId" element={<AllSkills />}/>
       </Routes>
     </BrowserRouter>
   );
