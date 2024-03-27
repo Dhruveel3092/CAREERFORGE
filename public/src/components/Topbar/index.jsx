@@ -223,7 +223,7 @@ export default function Topbar( { currentUser } ) {
                 </MenuItem>
               </Menu>
         <div className="icon-container">
-          <BsBriefcase size={30} className="react-icon" />
+          <BsBriefcase size={30} className="react-icon" onClick={()=>navigate("/createResume")}/>
           <span className="icon-name">Jobs</span>
         </div>
         <div className="icon-container">
@@ -255,27 +255,27 @@ export default function Topbar( { currentUser } ) {
      
     
       <div
-        className="w-full h-full bg-gray-800 bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0"
+        className="contain"
         id="chec-div"
-        style={{position: "fixed",zIndex:999999999}}
+        style={{position: "fixed",zIndex:1}}
       >
-        {/*- more free and premium Tailwind CSS components at https://tailwinduikit.com/ -*/}
+        
         <div
-          className="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
+          className="main-contain"
           id="notification"
         >
-          <div className="2xl:w-4/12 bg-gray-50 h-screen overflow-y-auto p-8 absolute right-0">
-            <div className="flex items-center justify-between">
+          <div className="notifi">
+            <div className="notif-sec">
               <p
                 tabIndex={0}
-                className="focus:outline-none text-2xl font-semibold leading-6 text-gray-800"
+                className="notif-text"
               >
                 Notifications
               </p>
               <button
                 role="button"
                 aria-label="close modal"
-                className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 rounded-md cursor-pointer"
+                className="notif-btn"//may
                 onClick={fun}
               >
                 <svg
@@ -306,12 +306,12 @@ export default function Topbar( { currentUser } ) {
             {notifications.map(item=>{
   return(<>
   <Link >
-  <div className="w-full p-3 mt-4 bg-white rounded flex">
+  <div className="notif-item">
               <div
                 tabIndex={0}
                 aria-label="post icon"
                 role="img"
-                className="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center"
+                className="ind-item"
               >
                 <svg
                   width={16}
@@ -327,12 +327,12 @@ export default function Topbar( { currentUser } ) {
                 </svg>
               </div>
               <div className="pl-3">
-                <p tabIndex={0} className="focus:outline-none text-sm leading-none">
-      <span className="text-indigo-700">{item.message}</span>
+                <p tabIndex={0} className="item-mess">
+      <span className="messa">{item.message}</span>
                 </p>
                 <p
                   tabIndex={0}
-                  className="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
+                  className="time"
                 >
                  {item.timestamp}
                 </p>
@@ -342,21 +342,13 @@ export default function Topbar( { currentUser } ) {
   </>)
 })}
 
-
-
-
-
-
-
-            <div className="flex items-center justiyf-between">
-              <hr className="w-full" />
-              <p
-                tabIndex={0}
-                className="focus:outline-none text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500"
+            <div className="com">
+            <p className="jkl">
+              <span
               >
                 No Notifications for now :)
+              </span>
               </p>
-              <hr className="w-full" />
             </div>
           </div>
         </div>
