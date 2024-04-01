@@ -393,16 +393,6 @@ module.exports.uploadPost = async (req,res,next) => {
       description:status,
       files:filesUrl,
     });
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    user.posts.push(post._id);
-
-    await user.save();
-
     await post.populate('user');
     return res.json({ status: true, post });
   } catch (ex) {
@@ -419,34 +409,6 @@ module.exports.getAllPost = async (req,res,next) => {
     const skip = (page-1)*pageSize;
 
     const posts=await Post.find().sort({ createdAt:-1 }).skip(skip).limit(pageSize).populate([
-      {
-        path: 'user',
-        model: 'User',
-        select: 'username avatarImage headline'
-      },
-      {
-        path: 'reactions.user',
-        model: 'User',
-        select: 'username avatarImage headline'
-      },
-      {
-        path: 'comments.user',
-        model: 'User',
-        select: 'username avatarImage headline'
-      }
-    ]);
-    return res.json(posts);
-  }catch( error )
-  {
-    next(error);
-  }
-}
-
-module.exports.getAllPostsByUserId = async (req,res,next) => {
-  try{
-    const userId = req.params.userId;
-
-    const posts=await Post.find({user:userId}).sort({ createdAt:-1 }).populate([
       {
         path: 'user',
         model: 'User',
@@ -497,42 +459,27 @@ module.exports.getPostById = async (req,res,next) => {
   }
 }
 
-module.exports.getProfileData = async (req,res,next) => {
+module.exports.getProfilePost = async (req,res,next) => {
   try{
     const id=req.params.id;
-    const user=await User.findById(id)
-                          .populate([{
-                            path: 'posts',
-                            options: { sort: { createdAt: -1 } },
-                            populate: [
-                              {
-                                path: 'user',
-                                model: 'User',
-                                select: 'username avatarImage headline'
-                              },
-                              {
-                                path: 'reactions.user',
-                                model: 'User',
-                                select: 'username avatarImage headline'
-                              },
-                              {
-                                path: 'comments.user',
-                                model: 'User',
-                                select: 'username avatarImage headline'
-                              }
-                            ]
-                          },
-                          {
-                            path: 'skills',
-                            options: { sort : {createdAt: -1} },
-                            populate: {
-                              path: 'endorsements',
-                              model: 'User',
-                              select: 'username avatarImage headline',
-                            }
-                          }
-                        ]);
-    return res.json(user);
+    const posts=await Post.find({ user:id }).sort({ createdAt:-1 }).populate([
+      {
+        path: 'user',
+        model: 'User',
+        select: 'username avatarImage headline'
+      },
+      {
+        path: 'reactions.user',
+        model: 'User',
+        select: 'username avatarImage headline'
+      },
+      {
+        path: 'comments.user',
+        model: 'User',
+        select: 'username avatarImage headline'
+      }
+    ]);
+    return res.json(posts);
   }catch( error )
   {
     next(error);
@@ -549,108 +496,6 @@ module.exports.updateProfile = async (req,res,next) => {
   }catch(error)
   {
     next(error);
-  }
-}
-
-module.exports.addSkill = async (req,res,next) => {
-
-  const {id , inputSkill} = req.body;
-
-  try{
-
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ status: false , message: 'User not found' });
-    }
-
-    const result = user.skills.find(skill => skill.skillName == inputSkill);
-
-    if(result)
-      return res.status(200).json({status:false , message: 'Skill is already added' });
-
-    user.skills.unshift({ skillName : inputSkill , endorsements : [] });
-
-    await user.save();
-
-    return res.status(200).json({ status:true , message: 'Skill added successfully' , user });
-
-  }catch(error)
-  {
-    console.error('Error adding skill and endorsement:', error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
-module.exports.addEndorsement = async (req,res,next) => {
-
-  const { userId , skillId , endorsementId } = req.body;
-
-  try{
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ status: false, message: 'User not found' });
-    }
-
-    const skillIndex = user.skills.findIndex(skill => skill._id==skillId);
-
-    user.skills[skillIndex].endorsements.unshift(endorsementId);
-    
-    await user.save();
-
-    const populatedEndorsements = await User.populate(user.skills[skillIndex], {
-      path: 'endorsements',
-      select: 'username avatarImage headline',
-    });
-
-    user.skills[skillIndex] = populatedEndorsements;    
-    
-    const skill = user.skills[skillIndex];
-
-    return res.status(200).json({ status:true , message: 'Endorsement added successfully' , skill });
-
-  }catch(error)
-  {
-    console.error('Error adding endorsement: ',error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
-module.exports.removeEndorsement = async (req,res,next) => {
-
-  const { userId , skillId , endorsementId } = req.body;
-
-  try{
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ status: false, message: 'User not found' });
-    }
-
-    const skillIndex = user.skills.findIndex(skill => skill._id==skillId);
-
-    user.skills[skillIndex].endorsements = user.skills[skillIndex].endorsements.filter(endorsement => endorsement != endorsementId);
-    
-    await user.save();
-
-    const populatedEndorsements = await User.populate(user.skills[skillIndex], {
-      path: 'endorsements',
-      select: 'username avatarImage headline',
-    });
-
-    user.skills[skillIndex] = populatedEndorsements;    
-    
-    const skill = user.skills[skillIndex];
-
-    return res.status(200).json({ status:true , message: 'Endorsement deleted successfully' , skill });
-
-  }catch(error)
-  {
-    console.error('Error deleting endorsement: ',error);
-    return res.status(500).json({ message: 'Internal server error' });
   }
 }
 
@@ -742,16 +587,7 @@ module.exports.addComment = async (req,res,next) => {
 
     data.comments = [{user:userId,comment:inputComment,timeStamp:timestamp},...data.comments];
     await data.save();
-
-    const updatedPost = await Post.findById(postId).populate({
-      path: 'comments.user',
-      select: 'username avatarImage headline',
-    })
-    .populate({
-      path: 'comments',
-      options: { sort: {timeStamp: -1}}
-    });
-    return res.json(updatedPost.comments);
+    return res.json(data.comments);
   }catch(error){
     console.log(error);
     return res.json(error);
@@ -759,34 +595,16 @@ module.exports.addComment = async (req,res,next) => {
 }
 
 module.exports.deletePost = async (req,res,next) => {
-
-  const postId = req.params.postId;
-  const userId = req.params.userId;
-
-  try {
-    const posts = await Post.deleteOne({ _id: postId });
-
-    if (posts.deletedCount === 1) {
-      const user = await User.findById(userId);
-
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      const index = user.posts.indexOf(postId);
-      if (index !== -1) {
-        user.posts.splice(index, 1);
-      }
-
-      await user.save();
-
+  try{
+    const id = req.params.id;
+    const post = await Post.deleteOne({ _id:id });
+    if (post.deletedCount === 1) {
       res.status(200).json({ message: 'Post deleted successfully' });
     } else {
       res.status(404).json({ message: 'Post not found' });
     }
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+  }catch(error){
+    return res.json(error);
   }
 }
 
@@ -811,45 +629,7 @@ module.exports.deleteComment = async (req,res,next) => {
 
     await post.save();
 
-    const updatedPost = await Post.findById(postId).populate({
-      path: 'comments.user',
-      select: 'username avatarImage headline',
-    })
-    .populate({
-      path: 'comments',
-      options: { sort: {timeStamp: -1}}
-    });
-    return res.json(updatedPost.comments);
-  }catch(error){
-    return res.json(error);
-  }
-}
-
-module.exports.deleteSkill = async (req,res,next) => {
-  try{
-    const skillId = req.params.skillId;
-    const userId = req.params.userId;
-
-    const user = await User.findById(userId).populate({
-      path: 'skills',
-      options: {sort: {createdAt:-1}},
-      populate: {
-        path: 'endorsements',
-        model: 'User',
-        select: 'username avatarImage headline',
-      }
-    });
-
-    if(!user){
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    user.skills.pull(skillId);
-
-    await user.save();
-
-    return res.json(user.skills);
-    
+    res.json({ message: 'Comment deleted successfully' });
   }catch(error){
     return res.json(error);
   }
