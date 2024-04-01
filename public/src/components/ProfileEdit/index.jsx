@@ -115,6 +115,14 @@ export default function ProfileEdit( { onEdit , currentUser } ){
           name="aboutMe"
           value={editInputs.aboutMe}
         />
+        <label>Skills</label>
+        <input
+          onChange={getInput}
+          className="input"
+          placeholder="Skill"
+          name="skills"
+          value={editInputs.skills}
+        />
       </div>
       <div className="save-container">
         <button className={`save-btn ${usernameError ? 'disabled-button' : ''}`} onClick={updateProfileData} disabled={usernameError}>

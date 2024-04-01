@@ -119,10 +119,10 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
         </button>
         {modalOpen && 
           <ModalComponent
+          setStatus={setStatus}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
           status={status}
-          setStatus={setStatus}
           sendStatus={sendStatus}
           files={files}
           setFiles={setFiles}

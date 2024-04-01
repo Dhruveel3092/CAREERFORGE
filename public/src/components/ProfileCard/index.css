@@ -103,98 +103,12 @@
     }
   }
 
-  .all-posts {
+  .post-status-main {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     position: relative;
-    width: 750px;
-    height: auto;
-    background-color: whitesmoke;
-    border: 1px solid #b7b7b7;
-    border-radius: 7px;
-    padding: 20px;
-    position: relative;
-    margin: 20px auto;
-    .username-posts {
-      font-size: 25px;
-      margin-bottom: -25px;
-      width: 100%;
-      font-weight: 600; 
-    }
-    hr {
-      border-top: 1px solid rgb(181, 181, 181);
-    }
-    .all-posts-button {
-      width: 100%;
-      height: 42px;
-      color: rgba(84, 84, 84, 0.89);
-      background-color: whitesmoke;
-      border-radius: 10px;
-      outline: none;
-      border: 1px solid #b7b7b7;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 15px;
-      font-family: system-ui, sans-serif;
-      margin-top: 10px;
-    }
-  
-    .all-posts-button:hover {
-      background-color: #dcdbdb;
-    }
-  }
-
-  .skills{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 750px;
-    height: auto;
-    background-color: whitesmoke;
-    border: 1px solid #b7b7b7;
-    border-radius: 7px;
-    padding: 20px;
-    margin: 20px auto;
-    .username-skills {
-      font-size: 25px;
-      margin-bottom: -10px;
-    }
-    .all-skills-button {
-      width: 100%;
-      height: 42px;
-      color: rgba(84, 84, 84, 0.89);
-      background-color: whitesmoke;
-      border-radius: 10px;
-      outline: none;
-      border: 1px solid #b7b7b7;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 15px;
-      font-family: system-ui, sans-serif;
-      margin-top: 10px;
-    }
-  
-    .all-skills-button:hover {
-      background-color: #dcdbdb;
-    }
-  }
-  
-  .username-skills {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; 
-    padding-left: 5px;
-    font-weight: 600;
-  }
-  
-  .username-skills .icon-container-2 {
-    display: flex;
-    gap: 10px;
-    padding-right: 5px;
   }
 
   .connect-button {
