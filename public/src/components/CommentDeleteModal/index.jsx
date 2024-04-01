@@ -1,10 +1,13 @@
-import React from "react";
-import { Modal } from "antd";
+import React, { useState } from "react";
+import { Button, Modal } from "antd";
+import "./index.css";
+import styled from 'styled-components';
 import "./index.css";
 
 const CommentDeleteModal = ({
   commentDeleteModal,
   setCommentDeleteModal,
+  commentId,
   deleteComment,
 }) => {
 
@@ -16,7 +19,7 @@ const CommentDeleteModal = ({
         open={commentDeleteModal}
         onOk={() => {
           setCommentDeleteModal(false);
-          deleteComment();
+          deleteComment(commentId);
         }}
         onCancel={() => {
           setCommentDeleteModal(false);

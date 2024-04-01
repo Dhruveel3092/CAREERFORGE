@@ -35,10 +35,9 @@ export default function PostsCard({ posts ,currentUser ,allPosts ,setAllPosts}) 
   };
 
   const deletePost = async () => {
-    const {data} = await axios.delete(`${deletePostAPI}/${posts._id}/${posts.user._id}`);
+    const {data} = await axios.delete(`${deletePostAPI}/${posts._id}`);
     // setAllPosts(allPosts.filter(post => posts._id!=post._id));    //aanathi like nu
     // setting vikhay jaay chhe a ready thay jaay pachhi filter karaje
-    console.log(data);
     return data.message;
   }
 

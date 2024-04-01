@@ -4,36 +4,19 @@ import PostsCard from "../PostsCard";
 import FileUploadModal from "../FileUploadModal";
 import axios from "axios";
 import { HiOutlinePencil } from "react-icons/hi";
-import { getProfileData, getSignature , setAvatarImage , addSkillAPI } from "../../utils/APIRoutes";
+import { getProfilePost, getSignature , setAvatarImage } from "../../utils/APIRoutes";
 import {sendconnect} from "../../utils/APIRoutes"
 import {checkConnection,checkRequest} from "../../utils/APIRoutes"
 import {remConnection} from "../../utils/APIRoutes"
-import { FaArrowRight } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
-import { IoAddSharp } from "react-icons/io5";
-import { ToastContainer, toast } from "react-toastify";
-import SkillAddModal from "../SkillAddModal";
-import Skill from "../Skill";
 
 export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurrentUser } ){
     const [user,setUser] = useState(undefined);
     const [editButton,setEditButton] = useState(false);
     const [allPosts,setAllPosts] = useState(undefined);
-    const [allSkills , setAllSkills] = useState(undefined);
     const [image, setImage] = useState(null);
     const [imgUrl,setImgUrl] = useState(undefined);
     const [modalOpen,setModalOpen] = useState(false);
-    const [connected,isconnected] = useState(false);
-    const [skillAddModal,setSkillAddModal] = useState(false);
-    const [inputSkill,setInputSkill] = useState('');
-    const navigate = useNavigate();
-    const toastOptions = {
-      position: "bottom-right",
-      autoClose: 8000,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "dark",
-    };
+    const [connected,isconnected]= useState(false);
     const [pend,setpend]= useState(false);
    
     useEffect( () => {   
@@ -147,10 +130,8 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
     useEffect(() => {
       const fetchData = async () => {
         if(guestUser){
-        const {data} = await axios.get(`${getProfileData}/${guestUser._id}`);
-        setAllPosts(data.posts);
-        setAllSkills(data.skills);
-        console.log(data.skills);
+        const {data} = await axios.get(`${getProfilePost}/${guestUser._id}`);
+        setAllPosts(data);
         }
       }
 
@@ -173,20 +154,6 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
       }
     },[currentUser,guestUser]);
 
-    const addSkill = async () => {
-      const {data} = await axios.post(addSkillAPI,{inputSkill,id:currentUser?._id});
-      if(data.status==false)
-        toast.error(data.message , toastOptions);
-      // console.log(data);
-      // setAllSkills(data.user.skills);
-      setAllSkills([{
-        skillName:inputSkill,
-        endorsements:[]
-      },...allSkills])
-      setInputSkill('');
-      setSkillAddModal(false);
-    }
-
     return (
       <> 
         {
@@ -202,7 +169,7 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
         <div className="profile-card">
         
             <div className="edit-btn">
-                 {editButton && <HiOutlinePencil className="icon" onClick={onEdit} />}
+                 {editButton && <HiOutlinePencil className="edit-icon" onClick={onEdit} />}
             </div>
           <div className="profile-info">
             <div>
@@ -239,101 +206,20 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
             {user.aboutMe}
           </p>}
 
+        {user && user.skills && <p className="skills">
+          <span className="skill-label">Skills</span>:&nbsp;
+          {user.skills}
+        </p>}
       </div>
-        {allPosts?.length>0 && <div className="all-posts">
-          <div className="username-posts">Posts</div>
-          {allPosts?.length>0 &&
-              <div key={allPosts[0].id}>
-                <hr style={{ backgroundColor: '#b7b7b7', marginTop: '30px' }} />
-                <PostsCard posts={allPosts[0]} currentUser={currentUser} allPosts={allPosts} setAllPosts={setAllPosts}/>
-              </div>
-          }
-          {allPosts?.length>1 && <button 
-            className="all-posts-button" 
-            onClick={()=>navigate(`/allPosts/${user?.username}/${user?._id}`)}
-          > 
-            Show all posts <FaArrowRight />
-          </button>}
-        </div>}
-
-        <div className="skills">
-          <div className="username-skills">
-            Skills
-            {editButton && <span className="icon-container-2">
-              <IoAddSharp 
-                className="icon" 
-                onClick={() => setSkillAddModal(true)}
-              />
-              <HiOutlinePencil 
-                className="icon" 
-                onClick={() => navigate(`/allSkills/${user?.username}/${user?._id}`)}
-              />
-            </span>}
-          </div>
-          {allSkills?.length>0 && (
-            <>
-            <hr style={{ backgroundColor: '#b7b7b7', marginTop: '20px' }} />
-            <Skill skill={allSkills[0]} userId={user?._id} currentUser={currentUser} />
-            </>
-          )}
-          {allSkills?.length>1 && (
-            <>
-            <hr style={{ backgroundColor: '#b7b7b7' }} />
-            <Skill skill={allSkills[1]} userId={user?._id} currentUser={currentUser} />
-            </>
-          )
-          }
-
-          {allSkills?.length>2 && <button 
-            className="all-skills-button" 
-            onClick={() => navigate(`/allSkills/${user?.username}/${user?._id}`)}
-          > 
-            Show all skills <FaArrowRight />
-          </button>}
-        </div>
-        {
-          editButton && skillAddModal && 
-          <SkillAddModal 
-          skillAddModal={skillAddModal} 
-          setSkillAddModal={setSkillAddModal}
-          inputSkill={inputSkill}
-          setInputSkill={setInputSkill}
-          addSkill={addSkill}
-          />
-        }
-        {/* <div className="skills">
-          <div className="username-skills">
-            Skills
-            {editButton && <span className="icon-container-2">
-              <IoAddSharp 
-                className="icon" 
-                onClick={() => setSkillAddModal(true)}
-              />
-              <HiOutlinePencil 
-                className="icon" 
-                onClick={() => navigate(`/allSkills/${user?.username}/${user?._id}`)}
-              />
-            </span>}
-          </div>
-                  
-          <button 
-            className="all-skills-button" 
-            onClick={() => navigate(`/allSkills/${user?.username}/${user?._id}`)}
-          > 
-            Show all skills <FaArrowRight />
-          </button>
-        </div>
-        {
-          editButton && skillAddModal && 
-          <SkillAddModal 
-          skillAddModal={skillAddModal} 
-          setSkillAddModal={setSkillAddModal}
-          inputSkill={inputSkill}
-          setInputSkill={setInputSkill}
-          addSkill={addSkill}
-          />
-        } */}
-        <ToastContainer/>
+            <div className="post-status-main">
+              {allPosts!==undefined && allPosts.map((posts) => {
+                return (
+                  <div key={posts.id}>
+                    <PostsCard posts={posts} currentUser={currentUser} allPosts={allPosts} setAllPosts={setAllPosts}/>
+                  </div>
+                );
+              })}
+            </div>
       </>
     );
 }
