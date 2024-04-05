@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import { AiOutlineLike ,AiOutlineComment } from "react-icons/ai";
 import like from "../../assets/like.png";
@@ -6,14 +6,12 @@ import celebration from "../../assets/celebration.png";
 import mind_blown from "../../assets/mind_blown.png";
 import link_copy from "../../assets/link_copy.png";
 import tick from "../../assets/tick.png";
-import { addReaction , removeReaction , addComments , deleteCommentAPI } from "../../utils/APIRoutes";
+import { addReaction , removeReaction , addComments } from "../../utils/APIRoutes";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import LikeModal from "../LikeModal";
-import PostTime from "../PostTime";
 import { FcLike } from "react-icons/fc";
-import { BsShareFill, BsTrash } from "react-icons/bs";
-import CommentDeleteModal from "../CommentDeleteModal";
+import { ToastContainer, toast } from "react-toastify";
+import CommentCard from "../CommentCard";
 
 export default function LikeButton({ currentUser, userId, postId , reactedUsers , setReactedUsers , comments , setComments , setLoginModal }) {
   const [reactionCount, setReactionCount] = useState(0);
@@ -23,9 +21,14 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [inputComment, setInputComment] = useState("");
   const [commentsToShow, setCommentsToShow] = useState(3);
-  const [commentDeleteModal,setCommentDeleteModal] = useState(false);
   const [copyLinkNotification, setCopyLinkNotification] = useState(false);
-  const navigate = useNavigate();
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
 
   const handleReaction = async(reactionType ,e ) => {
       e.stopPropagation();
@@ -72,34 +75,32 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
   };
 
   const addComment = async () => {
-    if(inputComment)
+    if(inputComment.trim())
     {
       const { data } =  await axios.post(addComments,{ postId,userId,inputComment,timeStamp : Date.now() });
       console.log(data);
-      let  newComments = [{
-                                  user:{ 
-                                  _id:currentUser?._id,
-                                  username:currentUser?.username,
-                                  avatarImage:currentUser?.avatarImage,
-                                  headline:currentUser?.headline,
-                                  },
-                                  comment : inputComment,
-                                  timeStamp : Date.now(),
-                              },...comments];
-      setComments(newComments);
+      // let  newComments = [{
+      //                             user:{ 
+      //                             _id:currentUser?._id,
+      //                             username:currentUser?.username,
+      //                             avatarImage:currentUser?.avatarImage,
+      //                             headline:currentUser?.headline,
+      //                             },
+      //                             comment : inputComment,
+      //                             timeStamp : Date.now(),
+      //                         },...comments];
+      setComments(data);
       setCommentsToShow(commentsToShow+1);
       setInputComment("");
+    }
+    else
+    {
+      toast.error("Write Something in Comment Box",toastOptions);
     }
   };
 
   const handleLoadMoreComments = () => {
     setCommentsToShow((prevCount) => prevCount + 10);
-  };
-
-  const deleteComment = async (commentId) => {
-    const {data} = await axios.delete(`${deleteCommentAPI}/${postId}/${commentId}`);
-    setComments(comments.filter(comment => comment._id!=commentId));
-    return data.message;
   };
 
   const copyToClipboard = () => {
@@ -111,6 +112,7 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
   }
 
   return (
+    <>
     <div className="like-container">
         <LikeModal modalOpen={modalOpen} setModalOpen={setModalOpen} reactedUsers={reactedUsers} />
       <div className="reactions-comments-container">
@@ -215,41 +217,13 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
             comments.slice(0, commentsToShow).map((comment) => {
               return (
                 <>
-                <div className="commenter-container">
-                  <img src={comment.user.avatarImage} alt="profile" className="commenter-image" onClick={() => navigate(`/profile/${comment.user.username}`)}/>
-                  <div className="all-comments">
-                    <p className="name" onClick={()=>navigate(`/profile/${comment.user.username}`)}>{comment.user.username}</p>
-                    <p className="headline" >
-                      <span onClick={() => navigate(`/profile/${comment.user.username}`)}>
-                        { 
-                          comment?.user?.headline?.length > 50
-                          ? `${comment.user.headline.substring(0, 50)}...`
-                          : comment?.user?.headline
-                        }
-                      </span>
-                    </p>
-                    <p className="comment">{comment.comment}</p>
-                    <p className="timestamp">
-                      <PostTime timestamp={comment.timeStamp} />
-                      {currentUser?.username==comment.user.username && <BsTrash 
-                        onClick={()=>setCommentDeleteModal(true)} 
-                        className="trash-button" 
-                        style={{ fontSize: '21px' }}
-                      />}
-                    </p>
-                    {commentDeleteModal&&
-                      <CommentDeleteModal
-                        commentDeleteModal={commentDeleteModal}
-                        setCommentDeleteModal={setCommentDeleteModal}
-                        commentId={comment._id}
-                        deleteComment={deleteComment}
-                      />
-                    }
-                    {/* 
-                    <p>•</p>
-                  */}
-                  </div>
-                </div>
+                  <CommentCard 
+                    comment={comment} 
+                    currentUser={currentUser}
+                    postId={postId}
+                    setComments={setComments}
+                    setCommentCount={setCommentCount}
+                  />
                 </>
               );
             })
@@ -266,5 +240,7 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
         <></>
       )}
     </div>
+    <ToastContainer/>
+    </>
   );
 }
