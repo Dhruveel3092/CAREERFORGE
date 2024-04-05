@@ -5,8 +5,8 @@ import FileUploadModal from "../FileUploadModal";
 import axios from "axios";
 import { HiOutlinePencil } from "react-icons/hi";
 import { getProfileData, getSignature , setAvatarImage , addSkillAPI, addEducationAPI, addExperienceAPI } from "../../utils/APIRoutes";
-import {addConnection} from "../../utils/APIRoutes"
-import {checkConnection} from "../../utils/APIRoutes"
+import {sendconnect} from "../../utils/APIRoutes"
+import {checkConnection,checkRequest} from "../../utils/APIRoutes"
 import {remConnection} from "../../utils/APIRoutes"
 import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -65,6 +65,7 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
       draggable: true,
       theme: "dark",
     };
+    const [pend,setpend]= useState(false);
    
     useEffect( () => {   
       const fetch = async() => {
@@ -72,6 +73,20 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
       const data=await axios.post(`${checkConnection}/${currentUser._id}`, { e:guestUser._id} );
        if(data.data==true){
         isconnected(true);
+      }
+    }
+    }
+
+      fetch();
+
+    },[user]);
+
+    useEffect( () => {   
+      const fetch = async() => {
+      if(guestUser!=undefined){
+      let data=await axios.post(`${checkRequest}/${currentUser.email}`, { e:guestUser.email} );
+       if(data.data==true){
+        setpend(true);
       }
     }
     }
@@ -93,9 +108,12 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
     }
 
     const addConn =async (e) => {
-      const data= await axios.post(`${addConnection}/${currentUser._id}`, { e } );
-      //console.log(data);
-   isconnected(true);
+      const data= await axios.post(`${sendconnect}`, { 
+       newUser: currentUser.email,
+       otheruser:e,
+       });
+     
+       setpend(true);
     }
 
     const uploadFile = async (type,timestamp,signature) => {
@@ -263,7 +281,7 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
               {user && user.headline && <p className="heading">{user.headline}</p>}
 
               {user && (editButton) ?  <></> : 
-              ((connected) ? <button class="connected-button"  onClick={() => remConn(guestUser._id)} >Connected</button> : <button class="connect-button" onClick={() => addConn(guestUser._id) }>Connect</button>) }
+              ((connected) ? <button class="connected-button"  onClick={() => remConn(guestUser._id)} >Connected</button> : ((pend)  ?  <button class="connected-button">request sent</button> : <button class="connect-button" onClick={() => addConn(guestUser.email) }>Connect</button>)) }
 
               {user && (user.city || user.country) && (
                 <p className="location">

@@ -2,16 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./ChatInput";
 import { v4 as uuidv4 } from "uuid";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import musicaudio from "./ting_iphone.mp3";
 
 export default function ChatContainer({ currentChat, socket ,reArrangeContact}) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const navigate = useNavigate();
-  // const audio=new Audio('ting_iphone.mp3');
+
   useEffect(() => {
     const fetchData = async () =>{
       const data = await JSON.parse(
@@ -37,16 +40,27 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
     getCurrentChat();
   }, [currentChat]);
 
+
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
-    socket.current.emit("send-msg", {
+    socket.emit("send-msg", {
+      cat:" from ",
+      naf:data.username,
       to: currentChat._id,
       from: data._id,
       msg,
     });
-
+    socket.emit("send-noti", {
+      cat:" from ",
+      naf:data.username,
+      to: currentChat._id,
+      from: data._id,
+      msg,
+    });
+    
+   
     reArrangeContact(currentChat._id);
     
     await axios.post(sendMessageRoute, {
@@ -58,20 +72,23 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
+   
   };
 
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-recieve", (data) => {
+    if (socket) {
+      socket.on("msg-recieve", (data) => {
         // if(data.from==currentChat._id)
         // {
         //   setArrivalMessage({ fromSelf: false, message: data.msg });
         // }
-        // audio.play();
+
+      const audio =new Audio(musicaudio);
+      audio.play().catch(console.warn);
         setArrivalMessage({ fromSelf: false, message: data.msg });
-        
         reArrangeContact(data.from);
       });
+      
     }
   }, []);
 

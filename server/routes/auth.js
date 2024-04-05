@@ -23,6 +23,9 @@ const {
   remConnection,
   getConnectedUsers,
   notConnectedUsers,
+  pending,
+  sendconnect,
+  checkRequest,
   getAllPostsByUserId,
   addSkill,
   getProfileData,
@@ -36,11 +39,20 @@ const {
   updateExperience
 } = require("../controllers/userController");
 
+const{
+  getnotif
+}=require('../controllers/notifController');
+ 
+
 
 const router = require("express").Router();
 
+router.post("/get",getnotif);
+router.post("/pending",pending);
 router.post("/login", login);
 router.post("/register", register);
+router.post('/sendconnect',sendconnect);
+router.post('/checkRequest/:id',checkRequest);
 router.post("/uploadPost/:id",uploadPost);
 router.post("/updateProfile/:id",updateProfile);
 router.post("/getSignature",getSignature);

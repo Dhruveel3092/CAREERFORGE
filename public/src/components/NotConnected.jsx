@@ -15,7 +15,7 @@ function NotConnected( ) {
     const navigate = useNavigate();
     
     const  getCurrentUser= async(e) => {
-      navigate(`/profile/${e}`);
+      navigate(`/profile/${e.username}`);
     }
     useEffect(() => {
       const fetchData = async () => {
@@ -39,7 +39,7 @@ function NotConnected( ) {
 
     useEffect(()=>{
       const fetch=async() => {
-      if(currentUser)
+      if(currentUser!=undefined)
       {
           const response = await axios.get(`${notConnectedUsers}/${currentUser._id}`);
           setUsers(response.data);      

@@ -13,6 +13,8 @@ import AllPosts from "./pages/AllPosts";
 import AllSkills from "./pages/AllSkills";
 import AllEducation from "./pages/AllEducation";
 import AllExperience from "./pages/AllExperience";
+import Pending from "./components/Pending";
+import CreateResume from "./components/CreateResume";
 
 export default function App() {
   return (
@@ -23,7 +25,9 @@ export default function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<SearchBar />} />  
         <Route path="/home" element={<Home />} />
+        <Route path="/createResume" element={<CreateResume />} />
         <Route path="/connections/connection" element={<ConnectionsComponent />} />
+        <Route path="/pending" element={<Pending />} />
         <Route path="/connections/addfriend" element={<NotConnected />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/posts/:postId" element={<Post />} />

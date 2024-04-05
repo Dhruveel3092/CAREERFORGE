@@ -9,10 +9,11 @@ import { Space, Spin } from "antd";
 import Topbar from "../components/Topbar/index";
 
 function ConnectionsComponent() {
-  const [currentUser,setCurrentUser]=useState([]);
+ 
     const [users,setUsers]=useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [currentUser,setCurrentUser]=useState([]);
 
     useEffect(() => {
       const fetchData = async () => {
@@ -34,7 +35,7 @@ function ConnectionsComponent() {
 
 
     const  getCurrentUser= async(e) => {
-      navigate(`/profile/${e}`);
+      navigate(`/profile/${e.username}`);
     }
     
     useEffect(()=>{
