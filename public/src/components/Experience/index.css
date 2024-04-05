@@ -1,0 +1,8 @@
+.dot{
+    padding-top: 5px;
+}
+
+.updateData:hover{
+    background-color: #dcdbdb;
+    border-radius: 5px;
+}

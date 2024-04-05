@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { type } = require("os");
 require("dotenv").config();
 
 const userSchema = new mongoose.Schema({
@@ -20,18 +21,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8,
   },
-  isAvatarImageSet: {
-    type: Boolean,
-    default: true,
-  },
   avatarImage: {
     type: String,
     default: `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/v1707052827/zupx5ylgkrtq33lzzkma.png`,
   },
-  // coverImage : {
-  //   type:String,
-  //   default:'./Screenshot 2023-12-29 at 5.14.59 PM.png',
-  // },
   aboutMe : {
     type:String,
   },
@@ -59,38 +52,37 @@ const userSchema = new mongoose.Schema({
   website : {
     type : String,
   },
-  skills : {
-    type : String,
-  },
+  skills : [{
+    skillName:{type: String,required:true},
+    endorsements:[{type:mongoose.Schema.Types.ObjectId, ref:'User' , required:true}],
+  }],
   college : {
     type : String,
   },
-  // education : [{
-  //     school:{type:String, required:true},
-  //     degree:{type:String, required:true},
-  //     startDate:{type:Date,required:true},
-  //     endDate:{type:Date,required:true},
-  //     grade:{type:String},
-  //     description:{type:String},
-  //     image:{type:String,default:'./Screenshot 2023-12-29 at 5.14.59 PM.png',}
-  // }],
-  // experience : [{
-  //     company:{type:String, required:true},
-  //     role:{type:String, required:true},
-  //     startDate:{type:Date,required:true},
-  //     endDate:{type:Date,required:true},
-  //     description:{type:String},
-  //     skills:[{type:String}],
-  //     location:{type:String},
-  //     image:{type:String,default:'./Screenshot 2023-12-29 at 5.14.59 PM.png',}
-  // }],
-  // languages : [{
-  //     type:String,
-  // }],
-  // skills : [{
-  //     skillsName:{type: String,required:true},
-  //     endorsements:[{type:mongoose.Schema.Types.ObjectId, ref:'User' , required:true}],
-  // }],
+  education : [{
+      school:{type:String, required:true},
+      degree:{type:String},
+      fieldOfStudy:{type:String},
+      startDate:{type:Date},
+      endDate:{type:Date},
+      grade:{type:String},
+      activitiesAndSocieties:{type:String},
+      description:{type:String},
+      image:{type:String,default:'/Users/dhruveelgajipara/Desktop/SNAPPY/public/src/assets/motilal_nehru_national_institute_of_technology_logo.jpeg'}
+  }],
+  experience : [{
+      company:{type:String, required:true},
+      role:{type:String, required:true},
+      startDate:{type:Date,required:true},
+      endDate:{type:Date},
+      industry:{type:String,required:true},
+      currently_working:{type:Boolean,default:false},
+      employment_type:{type:String},
+      description:{type:String},
+      location:{type:String},
+      location_type:{type:String},
+      image:{type:String,default:'/Users/dhruveelgajipara/Desktop/SNAPPY/public/src/assets/atlassian_logo.jpeg',}
+  }],
   });
 
 module.exports = mongoose.model("User", userSchema);
