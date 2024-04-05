@@ -1,0 +1,48 @@
+.education {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+  
+  .education-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .school-logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+  }
+  
+  .education-details h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .education-grade {
+    margin-bottom: 10px;
+  }
+  
+  .education-activities {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .education-trash-button{
+    margin-left: auto;
+    cursor: pointer;
+    color: #474646;
+    transition: color 0.1s ease;
+  }
+  
+  .education-information{
+    width: 565px;
+  }

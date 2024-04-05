@@ -1,0 +1,80 @@
+.education-form {
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .education-form input,
+  .education-form textarea,
+  .education-form button {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px; 
+    font-size: 20px;
+    height: 50px;
+  }
+  
+  .education-form .date-inputs {
+    display: flex;
+  }
+  
+  .education-form .date-inputs input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .education-form button {
+    background-color: #0073b1;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .education-form button:hover {
+    background-color: #005f91;
+  }
+
+  .date-inputs {
+    display: flex;
+    align-items: center;
+  }
+  
+  .date-inputs .ant-picker {
+    margin-right: 10px;
+  }
+  
+  .date-inputs .date-input-separator {
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  .education-form input:hover,
+  .education-form textarea:hover {
+  background-color: #f0f0f0; 
+  transition: background-color 0.3s ease;
+  }
+
+  .education-form .date-inputs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .education-form .date-inputs input {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .char-count{
+    width: 100%;
+    text-align: right;
+    margin-top: -20px;
+    margin-bottom: 18px;
+  }
+
+  .warning {
+    color: red;
+    font-size: 16px;
+    margin-top: -23px;
+    margin-bottom: 10px;
+  }
