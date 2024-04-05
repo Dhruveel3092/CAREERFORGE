@@ -12,9 +12,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import socket from "../socket";
 import notificationSound from '../ting_iphone.mp3';
-import {getnotifi} from "../../utils/APIRoutes"
-import NotificationBadge from "react-notification-badge";
-import { Effect } from "react-notification-badge";
+import {getnotifi} from "../../utils/APIRoutes";
 import {
   AiOutlineHome,
   AiOutlineUserSwitch,
@@ -232,13 +230,18 @@ export default function Topbar( { currentUser } ) {
           <span className="icon-name">Message</span>
         </div>
         <div className="icon-container">
-        <NotificationBadge
-               // onClick={fun}
-                count={ notificationCount}
-                effect={Effect.SCALE}
-              />
-       <AiOutlineBell size={30} className="react-icon"  onClick={fun}/>
-          <span className="icon-name">Notification</span>
+        <AiOutlineBell size={30} className="react-icon"  onClick={fun}/>
+        <span className="icon-name">Notification</span>
+        
+        {notificationCount > 0 && (
+         <div className="notification-badge">   
+              <span className="badge">    
+                  {notificationCount}
+              </span>    
+          </div>
+          )}
+      
+
         </div>
        
         <div className="icon-container">
