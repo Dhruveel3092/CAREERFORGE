@@ -112,7 +112,7 @@ export default function CreateResume() {
 <Container>
     <div class="body" >
         <section id = "about-sc" class = "">
-            <div class = "container">
+            <div class = "container resume-container">
                 <div class = "about-cnt">
                     <form action="" class="cv-form" id = "cv-form" >
                         <div class = "cv-form-blk">
@@ -205,12 +205,12 @@ export default function CreateResume() {
                                                     <span class="form-text"></span>
                                                 </div>
                                             </div>
-                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn"   onClick={(e) => {  deleteAccordion(acc.id);}}>-</button>
+                                            <button data-repeater-delete type = "button resume-btn" class = "repeater-remove-btn"   onClick={(e) => {  deleteAccordion(acc.id);}}>-</button>
                                         </div>
                                     </div>
                                 </div>
                                
-                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn" onClick={addAccordion}>+</button>
+                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn resume-btn" onClick={addAccordion}>+</button>
 
                             </div>
                                 )}
@@ -286,11 +286,11 @@ export default function CreateResume() {
                                                 </div>
                                             </div>
 
-                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn" onClick={(e) => {deleteAccordion2(acc.id);}}>-</button>
+                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn resume-btn" onClick={(e) => {deleteAccordion2(acc.id);}}>-</button>
                                         </div>
                                     </div>
                                 </div>
-                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn" onClick={addAccordion2}>+</button>
+                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn resume-btn" onClick={addAccordion2}>+</button>
                             </div>
                             )}
                         </div>
@@ -371,11 +371,11 @@ export default function CreateResume() {
                                                 </div>
                                             </div>
 
-                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn" onClick={(e) => {deleteAccordion3(acc.id);}}>-</button>
+                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn resume-btn" onClick={(e) => {deleteAccordion3(acc.id);}}>-</button>
                                         </div>
                                     </div>
                                 </div>
-                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn" onClick={addAccordion3}>+</button>
+                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn resume-btn" onClick={addAccordion3}>+</button>
                             </div>
                             )}
                         </div>
@@ -419,11 +419,11 @@ export default function CreateResume() {
                                                     <span class="form-text"></span>
                                                 </div>
                                             </div>
-                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn" onClick={(e) => {deleteAccordion4(acc.id);}}>-</button>
+                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn resume-btn" onClick={(e) => {deleteAccordion4(acc.id);}}>-</button>
                                         </div>
                                     </div>
                                 </div>
-                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn" onClick={addAccordion4}>+</button>
+                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn resume-btn" onClick={addAccordion4}>+</button>
                             </div>
                              )}
                         </div>
@@ -447,11 +447,11 @@ export default function CreateResume() {
                                                 <span class="form-text"></span>
                                             </div>
                                             
-                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn" onClick={(e) => {deleteAccordion5(acc.id);}}>-</button>
+                                            <button data-repeater-delete type = "button" class = "repeater-remove-btn resume-btn" onClick={(e) => {deleteAccordion5(acc.id);}}>-</button>
                                         </div>
                                     </div>
                                 </div>
-                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn" onClick={addAccordion5}>+</button>
+                                <button type = "button" data-repeater-create value = "Add" class = "repeater-add-btn resume-btn" onClick={addAccordion5}>+</button>
                             </div>
                               )}
                         </div>
@@ -462,12 +462,12 @@ export default function CreateResume() {
         </section>
         <div ref={componentRef} >
         <section id = "preview-sc"  class = "print_area">
-            <div class = "container">
+            <div class = "container resume-container">
                 <div class = "preview-cnt">
                     <div class = "preview-cnt-l text-white">
                         <div class = "preview-blk">
                             <div class = "preview-image">
-                                <img src ={values['image'] ||"https://as1.ftcdn.net/v2/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"} alt = "" id = "image_dsp"/> 
+                                <img className='resume-img' src ={values['image'] ||"https://as1.ftcdn.net/v2/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"} alt = "" id = "image_dsp"/> 
                             </div>
                             <div class = "preview-item preview-item-name">
                                 <span class = "preview-item-val" id = "fullname_dsp">{values['firstname']} {values['middlename']} {values['lastname']}</span>
@@ -581,7 +581,7 @@ export default function CreateResume() {
                             <div class = "projects-items preview-blk-lis" id = "projects_dsp">
                                  <p class="ach-tit">{acc.project_title}</p>
                                      <p class="disc">{acc.proj_description}</p>  
-                                    <a class="font-light text-xl" href={acc.project_link}>Visit</a>  
+                                    <a class="font-light text-xl resume-link" href={acc.project_link}>Visit</a>  
                                    
                             </div>
                             )}
@@ -592,8 +592,8 @@ export default function CreateResume() {
         </section>
         </div>
         <section class = "print-btn-sc">
-            <div class = "container">
-                <button type = "button" class = "btn btn-primary" onClick={printCV}>Print CV</button>
+            <div class = "container resume-container">
+                <button type = "button" class = "btn btn-primary resume-btn" onClick={printCV}>Print CV</button>
             </div>
         </section>
         </div>

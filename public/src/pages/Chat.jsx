@@ -103,7 +103,7 @@ export const ChatState = () => {
 
 
 const Container = styled.div`
-  height: 92.4vh;
+  height: 93vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
