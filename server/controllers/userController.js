@@ -389,38 +389,6 @@ module.exports.uploadPost = async (req,res,next) => {
   }
 }
 
-module.exports.getAllPost = async (req,res,next) => {
-  try{
-
-    const id = req.params.id;
-    const page = req.params.page || 1;
-    const pageSize = 10;
-    const skip = (page-1)*pageSize;
-
-    const posts=await Post.find().sort({ createdAt:-1 }).skip(skip).limit(pageSize).populate([
-      {
-        path: 'user',
-        model: 'User',
-        select: 'username avatarImage headline'
-      },
-      {
-        path: 'reactions.user',
-        model: 'User',
-        select: 'username avatarImage headline'
-      },
-      {
-        path: 'comments.user',
-        model: 'User',
-        select: 'username avatarImage headline'
-      }
-    ]);
-    return res.json(posts);
-  }catch( error )
-  {
-    next(error);
-  }
-}
-
 module.exports.getAllPostsByUserId = async (req,res,next) => {
   try{
     const userId = req.params.userId;
@@ -838,6 +806,38 @@ module.exports.addComment = async (req,res,next) => {
   }catch(error){
     console.log(error);
     return res.json(error);
+  }
+}
+
+module.exports.getMorePost = async (req,res,next) => {
+  try{
+
+    const id = req.params.id;
+    const page = req.params.page || 1;
+    const pageSize = 10;
+    const skip = (page-1)*pageSize;
+
+    const posts=await Post.find().sort({ createdAt:-1 }).skip(skip).limit(pageSize).populate([
+      {
+        path: 'user',
+        model: 'User',
+        select: 'username avatarImage headline'
+      },
+      {
+        path: 'reactions.user',
+        model: 'User',
+        select: 'username avatarImage headline'
+      },
+      {
+        path: 'comments.user',
+        model: 'User',
+        select: 'username avatarImage headline'
+      }
+    ]);
+    return res.json(posts);
+  }catch( error )
+  {
+    next(error);
   }
 }
 

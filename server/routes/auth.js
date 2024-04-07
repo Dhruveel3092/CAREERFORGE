@@ -6,7 +6,6 @@ const {
   SearchUsers,
   getUserById,
   uploadPost,
-  getAllPost,
   updateProfile,
   checkUsernameValidity,
   getUserByName,
@@ -36,7 +35,8 @@ const {
   deleteEducation,
   addExperience,
   deleteExperience,
-  updateExperience
+  updateExperience,
+  getMorePost
 } = require("../controllers/userController");
 
 const{
@@ -74,12 +74,12 @@ router.post("/addComment",addComment);
 router.get("/logout/:id", logOut);
 router.get("/SearchUsers/:id", SearchUsers);
 router.get("/getUserById/:id",getUserById);
-router.get("/getAllPost/:id/:page",getAllPost);
 router.get("/getProfileData/:id",getProfileData);
 router.get("/checkUsernameValidity/:username/:checkUsername",checkUsernameValidity);
 router.get("/getUserByName/:username",getUserByName);
 router.get("/getPostById/:postId",getPostById);
 router.get("/getAllPostsByUserId/:userId",getAllPostsByUserId);
+router.get("/getMorePost/:id/:page",getMorePost);
 router.delete("/deletePost/:postId/:userId",deletePost);
 router.delete("/deleteComment/:postId/:commentId",deleteComment);
 router.delete("/deleteSkill/:userId/:skillId",deleteSkill);
