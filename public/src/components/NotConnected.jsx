@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getAllUsers } from '../utils/APIRoutes';
 import ConnectedUser from "./ConnectedUser/Index";
 import styled from "styled-components";
-import {notConnectedUsers} from "../utils/APIRoutes"
+import {notConnectedUsers,host} from "../utils/APIRoutes"
 import { useNavigate } from "react-router-dom";
 import { Space, Spin } from "antd";
 import Topbar from "../components/Topbar/index";
@@ -19,19 +19,20 @@ function NotConnected( ) {
     }
     useEffect(() => {
       const fetchData = async () => {
-        if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-          navigate("/login");
-        } else {
-          setLoading(false);
-          setCurrentUser(
-            await JSON.parse(
-              localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-            )
-          );
-          
-        }
+        try {
+          const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+         if(response.data.user) setCurrentUser(response.data.user);
+         // console.log("current",currentUser)
+         // console.log("response",response.data.user)
+         setLoading(false);
+      } catch (error) {
+        console.log(error)
+        navigate("/login")
+      }
+  
       };
   
+      
       fetchData();
     }, []);
 

@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import { sendMessageRoute, recieveMessageRoute ,host } from "../utils/APIRoutes";
 import musicaudio from "./ting_iphone.mp3";
 
 export default function ChatContainer({ currentChat, socket ,reArrangeContact}) {
@@ -17,11 +17,10 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
 
   useEffect(() => {
     const fetchData = async () =>{
-      const data = await JSON.parse(
-        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-      );
+      const dat = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+
       const response = await axios.post(recieveMessageRoute, {
-        from: data._id,
+        from: dat.data.user._id,
         to: currentChat._id,
       });
       setMessages(response.data);
@@ -31,10 +30,10 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
 
   useEffect(() => {
     const getCurrentChat = async () => {
+     
       if (currentChat) {
-        await JSON.parse(
-          localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-        )._id;
+        const dat = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+        dat.data.user._id;
       }
     };
     getCurrentChat();
@@ -42,9 +41,8 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
 
 
   const handleSendMsg = async (msg) => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
+    const dat = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+    const data =dat.data.user;
     socket.emit("send-msg", {
       cat:" from ",
       naf:data.username,

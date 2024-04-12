@@ -12,6 +12,7 @@ const allowedOrigin=[
     'https://www.google.com',
     'careersync.free.nf',
     'http://careersync.free.nf',
-    'http://socketrmn1.epizy.com'
+    'http://socketrmn1.epizy.com',
+    'http://localhost:3000/api/auth/google/callback',
 ]
 module.exports=allowedOrigin

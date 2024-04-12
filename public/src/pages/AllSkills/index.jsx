@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import "./index.css";
 import Skill from "../../components/Skill";
+import { host } from "../../utils/APIRoutes";
 import SkillAddModal from "../../components/SkillAddModal";
 
 export default function AllSkills() {
@@ -27,17 +28,19 @@ export default function AllSkills() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        navigate("/login");
-      } else {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-          )
-        );
-      }
+      try {
+        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+       if(response.data.user) setCurrentUser(response.data.user);
+       // console.log("current",currentUser)
+       // console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+
     };
 
+    
     fetchData();
   }, []);
 

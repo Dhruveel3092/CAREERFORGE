@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from "react";
 import { useParams , useNavigate } from "react-router-dom";
-import { getAllPostsByUserId } from "../../utils/APIRoutes";
+import { getAllPostsByUserId ,host } from "../../utils/APIRoutes";
 import axios from "axios";
 import PostsCard from "../../components/PostsCard";
 import Topbar from "../../components/Topbar";
@@ -16,17 +16,19 @@ export default function AllPosts() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        navigate("/login");
-      } else {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-          )
-        );
-      }
+      try {
+        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+       if(response.data.user) setCurrentUser(response.data.user);
+       // console.log("current",currentUser)
+       // console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+
     };
 
+    
     fetchData();
   }, []);
 

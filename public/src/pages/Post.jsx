@@ -6,6 +6,7 @@ import PostsCard from "../components/PostsCard";
 import { getPostById } from "../utils/APIRoutes";
 import styled,{ createGlobalStyle } from "styled-components";
 import GuestTopbar from "../components/Guest Topbar";
+import {host} from "../utils/APIRoutes"
 
 const GlobalStyle = createGlobalStyle`
   body, html {
@@ -22,18 +23,19 @@ export default function Post() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        setCurrentUser(
-            await JSON.parse(
-              localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-            )
-          );
-      }
-    };
+      try {
+        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+       if(response.data.user) setCurrentUser(response.data.user);
+      //  console.log("current",currentUser)
+      //  console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
 
+    };  
     fetchData();
   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       const {data} = await axios.get(`${getPostById}/${postId}`);

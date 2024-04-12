@@ -10,7 +10,7 @@ const notifiSchema = new Schema({
     message: {
         type: String,
         required: true
-    },
+    }, 
     email: {
         type: String,
      

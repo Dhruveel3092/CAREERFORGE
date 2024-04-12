@@ -5,7 +5,7 @@ import ProfileComponent from "../components/ProfileComponent";
 import axios from "axios";
 import { getUserByName } from "../utils/APIRoutes";
 import styled, { createGlobalStyle } from "styled-components";
-
+import {host} from "../utils/APIRoutes"
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
@@ -24,17 +24,19 @@ export default function ProfilePage() {
   const navigate=useNavigate();
   useEffect(() => {
     const fetchData = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        navigate("/login");
-      } else {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-          )
-        );
-      }
+      try {
+        const response = await axios.get(`${host}/login/sucess`,{withCredentials: true} );
+       if(response.data.user) setCurrentUser(response.data.user);
+       // console.log("current",currentUser)
+       // console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+
     };
 
+    
     fetchData();
   }, []);
 

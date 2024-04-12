@@ -6,6 +6,7 @@ const Connection = connectSchema;
 const { connections } = require("mongoose");
 const Notification = require('../models/notifiSchema');
 const mongoose = require("mongoose");
+const jwt=require("jsonwebtoken")
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
@@ -27,7 +28,13 @@ module.exports.login = async (req, res, next) => {
     if (!isPasswordValid)
       return res.json({ msg: "Incorrect Username or Password", status: false });
     delete user.password;
+   const token = await user.generateAuthToken();
+    res.cookie("jwt",token,{
+    expires:new Date(Date.now() + 120000),
+    httpOnly:true,
+   });
     return res.json({ status: true, user });
+  
   } catch (ex) {
     next(ex);
   }
@@ -48,7 +55,16 @@ module.exports.register = async (req, res, next) => {
       username,
       password: hashedPassword,
     });
+
     delete user.password;
+    const token = await user.generateAuthToken();
+
+  res.cookie("jwt",token,{
+    expires:new Date(Date.now() + 120000),
+    httpOnly:true,
+   });
+   
+   
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);
@@ -318,10 +334,18 @@ module.exports.SearchUsers = async (req, res, next) => {
   }
 };
 
-module.exports.logOut = (req, res, next) => {
+module.exports.logOut = async (req, res, next) => {
   try {
     if (!req.params.id) return res.json({ msg: "User id is required " });
     onlineUsers.delete(req.params.id);
+    const user = await User.findById(req.params.id);
+    const tokend=req.cookies;
+   console.log(tokend,"jkjk")
+    user.tokens=user.tokens.filter((elem)=>{
+               elem.token !== tokend;
+          })
+  
+    await user.save()
     return res.status(200).send();
   } catch (ex) {
     next(ex);

@@ -5,7 +5,7 @@ import axios from 'axios';
 import styled from "styled-components";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {getpending,addConnection} from '../utils/APIRoutes';
+import {getpending,addConnection,host} from '../utils/APIRoutes';
 import { useNavigate } from "react-router-dom";
 import Topbar from './Topbar';
 import ConnectedUser from "./ConnectedUser/Index";
@@ -18,18 +18,19 @@ const Pending = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        navigate("/login");
-      } else {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-          )
-        );
-        
-      }
+      try {
+        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+       if(response.data.user) setCurrentUser(response.data.user);
+       // console.log("current",currentUser)
+       // console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+
     };
 
+    
     fetchData();
   }, []);
 

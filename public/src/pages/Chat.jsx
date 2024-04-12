@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import styled from "styled-components";
-import { allUsersRoute, host ,getUserById} from "../utils/APIRoutes";
+import { host,allUsersRoute ,getUserById} from "../utils/APIRoutes";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
@@ -22,16 +22,19 @@ export default function Chat() {
 
   useEffect( () => {
     const fetchData = async () => {
-      if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        navigate("/login");
-      } else {
-        setCurrentUser(
-          await JSON.parse(
-            localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-          )
-        );
-      }
+      try {
+        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+       if(response.data.user) setCurrentUser(response.data.user);
+        // console.log("current",currentUser)
+        // console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
     }
+
+    };
+
+    
     fetchData();
   }, []);
 

@@ -4,6 +4,8 @@ import './Resume.css';
 import  {useReactToPrint}  from "react-to-print";
 import styled from "styled-components";
 import Topbar from "../components/Topbar/index";
+import axios from 'axios';
+import { host} from "../utils/APIRoutes";
 import { Container } from '@mui/system';
 import { Dialog, DialogTitle, DialogContent, Button } from '@mui/material';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,7 +31,22 @@ export default function CreateResume() {
       const [Items5, setItems5] = React.useState([
         { id: 1, skill:"" },
       ]);
-
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+           if(response.data.user) setCurrentUser(response.data.user);
+           // console.log("current",currentUser)
+           // console.log("response",response.data.user)
+        } catch (error) {
+          console.log(error)
+          navigate("/login")
+        }
+    
+        }
+        
+        fetchData();
+      }, []);
       const addAccordion = () => {
         let newAccordion = { id: Date.now(), achieve_title:"",achieve_description:"" };
         setItems([...Items, newAccordion]);
@@ -82,23 +99,8 @@ export default function CreateResume() {
       });
 
     const navigate=useNavigate();
-    useEffect(() => {
-        const fetchData = async () => {
-          if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-            navigate("/login");
-          } else {
-            setCurrentUser(
-              await JSON.parse(
-                localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-              )
-            );
-          }
-    
-        };
-      
-        
-        fetchData();
-      }, []);
+
+  
 
         const handleChange=(event)=>{
                 setValues({ ...values, [event.target.name]: event.target.value });

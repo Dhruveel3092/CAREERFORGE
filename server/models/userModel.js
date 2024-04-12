@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { type } = require("os");
+const jwt=require('jsonwebtoken');
 require("dotenv").config();
 
 const userSchema = new mongoose.Schema({
@@ -18,7 +19,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    default: "v1234",
     min: 8,
   },
   avatarImage: {
@@ -83,6 +84,24 @@ const userSchema = new mongoose.Schema({
       location_type:{type:String},
       image:{type:String,default:'/Users/dhruveelgajipara/Desktop/SNAPPY/public/src/assets/atlassian_logo.jpeg',}
   }],
+  
+  tokens:[{
+    token:{ 
+        type:String
+    }
+
+}],
   });
 
+  userSchema.methods.generateAuthToken= async function(){
+    try {
+        const toke=await jwt.sign({email:this.email},process.env.Secret_Key);
+        this.tokens=this.tokens.concat({token:toke});
+        await this.save();
+        return toke;
+    } catch (error) {
+        res.send("the error part"+error);
+
+    }
+}
 module.exports = mongoose.model("User", userSchema);

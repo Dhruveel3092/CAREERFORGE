@@ -6,6 +6,8 @@ import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
+import { FaGoogle } from "react-icons/fa";
+import {host} from "../utils/APIRoutes"
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,11 +19,11 @@ export default function Login() {
     draggable: true,
     theme: "dark",
   };
-  useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-      navigate("/home");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+  //     navigate("/home");
+  //   }
+  // }, []);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -39,6 +41,12 @@ export default function Login() {
     return true;
   };
 
+  const simulateGoogleSignIn= async ()=>{
+   
+     window.open("http://localhost:8080/auth/google","_self");
+
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
@@ -46,16 +54,11 @@ export default function Login() {
       const { data } = await axios.post(loginRoute, {
         username,
         password,
-      });
+      },{withCredentials: true});
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
-        localStorage.setItem(
-          process.env.REACT_APP_LOCALHOST_KEY,
-          JSON.stringify(data.user)
-        );
-
         navigate("/home");
       }
     }
@@ -83,10 +86,16 @@ export default function Login() {
             onChange={(e) => handleChange(e)}
           />
           <button type="submit">Log In</button>
+          <div class="separator">or</div>
+                <div class="google">
+                <FaGoogle size={30}/>
+                
+                </div>
           <span>
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>
+        <button class="google-signin-btn" onClick={simulateGoogleSignIn}>Sign in with Google</button>
       </FormContainer>
       <ToastContainer />
     </>
@@ -115,6 +124,54 @@ const FormContainer = styled.div`
       text-transform: uppercase;
     }
   }
+  
+.separator {
+  text-align: center;
+  margin: 2px 0;
+  color: white;
+  position: relative;
+  font-weight: 600;
+}
+.separator::before, .separator::after {
+  content: "";
+  display: inline-block;
+  height: 1px;
+  background-color:rgb(169, 209, 249);
+  width: 39%;
+}
+.separator::before {
+  margin-right: 10px;
+}
+.separator::after {
+  margin-left: 10px;
+}
+.google-signin-btn {
+  color: white;
+  padding: 10px 0px 10px 0px;
+  border: none;
+  border-radius: 3px;
+  font-weight: 500;
+  background-color: transparent;
+  margin-right: 0%;
+}
+.google-signin-btn:hover{
+  background-color: rgb(10, 19, 139);
+}
+.google:hover{
+  background-color: rgb(10, 19, 139);
+}
+.google{
+  display: flex;
+  gap: 1.5rem;
+  border-radius: 15px;
+  padding: 10px;
+  width: 80%;
+  border: 1px solid rgb(80, 80, 251);
+  background-color: rgb(10, 19, 139);
+  background-color: rgb(80, 80, 251);
+  margin: auto;
+  margin-bottom:10px;
+}
 
   form {
     display: flex;
