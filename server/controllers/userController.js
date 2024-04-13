@@ -30,8 +30,8 @@ module.exports.login = async (req, res, next) => {
     delete user.password;
    const token = await user.generateAuthToken();
     res.cookie("jwt",token,{
-    expires:new Date(Date.now() + 120000),
-    httpOnly:true,
+    expires:new Date(Date.now() + 1200000),
+    httpOnly:false,
    });
     return res.json({ status: true, user });
   
@@ -60,8 +60,8 @@ module.exports.register = async (req, res, next) => {
     const token = await user.generateAuthToken();
 
   res.cookie("jwt",token,{
-    expires:new Date(Date.now() + 120000),
-    httpOnly:true,
+    expires:new Date(Date.now() + 1200000),
+    httpOnly:false,
    });
    
    
@@ -339,12 +339,11 @@ module.exports.logOut = async (req, res, next) => {
     if (!req.params.id) return res.json({ msg: "User id is required " });
     onlineUsers.delete(req.params.id);
     const user = await User.findById(req.params.id);
-    const tokend=req.cookies;
-   console.log(tokend,"jkjk")
+    const tokend=req.user;
+
     user.tokens=user.tokens.filter((elem)=>{
                elem.token !== tokend;
           })
-  
     await user.save()
     return res.status(200).send();
   } catch (ex) {

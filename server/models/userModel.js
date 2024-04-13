@@ -95,9 +95,10 @@ const userSchema = new mongoose.Schema({
 
   userSchema.methods.generateAuthToken= async function(){
     try {
-        const toke=await jwt.sign({email:this.email},process.env.Secret_Key);
+        const toke= jwt.sign({email:this.email},process.env.Secret_Key);
         this.tokens=this.tokens.concat({token:toke});
         await this.save();
+        console.log(this.tokens,"I am in usermodel");
         return toke;
     } catch (error) {
         res.send("the error part"+error);

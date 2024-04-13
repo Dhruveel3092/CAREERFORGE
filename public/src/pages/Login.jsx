@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 import { FaGoogle } from "react-icons/fa";
 import {host} from "../utils/APIRoutes"
+import  Cookie from 'js-cookie';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -19,11 +20,22 @@ export default function Login() {
     draggable: true,
     theme: "dark",
   };
-  // useEffect(() => {
-  //   if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-  //     navigate("/home");
-  //   }
-  // }, []);
+
+
+  useEffect(() => {
+    const ch = async () => {
+      let h=Cookie.get('jwt');
+      
+      
+   const response=await axios.get(`http://localhost:8080/check/${h}`,{withCredentials:true});
+   console.log(response.data,"login")
+   if(response.data.chk==true){
+  
+    navigate("/home");
+   }
+  }
+  ch();
+  }, []);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -67,6 +79,7 @@ export default function Login() {
   return (
     <>
       <FormContainer>
+
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
@@ -89,13 +102,13 @@ export default function Login() {
           <div class="separator">or</div>
                 <div class="google">
                 <FaGoogle size={30}/>
-                
+                <button type="button" class="google-signin-btn" onClick={simulateGoogleSignIn}>Sign in with Google</button>
                 </div>
           <span>
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>
-        <button class="google-signin-btn" onClick={simulateGoogleSignIn}>Sign in with Google</button>
+      
       </FormContainer>
       <ToastContainer />
     </>

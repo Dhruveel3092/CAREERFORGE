@@ -60,7 +60,7 @@ passport.use(
   async (accessToken,refreshToken,profile,done)=>{
       try {
           let user = await User.findOne({email:profile.emails[0].value});
-          console.log("jii")
+         // console.log("jii")
           if(!user){
               user = new User({
                   username:profile.displayName,
@@ -95,15 +95,15 @@ app.get("/auth/google/callback",passport.authenticate("google",{
     failureRedirect:"http://localhost:3000/login"
 }),
 async (req, res) => {
-   console.log("hii")
+ //  console.log("hii")
   const user=req.user;
   //console.log(user)
   const token = await user.generateAuthToken();
 
-  console.log(token)
+ // console.log(token)
   res.cookie("jwt",token,{
-    expires:new Date(Date.now() + 120000),
-    httpOnly:true,
+    expires:new Date(Date.now() + 1200000),
+    httpOnly:false,
    });
   res.redirect('http://localhost:3000/home')
 })
@@ -111,21 +111,44 @@ async (req, res) => {
 
 app.get("/login/sucess",async(req,res)=>{
   try {
-    console.log("i am here");
+    //console.log("i am here");
     
     const token=req.cookies.jwt;
     const verifyuser= jwt.verify(token,process.env.Secret_Key);
-    
     const user= await User.findOne({email:verifyuser.email});
-    
-    user.tokens=[{tokenn :token}];
-  
-    console.log(user.tokens,"fun");
-    await user.save();
     req.user=user;
   
-    console.log(req,"lkklk");
+    //console.log(req,"lkklk");
     res.status(200).json({message:"user Login",user:req.user})
+} catch (error) {
+  console.log(error)
+    res.status(401).send(error);
+}
+})
+
+app.get("/check/:id",async(req,res)=>{
+  try {
+ 
+    const id=req.params.id;
+    //const token=id;
+    //console.log(token,"toke");
+    if(id){
+    const verifyuser= jwt.verify(id,process.env.Secret_Key);
+    
+    const user= await User.findOne({email:verifyuser.email});
+    let k=false;
+   // console.log(user,"user");
+   user.tokens.map((tok)=>{ 
+    console.log(tok);     
+  if(tok!=undefined &&  tok.token==id) k=true;
+  })
+
+    
+   // console.log(k,"lkklk");
+  res.json({chk:k,user:req.user})
+
+  }
+
 } catch (error) {
   console.log(error)
     res.status(401).send(error);

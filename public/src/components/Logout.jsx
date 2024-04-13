@@ -2,16 +2,19 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { BiPowerOff } from "react-icons/bi";
 import styled from "styled-components";
+import  Cookie from 'js-cookie';
 import axios from "axios";
 import { logoutRoute,host } from "../utils/APIRoutes";
 export default function Logout() {
   const navigate = useNavigate();
-
+  
   const handleClick = async () => {
+   
     const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
     const data = await axios.get(`${logoutRoute}/${response.data.user._id}`);
     if (data.status === 200) {
-    //  localStorage.clear();
+   
+   // Cookie.remove('jwt', { path: '/' });
       navigate("/login");
     }
   };
