@@ -15,6 +15,7 @@ import AllEducation from "./pages/AllEducation";
 import AllExperience from "./pages/AllExperience";
 import Pending from "./components/Pending";
 import CreateResume from "./components/CreateResume";
+import Jobs from "./pages/Jobs";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/allSkills/:username/:userId" element={<AllSkills />}/>
         <Route path="/allEducation/:username/:userId" element={<AllEducation />}/>
         <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>
+        <Route path="/job-portal" element={<Jobs />}/>
       </Routes>
     </BrowserRouter>
   );

@@ -20,7 +20,7 @@ export default function Post() {
   const { postId } = useParams();
   const [currentUser,setCurrentUser] = useState(undefined);
   const [posts,setPosts] = useState(undefined);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {

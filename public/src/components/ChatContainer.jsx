@@ -33,7 +33,6 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
      
       if (currentChat) {
         const dat = await axios.get(`${host}/login/sucess`, { withCredentials: true });
-        dat.data.user._id;
       }
     };
     getCurrentChat();
