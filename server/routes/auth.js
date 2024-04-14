@@ -36,7 +36,10 @@ const {
   addExperience,
   deleteExperience,
   updateExperience,
-  getMorePost
+  getMorePost,
+  forgotpost,
+  resetpass,
+  changepass,
 } = require("../controllers/userController");
 
 const{
@@ -47,6 +50,9 @@ const{
 
 const router = require("express").Router();
 
+router.post('/forgot-password',forgotpost);
+router.post('/reset-password',changepass);
+router.get('/reset-password/:id/:token',resetpass);
 router.post("/get",getnotif);
 router.post("/pending",pending);
 router.post("/login", login);

@@ -14,7 +14,9 @@ import AllSkills from "./pages/AllSkills";
 import AllEducation from "./pages/AllEducation";
 import AllExperience from "./pages/AllExperience";
 import Pending from "./components/Pending";
+import Forgotpass from "./components/Forgotpass";
 import CreateResume from "./components/CreateResume";
+import Changepass from "./components/Changepass";
 
 export default function App() {
   return (
@@ -26,6 +28,8 @@ export default function App() {
         <Route path="/search" element={<SearchBar />} />  
         <Route path="/home" element={<Home />} />
         <Route path="/createResume" element={<CreateResume />} />
+        <Route path="/forgotpassword" element={<Forgotpass />} />
+        <Route path="/changepass/:id" element={<Changepass />} />
         <Route path="/connections/connection" element={<ConnectionsComponent />} />
         <Route path="/pending" element={<Pending />} />
         <Route path="/connections/addfriend" element={<NotConnected />} />

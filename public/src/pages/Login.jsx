@@ -92,14 +92,19 @@ export default function Login() {
             onChange={(e) => handleChange(e)}
             min="3"
           />
-          <input
+         
+             <div class="input-container" id="password">
+                     <input
             type="password"
             placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
+            
           />
+                    <Link to="/forgotpassword">Forgot?</Link>     
+                </div>  
           <button type="submit">Log In</button>
-          <div class="separator">or</div>
+          <div class="separator" id="password">or</div>
                 <div class="google">
                 <FaGoogle size={30}/>
                 <button type="button" class="google-signin-btn" onClick={simulateGoogleSignIn}>Sign in with Google</button>
@@ -138,6 +143,33 @@ const FormContainer = styled.div`
     }
   }
   
+  .input-container {
+    padding-left: 10px;
+    margin: 0px;
+    border: solid 2px white;
+    border-radius: 0.4rem;
+    background-color: white;
+}
+#password{
+    display: flex;
+}
+#password > input{
+    flex: 1;
+}
+#password > a{
+    text-decoration: none;
+    margin-top: 7px;
+    padding-top: 3px;
+    padding-right: 15px;
+    padding-left: 8px;
+    color: rgb(114, 113, 113);
+    font-size: 14px;
+    border-left: 0.1px solid rgb(101, 100, 100);
+    height:25px;
+}
+#password > i{
+    padding-top:12px;
+}
 .separator {
   text-align: center;
   margin: 2px 0;
@@ -195,11 +227,11 @@ const FormContainer = styled.div`
     padding: 5rem;
   }
   input {
-    background-color: transparent;
+    background-color: white;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: none;
     border-radius: 0.4rem;
-    color: white;
+    color: black;
     width: 100%;
     font-size: 1rem;
     &:focus {

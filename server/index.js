@@ -114,12 +114,14 @@ app.get("/login/sucess",async(req,res)=>{
     //console.log("i am here");
     
     const token=req.cookies.jwt;
+    if(token){
     const verifyuser= jwt.verify(token,process.env.Secret_Key);
     const user= await User.findOne({email:verifyuser.email});
     req.user=user;
   
     //console.log(req,"lkklk");
     res.status(200).json({message:"user Login",user:req.user})
+    }
 } catch (error) {
   console.log(error)
     res.status(401).send(error);

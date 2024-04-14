@@ -6,7 +6,8 @@ const Connection = connectSchema;
 const { connections } = require("mongoose");
 const Notification = require('../models/notifiSchema');
 const mongoose = require("mongoose");
-const jwt=require("jsonwebtoken")
+const jwt=require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
@@ -70,6 +71,95 @@ module.exports.register = async (req, res, next) => {
     next(ex);
   }
 };
+
+module.exports.forgotpost= async (req,res)=>{
+       
+  try {
+      const {email}=req.body;
+      const em=email;
+      const user=await User.findOne({email:em});
+      if(user){
+        
+      const secret=user.password+process.env.Secret_Key;
+      console.log(secret);
+      const toke=await jwt.sign({email:user.email},secret,{expiresIn: '15m'});
+      const link=`http://localhost:8080/api/auth/reset-password/${user._id}/${toke}`;
+
+      var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          port:465,
+          secure:true,
+          auth: {
+            user: 'krishnamorker2021@gmail.com',
+            pass: 'tahd pher pfkz ehla',
+            tls:{
+              rejectUnauthorized:true
+             }
+          }
+        });
+        
+        var mailOptions = {
+          from: 'SNAPPY',
+          to: user.email,
+          subject: 'Reset Password',
+          text: `Thank you for Joining our platform and this is your reset Password Link:${link}`,
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+  
+      console.log(link)
+      return res.json({ sta: true, user });
+      }else{
+        return res.json({ sta: false, user });
+      }
+
+  } catch (error) {
+      res.status(401).send(error)
+  }
+  
+}
+
+
+
+module.exports.resetpass=async (req,res)=>{
+  try {
+      const {id,token} =req.params;
+       const user=await User.findOne({_id:id});
+       const secret=user.password+process.env.Secret_Key;
+      const payload=jwt.verify(token,secret);
+      res.redirect(`http://localhost:3000/changepass/${id}`);
+
+  } catch (error) {
+      res.send(error.message);
+  }
+
+}
+module.exports.changepass=async (req,res,next)=>{
+    
+  try {
+    const {password1,params}=req.body;
+   
+    console.log(password1,"pa");
+   // console.log(params.id,"pa");
+    const user=await User.findOne({_id:params.id});
+    
+        const hash= await bcrypt.hash(password1,10);
+         user.password=hash;
+        const r=await user.save();
+        console.log(password1);
+        return res.json({ sta: true, user });
+  } catch (error) {
+    
+    res.status(401).send(error)
+  }
+
+}
 
 module.exports.getAllUsers = async (req, res, next) => {
   try {
