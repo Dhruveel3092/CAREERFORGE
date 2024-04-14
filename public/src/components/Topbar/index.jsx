@@ -6,7 +6,7 @@ import Logout from "../Logout";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SearchModal from "../Search_Modal";
-import { SearchUsers } from '../../utils/APIRoutes';
+import { SearchUsers,setnotifi } from '../../utils/APIRoutes';
 import { Link, useLocation } from "react-router-dom";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -37,6 +37,7 @@ export default function Topbar( { currentUser } ) {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
   const [sh,setsh]=useState(false);
+  const [h,seth]=useState();
   const [notificationCount,setnotificationCount]=useState(0);
 
 
@@ -127,7 +128,6 @@ export default function Topbar( { currentUser } ) {
   // }
   // fetch();
   // },);
-  
   useEffect(() => {
     const fetchNotifications = async () => {
       
@@ -137,8 +137,9 @@ export default function Topbar( { currentUser } ) {
         const response = await axios.post(getnotifi, {
           userid: currentUser._id, // Replace with the actual user ID or get it dynamically
         });
-       // console.log(response.data.notifications);
+        console.log(response.data.notifications.length,"kll");
         setNotifications(response.data.notifications);
+        setnotificationCount(response.data.notifications.length)
       } catch (error) {
         console.error('Error fetching notifications:', error);
       } 
@@ -151,10 +152,11 @@ export default function Topbar( { currentUser } ) {
 
 
 
-  function fun(){
-  
-    
+  const fun = async ()=>{
     setsh((old)=>(!old));
+    const response = await axios.post(setnotifi, {
+      userid: currentUser._id, // Replace with the actual user ID or get it dynamically
+    });
     localStorage.removeItem('notificationCount');
     setnotificationCount(0);
    

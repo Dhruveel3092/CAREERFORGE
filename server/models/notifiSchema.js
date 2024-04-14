@@ -13,8 +13,6 @@ const notifiSchema = new Schema({
     }, 
     email: {
         type: String,
-     
-   
     },
     timestamp: {
         type: Date,
@@ -25,7 +23,11 @@ const notifiSchema = new Schema({
     },
     category:{
         type:String
-    }
+    },
+    seen: {
+        type: Boolean,
+        default: false
+      },
    
 });
 

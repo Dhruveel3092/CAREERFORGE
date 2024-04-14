@@ -219,14 +219,14 @@ io.on("connection", (socket) => {
   socket.on("send-noti", async(data)=>{
 try{
   const sendUserSocket = onlineUsers.get(data.to);
-  if (sendUserSocket) {
+ 
     const fg=data.msg + data.cat + data.naf;
      console.log(fg);
     const newNotification = new Notification({ 'user': data.to, 'message': fg });
     await newNotification.save();
     
 socket.to(sendUserSocket).emit("newNotification",newNotification);
-  }
+  
 }catch(error){
   console.error('Error saving notification:', error.message);
 }

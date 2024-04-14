@@ -43,7 +43,8 @@ const {
 } = require("../controllers/userController");
 
 const{
-  getnotif
+  getnotif,
+  setnotif,
 }=require('../controllers/notifController');
  
 
@@ -54,6 +55,7 @@ router.post('/forgot-password',forgotpost);
 router.post('/reset-password',changepass);
 router.get('/reset-password/:id/:token',resetpass);
 router.post("/get",getnotif);
+router.post("/set",setnotif);
 router.post("/pending",pending);
 router.post("/login", login);
 router.post("/register", register);

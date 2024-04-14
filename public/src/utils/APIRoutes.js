@@ -40,4 +40,5 @@ export const deleteEducationAPI = `${host}/api/auth/deleteEducation`;
 export const addExperienceAPI = `${host}/api/auth/addExperience`;
 export const deleteExperienceAPI = `${host}/api/auth/deleteExperience`;
 export const updateExperienceAPI = `${host}/api/auth/updateExperience`;
+export const setnotifi=`${host}/api/auth/set`;
 export const getMorePost=`${host}/api/auth/getMorePost`;
