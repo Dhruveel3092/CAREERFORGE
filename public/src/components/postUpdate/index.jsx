@@ -8,10 +8,12 @@ import job from "../../assets/job.png";
 import article from "../../assets/article.png";
 import { sendPostRoute,getSignature } from "../../utils/APIRoutes";
 import PostsCard from "../PostsCard";
+import ArticleModal from "../Artical_Modal";
 
 export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const [articleModal, setArticleModal] = useState(false);
   const [status, setStatus] = useState("");
   const [currentUserImage,setCurrentUserImage] = useState(undefined);
   const [files,setFiles] = useState([]);
@@ -97,6 +99,20 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
     await setFiles([]);
   };
 
+  const sendStatusForArticle = async (event) => {
+    await setArticleModal(false);
+    var filesUrl = [];
+    const response= await axios.post(`${sendPostRoute}/${currentUser._id}`,{
+      status,
+      filesUrl,
+    });
+  //   setAllPosts((prevPosts) => [
+  //     response.data.post ,
+  //    ...prevPosts,
+  //  ]);
+    await setStatus("");
+  };
+
   const openModal = () => {
     setModalOpen(true);
   };
@@ -129,14 +145,24 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
         />
         }
 
+        {articleModal && 
+          <ArticleModal
+          articleModal={articleModal}
+          setArticleModal={setArticleModal}
+          status={status}
+          setStatus={setStatus}
+          sendStatusForArticle={sendStatusForArticle}
+        />
+        }
+
         <div className="additional-buttons">
-          <button className="additional-button">
+          <button className="additional-button" onClick={openModal}>
             <img src={media} alt="" className="icon"/>Media
           </button>
-          <button className="additional-button">
+          <button className="additional-button">    
             <img src={job} alt="" className="icon"/>Job
           </button>
-          <button className="additional-button">
+          <button className="additional-button" onClick={() => setArticleModal(true)}>
             <img src={article} alt="" className="icon"/>Write article
           </button>
 
