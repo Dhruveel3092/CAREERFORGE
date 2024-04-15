@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
+const jobRoutes = require("./routes/job");
 const messageRoutes = require("./routes/messages");
 const allowedOrigin = require('./config/allowedOrigin')
 const app = express();
@@ -174,6 +175,7 @@ app.get("/check/:id",async(req,res)=>{
 // })
 
 app.use("/api/auth", authRoutes);
+app.use("/api", jobRoutes);
 
 
 const server = app.listen(8080, () =>

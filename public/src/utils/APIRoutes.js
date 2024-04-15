@@ -41,3 +41,6 @@ export const addExperienceAPI = `${host}/api/auth/addExperience`;
 export const deleteExperienceAPI = `${host}/api/auth/deleteExperience`;
 export const updateExperienceAPI = `${host}/api/auth/updateExperience`;
 export const getMorePost=`${host}/api/auth/getMorePost`;
+export const getJobsAPI=`${host}/api/getJobs`;
+export const addJobAPI=`${host}/api/addJob`;
+    

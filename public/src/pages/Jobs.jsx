@@ -3,7 +3,8 @@ import Banner from '../components/Banner'
 import Card from '../components/Card'
 import JobsDes from './JobsDes'
 import Sidebar from '../sidebar/Sidebar'
-
+import { getJobsAPI  } from '../utils/APIRoutes'
+import axios  from 'axios';
 const Jobs = () => {
 
   const [isLoading,setIsLoading] = useState(true)
@@ -15,13 +16,17 @@ const Jobs = () => {
       setQuery(event.target.value)
   }
   const [jobs,setJobs] = useState([])
-
+  const getJobs = async () => {
+    const res = await axios.get(getJobsAPI);
+    console.log(res.data);
+    setJobs(res.data);
+  }
   useEffect(() => {
     setIsLoading(true)
-    fetch("http://localhost:5000/all-jobs").then(res => res.json()).then(data => setJobs(data));  
+    getJobs();
     setIsLoading(false)
   },[])
-  console.log(jobs)
+  // console.log(jobs)
 
   // ----------filter jobs by title-------------
   

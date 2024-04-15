@@ -1,20 +1,34 @@
 import React, { useState,useEffect } from "react";
 import CreatableSelect from "react-select/creatable";
-
-
+import axios from "axios";
+import { addJobAPI } from "../utils/APIRoutes";
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [product,setProduct] = useState({skills:[]});
+  const [job,setJob] = useState({skills:[]});
   useEffect(() => {
-    console.log(product);
-  }, [product]);
+    // console.log(product);
+  }, [job]);
   const handleChange = (e) => {
-    setProduct({...product, [e.target.name] : e.target.value});
+    setJob({...job, [e.target.name] : e.target.value});
   }
- 
-  const handleSubmit = (e) => {
+  const updateJob = async () => {
+    setJob(job => {
+      const updatedJob = { ...job, skills: selectedOption };
+
+      console.log(updatedJob); 
+      postJob(updatedJob);
+      return updatedJob;
+    });
+  };
+  const postJob = async (job) => {
+    const postedJob = await axios.post(`${addJobAPI}`, job);
+    console.log(postedJob)
+  }
+  
+  
+  const handleSubmit =  (e) => {
     e.preventDefault();
-    setProduct(prevProduct => ({ ...prevProduct, skills: selectedOption }));
+     updateJob(); // updateJob is calling postJob
   };
   
 
@@ -90,7 +104,7 @@ const CreateJob = () => {
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg">Salary type</label>
-              <select className="create-job-input">
+              <select className="create-job-input" name="salaryType" onChange={handleChange}>
                 <option value="">Choose your salary</option>
                 <option value="Hourly">Hourly</option>
                 <option value="Monthly">Monthly</option>
@@ -126,7 +140,8 @@ const CreateJob = () => {
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg">Experience Level</label>
               <select
-               
+                name="experienceLevel"
+                onChange={handleChange}
                 className="create-job-input"
               >
                 <option value="">Choose your experience</option>
@@ -166,7 +181,8 @@ const CreateJob = () => {
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg">Employment Type</label>
               <select
-                
+                name="employmentType"
+                onChange={handleChange}
                 className="create-job-input"
               >
                 <option value="">Select your job-type</option>

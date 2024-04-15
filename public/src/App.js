@@ -38,6 +38,7 @@ export default function App() {
         <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>
         <Route path="/job-portal" element={<Jobs />}/>
         <Route path="/create-job" element={<CreateJob />}/>
+        
       </Routes>
     </BrowserRouter>
   );
