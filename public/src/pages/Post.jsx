@@ -21,6 +21,7 @@ export default function Post() {
   const [currentUser,setCurrentUser] = useState(undefined);
   const [posts,setPosts] = useState(undefined);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,8 +30,8 @@ export default function Post() {
       //  console.log("current",currentUser)
       //  console.log("response",response.data.user)
     } catch (error) {
-      console.log(error)
       navigate("/login")
+      console.log(error)
     }
 
     };  

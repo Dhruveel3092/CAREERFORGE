@@ -16,7 +16,7 @@ import AllExperience from "./pages/AllExperience";
 import Pending from "./components/Pending";
 import CreateResume from "./components/CreateResume";
 import Jobs from "./pages/Jobs";
-
+import CreateJob from "./pages/CreateJob";
 export default function App() {
   return (
     <BrowserRouter>
@@ -37,6 +37,7 @@ export default function App() {
         <Route path="/allEducation/:username/:userId" element={<AllEducation />}/>
         <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>
         <Route path="/job-portal" element={<Jobs />}/>
+        <Route path="/create-job" element={<CreateJob />}/>
       </Routes>
     </BrowserRouter>
   );
