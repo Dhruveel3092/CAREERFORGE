@@ -17,6 +17,7 @@ import Pending from "./components/Pending";
 import CreateResume from "./components/CreateResume";
 import Jobs from "./pages/Jobs";
 import CreateJob from "./pages/CreateJob";
+import PostedJobs from "./pages/PostedJobs";
 export default function App() {
   return (
     <BrowserRouter>
@@ -35,9 +36,10 @@ export default function App() {
         <Route path="/allPosts/:username/:userId" element={<AllPosts />} />
         <Route path="/allSkills/:username/:userId" element={<AllSkills />}/>
         <Route path="/allEducation/:username/:userId" element={<AllEducation />}/>
-        <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>
+        <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>  
         <Route path="/job-portal" element={<Jobs />}/>
-        <Route path="/create-job" element={<CreateJob />}/>
+        <Route path="/post-job" element={<CreateJob />}/>
+        <Route path="/allPostedJobs" element={<PostedJobs/>}/>
         
       </Routes>
     </BrowserRouter>

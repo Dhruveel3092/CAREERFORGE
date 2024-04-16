@@ -42,6 +42,10 @@ const {
 const{
   getnotif
 }=require('../controllers/notifController');
+
+const {
+   getAllJobPostsByUserId 
+} = require("../controllers/jobController");
  
 
 
@@ -86,6 +90,7 @@ router.delete("/deleteSkill/:userId/:skillId",deleteSkill);
 router.delete("/deleteEducation/:userId/:educationId",deleteEducation);
 router.delete("/deleteExperience/:userId/:experienceId",deleteExperience);
 router.put("/updateExperience/:userId/:experienceId",updateExperience);
+
 
 
 module.exports = router;

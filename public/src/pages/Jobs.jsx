@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Banner from '../components/Banner'
 import Card from '../components/Card'
 import JobsDes from './JobsDes'
 import Sidebar from '../sidebar/Sidebar'
-import { getJobsAPI  } from '../utils/APIRoutes'
+import { getJobsAPI , host } from '../utils/APIRoutes'
+
 import axios  from 'axios';
 const Jobs = () => {
 
@@ -12,12 +14,35 @@ const Jobs = () => {
   const itemsPerPage = 6;
   const [selectedCategory,setSelectedCategory] = useState(null)
   const [query,setQuery] = useState("")
+  const [currentUser,setCurrentUser] = useState(undefined)
+  const navigate = useNavigate()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       // console.log("current",currentUser)
+       // console.log(response,"response")
+        const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
+        console.log(response,"response")
+       if(response.data.user) setCurrentUser(response.data.user);
+        console.log("current",currentUser)
+        console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+    };
+
+    
+    fetchData();
+  }, []);
+
+
   const handleInputChange = (event) => {
       setQuery(event.target.value)
   }
   const [jobs,setJobs] = useState([])
   const getJobs = async () => {
-    const res = await axios.get(getJobsAPI);
+    const res = await axios.get(`${getJobsAPI}`);
     console.log(res.data);
     setJobs(res.data);
   }

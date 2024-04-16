@@ -1,20 +1,42 @@
 import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
+import { host } from "../utils/APIRoutes"; 
 import { addJobAPI } from "../utils/APIRoutes";
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [job,setJob] = useState({skills:[]});
+  const [currentUser,setCurrentUser] = useState(undefined)
+  const navigate = useNavigate();
   useEffect(() => {
     // console.log(product);
   }, [job]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       // console.log("current",currentUser)
+       // console.log(response,"response")
+        const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
+        console.log(response,"response")
+       if(response.data.user) setCurrentUser(response.data.user);
+        console.log("current",currentUser)
+        console.log("response",response.data.user)
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+    };
+
+    
+    fetchData();
+  }, []);
   const handleChange = (e) => {
     setJob({...job, [e.target.name] : e.target.value});
   }
   const updateJob = async () => {
     setJob(job => {
-      const updatedJob = { ...job, skills: selectedOption };
-
+      const updatedJob = { ...job, skills: selectedOption , user:currentUser._id };
       console.log(updatedJob); 
       postJob(updatedJob);
       return updatedJob;

@@ -91,6 +91,10 @@ const userSchema = new mongoose.Schema({
     }
 
 }],
+  
+  postedJobs:[{
+    type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true,
+  }]
   });
 
   userSchema.methods.generateAuthToken= async function(){

@@ -9,6 +9,7 @@ const skillSchema = new Schema({
     label: { type: String, required: true }
   });
 const jobSchema = new Schema({
+        user : {type:mongoose.Schema.Types.ObjectId, ref:"User", required:'true'},
         companyName: {type:String, required:true},
         jobTitle: {type:String, required:true},
         companyLogo: {type:String, required:true},

@@ -1,15 +1,27 @@
 const mongoose = require('mongoose');
 const model  = require('../models/jobModel')
+const User = require("../models/userModel");
 const Job = model.Job;
 // API
- exports.createJob = async(req,res)=>{
+ module.exports.createJob = async(req,res)=>{
+  try{
      const job = new Job(req.body);
-     
-     await job.save().then(j=>res.status(201).json(j)).catch(err=>res.json(err));
+     const id = req.body.user;
+     console.log(job,id)
+     const user = await User.findById(id);
+     user.postedJobs.push(id);
+     await user.save();
+     await job.save();
+     return res.json(job);
   }
-  exports.getAllJobs = async (req,res)=>{
+  catch(err){
+    console.log({err});
+  }
+  }
+  module.exports.getAllJobs = async (req,res)=>{
     try{
       const jobs = await Job.find();
+      console.log(jobs)
       res.json(jobs);
     }
     catch(err){
@@ -57,3 +69,25 @@ const Job = model.Job;
       res.json(err).status(400)
     }
   }
+
+  exports.getAllJobPostsByUserId = async (req,res,next) => {
+    try{
+      const userId = req.params.userId;
+      const jobs=await Job.find({user:userId}).populate([
+        {
+          path: 'user',
+          model: 'User',
+          select: 'postedJobs',
+          populate : {
+            path : 'postedJobs',
+            model : 'Job'
+        }
+        },
+      ]);
+      return res.json(jobs);
+    }catch( error )
+    {
+      next(error);
+    }
+  }
+  
