@@ -55,7 +55,7 @@ export default function Login() {
 
   const simulateGoogleSignIn= async ()=>{
    
-     window.open("http://localhost:8080/auth/google","_self");
+     window.open("http://localhost:8080/api/auth/google","_self");
 
   }
 

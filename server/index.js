@@ -14,6 +14,8 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongodb-session')(session)
 const Notification = require('./models/notifiSchema');
+require('./config/passport')(passport);
+
 require("dotenv").config();
 const corsOptions ={
   origin: allowedOrigin, 
@@ -49,65 +51,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.use(
-  new OAuth2Strategy({
-      clientID: process.env.CLIENT_ID,
-      clientSecret:process.env.CLIENT_SECRET,
-      callbackURL:"/auth/google/callback",
-      scope:["profile","email"]
-  },
-  async (accessToken,refreshToken,profile,done)=>{
-      try {
-          let user = await User.findOne({email:profile.emails[0].value});
-         // console.log("jii")
-          if(!user){
-              user = new User({
-                  username:profile.displayName,
-                  email:profile.emails[0].value,
-                  avatarImage:profile.photos[0].value
-              
-              });
-
-              await user.save();
-          }
-
-          return done(null,user)
-      } catch (error) {
-          return done(error,null)
-      }
-  }
-  )
-)
-
-passport.serializeUser((user,done)=>{
-  done(null,user);
-})
-
-passport.deserializeUser((user,done)=>{
-  done(null,user);
-});
-
-
-app.get("/auth/google",passport.authenticate("google",{scope:["profile","email"]}));
-
-app.get("/auth/google/callback",passport.authenticate("google",{
-    failureRedirect:"http://localhost:3000/login"
-}),
-async (req, res) => {
- //  console.log("hii")
-  const user=req.user;
-  //console.log(user)
-  const token = await user.generateAuthToken();
-
- // console.log(token)
-  res.cookie("jwt",token,{
-    expires:new Date(Date.now() + 1200000),
-    httpOnly:false,
-   });
-  res.redirect('http://localhost:3000/home')
-})
-
 
 app.get("/login/sucess",async(req,res)=>{
   try {

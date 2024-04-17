@@ -46,8 +46,8 @@ const{
   getnotif,
   setnotif,
 }=require('../controllers/notifController');
- 
-
+const passport=require('passport');
+require('../config/passport')(passport);
 
 const router = require("express").Router();
 
@@ -94,6 +94,22 @@ router.delete("/deleteSkill/:userId/:skillId",deleteSkill);
 router.delete("/deleteEducation/:userId/:educationId",deleteEducation);
 router.delete("/deleteExperience/:userId/:experienceId",deleteExperience);
 router.put("/updateExperience/:userId/:experienceId",updateExperience);
+router.get("/google",passport.authenticate("google",{scope:["profile","email"]}));
+router.get("/google/callback",passport.authenticate("google",{
+    failureRedirect:"http://localhost:3000/login"
+}),
+async (req, res) => {
+ //  console.log("hii")
+  const user=req.user;
+  //console.log(user)
+  const token = await user.generateAuthToken();
 
+ // console.log(token)
+  res.cookie("jwt",token,{
+    expires:new Date(Date.now() + 1200000),
+    httpOnly:false,
+   });
+  res.redirect('http://localhost:3000/home')
+})
 
 module.exports = router;
