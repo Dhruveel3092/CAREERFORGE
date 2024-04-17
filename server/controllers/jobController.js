@@ -28,7 +28,7 @@ const Job = model.Job;
       console.log(err);
     }
   }
-  exports.getJob = async (req,res)=>{
+  module.exports.getJob = async (req,res)=>{
     const id = req.params.id;
     try{
       const job = await Job.findById(id);  
@@ -38,7 +38,7 @@ const Job = model.Job;
         res.json(err).status(400)
       }
   }
-  exports.replaceJob = async (req,res)=>{
+  module.exports.replaceJob = async (req,res)=>{
     const id = req.params.id;
     try{
     const job = await Job.findOneAndReplace({_id:id},req.body,{new:true});  
@@ -48,7 +48,7 @@ const Job = model.Job;
       res.json(err).status(400)
     }
   }
-  exports.updateJob = async(req,res)=>{
+  module.exports.updateJob = async(req,res)=>{
     const id = req.params.id;
     try{
     const job = await Job.findOneAndUpdate({_id:id},req.body,{new:true});  
@@ -58,7 +58,7 @@ const Job = model.Job;
       res.json(err).status(400)
     }
   }
-  exports.deleteJob = async (req,res)=>{
+  module.exports.deleteJob = async (req,res)=>{
     const id = req.params.id;
     
     try{
@@ -70,7 +70,7 @@ const Job = model.Job;
     }
   }
 
-  exports.getAllJobPostsByUserId = async (req,res,next) => {
+  module.exports.getAllJobPostsByUserId = async (req,res,next) => {
     try{
       const userId = req.params.userId;
       const jobs=await Job.find({user:userId}).populate([
@@ -90,4 +90,22 @@ const Job = model.Job;
       next(error);
     }
   }
+  module.exports.getJobPosterById = async (req, res) => {
+    try {
+      const jobPostId = req.params.postId;
+      const jobPoster = await Job.findOne({ _id: jobPostId }); // Use findOne instead of find
+      if (jobPoster) {
+        // Access the user field from the document
+        const user = jobPoster.user;
+        console.log(user);
+        return res.json(user);
+      } else {
+        // Handle case when no document is found
+        return res.status(404).json({ message: "Job poster not found" });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  };
   

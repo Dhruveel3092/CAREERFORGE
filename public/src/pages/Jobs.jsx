@@ -14,7 +14,7 @@ const Jobs = () => {
   const itemsPerPage = 6;
   const [selectedCategory,setSelectedCategory] = useState(null)
   const [query,setQuery] = useState("")
-  const [currentUser,setCurrentUser] = useState(undefined)
+  const [currentUser,setCurrentUser] = useState([])
   const navigate = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +50,7 @@ const Jobs = () => {
     setIsLoading(true)
     getJobs();
     setIsLoading(false)
-  },[])
+  },[currentUser])
   // console.log(jobs)
 
   // ----------filter jobs by title-------------
@@ -110,7 +110,7 @@ const Jobs = () => {
     const {startIndex,endIndex} = calculatePageRange();
     filteredJobs = filteredJobs.slice(startIndex,endIndex);
 
-    return filteredJobs.map((data,i)=><Card key = {i} data = {data}/>)
+    return filteredJobs.map((data,i)=><Card key = {i} data = {data} userId = {currentUser._id}/>)
   }
 
    const result = filteredData(jobs,selectedCategory,query)

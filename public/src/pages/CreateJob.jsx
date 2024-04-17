@@ -76,7 +76,6 @@ const CreateJob = () => {
               <label className="block mb-2 text-lg">Job title</label>
               <input
                 type="text"
-                defaultValue={"Web developer"}
                 name = "jobTitle"
                 id = "jobTitle"
                 onChange={handleChange}
@@ -222,9 +221,7 @@ const CreateJob = () => {
               className="w-full pl-3 py-1.5 focus:outline-none placeholder:text-gray-700"
               rows={6}
               placeholder="Job Description"
-              defaultValue={
-                "Ia ama asnca ANDs N nxc msnxcmx mZXcnzmxn Oemnca mdnsmMZXnbc xbd"
-              }
+              
               name = "jobDescription"
                 id = "jobDescription"
                 onChange={handleChange}

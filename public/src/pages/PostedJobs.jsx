@@ -67,7 +67,7 @@ const main = (jobs) => {
     let postedJobs = jobs;
     const {startIndex,endIndex} = calculatePageRange();
      postedJobs = postedJobs.slice(startIndex,endIndex);
-    return jobs.map((data,i) => <Card key = {i} data = {data}></Card>);
+    return postedJobs.map((data,i) => <Card key = {i} data = {data} userId = {currentUser._id}></Card>);
 }
 const result = main(jobs);
   return (

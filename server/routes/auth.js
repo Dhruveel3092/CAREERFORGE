@@ -43,11 +43,6 @@ const{
   getnotif
 }=require('../controllers/notifController');
 
-const {
-   getAllJobPostsByUserId 
-} = require("../controllers/jobController");
- 
-
 
 const router = require("express").Router();
 

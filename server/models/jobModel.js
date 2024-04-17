@@ -25,5 +25,6 @@ const jobSchema = new Schema({
         employmentType: {type:String, required:true},
         description: {type:String},
         skills: { type: [skillSchema], default: [] }
+        
   });
    exports.Job = mongoose.model('Job', jobSchema);

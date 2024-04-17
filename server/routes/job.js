@@ -8,6 +8,7 @@ router.get('/getAllJobs',jobController.getAllJobs)
 .put('/replaceJob:id',jobController.replaceJob)
 .patch('/updateJob/:id',jobController.updateJob)
 .delete('/deleteJob/:id',jobController.deleteJob)
-.get("/getAllJobPostsByUserId/:userId",jobController.getAllJobPostsByUserId);
+.get("/getAllJobPostsByUserId/:userId",jobController.getAllJobPostsByUserId)
+.get("/getJobPosterById/:postId",jobController.getJobPosterById);
 
 module.exports = router;

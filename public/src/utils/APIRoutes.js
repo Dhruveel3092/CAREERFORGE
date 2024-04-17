@@ -44,3 +44,4 @@ export const getMorePost=`${host}/api/auth/getMorePost`;
 export const getJobsAPI=`${host}/api/getAllJobs`;
 export const addJobAPI=`${host}/api/addJob`;
 export const getAllPostedJobs = `${host}/api/getAllJobPostsByUserId`;
+export const getJobPosterById = `${host}/api/getJobPosterById`
