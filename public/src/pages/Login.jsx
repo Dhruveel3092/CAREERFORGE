@@ -79,8 +79,9 @@ export default function Login() {
   return (
     <>
       <FormContainer>
-
+        
         <form action="" onSubmit={(event) => handleSubmit(event)}>
+        
           <div className="brand">
             <img src={Logo} alt="logo" />
             <h1>snappy</h1>
@@ -109,10 +110,12 @@ export default function Login() {
                 <FaGoogle size={30}/>
                 <button type="button" class="google-signin-btn" onClick={simulateGoogleSignIn}>Sign in with Google</button>
                 </div>
+                
           <span>
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>
+        
       
       </FormContainer>
       <ToastContainer />

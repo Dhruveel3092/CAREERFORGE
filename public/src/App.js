@@ -17,12 +17,14 @@ import Pending from "./components/Pending";
 import Forgotpass from "./components/Forgotpass";
 import CreateResume from "./components/CreateResume";
 import Changepass from "./components/Changepass";
+import Front from "./pages/Front";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/register" element={<Register />} />
+        <Route path="/Front" element={<Front />} />
         <Route path="/login" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<SearchBar />} />  
