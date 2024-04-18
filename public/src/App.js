@@ -19,6 +19,7 @@ import CreateResume from "./components/CreateResume";
 import Changepass from "./components/Changepass";
 import Front from "./pages/Front";
 
+
 export default function App() {
   return (
     <BrowserRouter>

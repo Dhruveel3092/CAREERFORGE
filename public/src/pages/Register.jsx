@@ -83,6 +83,11 @@ export default function Register() {
   return (
     <>
       <FormContainer>
+      <nav className='navb'>
+       <Link to='/Front' className='link-na'>Home</Link>
+       <Link to='/login' className='link-na'>Sign-up</Link>
+       <Link to='/register' className='link-na'>Sign-in</Link>
+      </nav>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
@@ -143,6 +148,27 @@ const FormContainer = styled.div`
     h1 {
       color: white;
       text-transform: uppercase;
+    }
+  }
+  .navb{
+    background-color: black;
+    padding: 20px;
+    width:100vw;
+    position:sticky;
+    display: flex;
+    gap:2rem;
+    justify-content: flex-end;
+  }
+  .link-na{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 15px; 
+    margin-top: 8px;
+    &:hover{
+      color: #10b981;
+      cursor: pointer;
+      transition: 0.3s;
     }
   }
 
