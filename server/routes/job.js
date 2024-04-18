@@ -9,6 +9,10 @@ router.get('/getAllJobs',jobController.getAllJobs)
 .patch('/updateJob/:id',jobController.updateJob)
 .delete('/deleteJob/:id',jobController.deleteJob)
 .get("/getAllJobPostsByUserId/:userId",jobController.getAllJobPostsByUserId)
-.get("/getJobPosterById/:postId",jobController.getJobPosterById);
+.get("/getJobPosterById/:postId",jobController.getJobPosterById)
+.post("/addApplicantDetails/:jobPostId",jobController.addApplicantDetails)
+.post("/addAppliedJob/:userId",jobController.addAppliedJob)
+.get("/getAppliedJobsByUserId/:userId",jobController.getAppliedJobsByUserId)
+.get("/getStatusOfJobApplication/:userId/:jobId",jobController.getStatusOfJobApplication);
 
 module.exports = router;

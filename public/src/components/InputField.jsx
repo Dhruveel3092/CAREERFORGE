@@ -1,4 +1,5 @@
 import React from 'react'
+import '../pages/JobStyle.css';
 
 const InputField = ({ handleChange, name, value, title }) => {
     return (

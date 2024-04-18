@@ -8,6 +8,10 @@ const skillSchema = new Schema({
     value: { type: String, required: true },
     label: { type: String, required: true }
   });
+  const applicantSchema = new Schema({
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    resumeLink: { type: String, required: true }
+  })
 const jobSchema = new Schema({
         user : {type:mongoose.Schema.Types.ObjectId, ref:"User", required:'true'},
         companyName: {type:String, required:true},
@@ -24,7 +28,7 @@ const jobSchema = new Schema({
         experienceLevel: {type:String, required:true},
         employmentType: {type:String, required:true},
         description: {type:String},
-        skills: { type: [skillSchema], default: [] }
-        
+        skills: { type: [skillSchema], default: [] },
+        applicants : { type : [applicantSchema] }
   });
    exports.Job = mongoose.model('Job', jobSchema);

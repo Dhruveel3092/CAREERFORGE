@@ -1,5 +1,6 @@
 import React from 'react'
 import InputField from '../components/InputField'
+import '../pages/JobStyle.css';
 
 const JobPostingData = ({handleChange}) => {
     const now = new Date();
@@ -16,7 +17,7 @@ const JobPostingData = ({handleChange}) => {
   return (
     <div>
        <div>
-      <h4 className='text-lg font-medium mb-2'>Date of posting</h4>
+      <h4 className='EmploymentTypeHeading'>Date of posting</h4>
       <div>
         <label className='sidebar-label-container'>
             <input type='radio' name='test' id='test' value="" onChange={handleChange}/>

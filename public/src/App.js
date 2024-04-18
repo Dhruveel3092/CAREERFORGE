@@ -18,6 +18,7 @@ import CreateResume from "./components/CreateResume";
 import Jobs from "./pages/Jobs";
 import CreateJob from "./pages/CreateJob";
 import PostedJobs from "./pages/PostedJobs";
+import AppliedJobs from "./pages/AppliedJobs";
 export default function App() {
   return (
     <BrowserRouter>
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/job-portal" element={<Jobs />}/>
         <Route path="/post-job" element={<CreateJob />}/>
         <Route path="/allPostedJobs" element={<PostedJobs/>}/>
+        <Route path="/allAppliedJobs" element={<AppliedJobs/>}/>
         
       </Routes>
     </BrowserRouter>

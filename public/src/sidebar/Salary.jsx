@@ -1,12 +1,14 @@
 import React from 'react'
 import Button from './Button'
 import InputField from '../components/InputField'
+import '../pages/JobStyle.css';
 
 const Salary = ({handleChange,handleClick}) => {
   return (
     <div>
-      <h4 className='text-lg font-medium mb-2'>Salary</h4>
-      <div className='mb-4'>
+      <h4 className='EmploymentTypeHeading'>Salary</h4>
+      <div style={{ marginBottom: '1rem' }}>
+
         <Button onClickHandler={handleClick} value="" title="Hourly"></Button>
         <Button onClickHandler={handleClick} value="Monthly" title="Monthly"></Button>
         <Button onClickHandler={handleClick} value="Yearly" title="Yearly"></Button>

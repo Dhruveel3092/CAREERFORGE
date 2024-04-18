@@ -5,7 +5,7 @@ import Card from '../components/Card'
 import JobsDes from './JobsDes'
 import Sidebar from '../sidebar/Sidebar'
 import { getJobsAPI , host } from '../utils/APIRoutes'
-
+import './JobStyle.css'
 import axios  from 'axios';
 const Jobs = () => {
 
@@ -14,8 +14,12 @@ const Jobs = () => {
   const itemsPerPage = 6;
   const [selectedCategory,setSelectedCategory] = useState(null)
   const [query,setQuery] = useState("")
-  const [currentUser,setCurrentUser] = useState([])
+  const [currentUser,setCurrentUser] = useState(undefined)
+  const [jobs,setJobs] = useState([])
   const navigate = useNavigate()
+
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,25 +35,26 @@ const Jobs = () => {
       navigate("/login")
     }
     };
-
     
     fetchData();
   }, []);
-
+  
+  
 
   const handleInputChange = (event) => {
       setQuery(event.target.value)
   }
-  const [jobs,setJobs] = useState([])
   const getJobs = async () => {
     const res = await axios.get(`${getJobsAPI}`);
     console.log(res.data);
     setJobs(res.data);
   }
   useEffect(() => {
-    setIsLoading(true)
+    if(currentUser){
+      console.log(currentUser);
+      setIsLoading(true)
     getJobs();
-    setIsLoading(false)
+    setIsLoading(false)}
   },[currentUser])
   // console.log(jobs)
 
@@ -109,30 +114,33 @@ const Jobs = () => {
     // Slice the data based on current page
     const {startIndex,endIndex} = calculatePageRange();
     filteredJobs = filteredJobs.slice(startIndex,endIndex);
+      
+    return   filteredJobs.map((data,i)=><Card key = {i} data = {data} currentUser = {currentUser}/>)
+    
+    }
+    
+  
 
-    return filteredJobs.map((data,i)=><Card key = {i} data = {data} userId = {currentUser._id}/>)
-  }
-
-   const result = filteredData(jobs,selectedCategory,query)
+   const result = filteredData(jobs,selectedCategory,query);
   
 
   return (
-    <div >
-      <Banner query={query} handleInputChange={handleInputChange}/>  
+    <div className="Banner">
+      <Banner query={query} handleInputChange={handleInputChange} />  
       {/* Main content */}
-      <div className='bg-[#FAFAFA] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12'>
+      <div className="JobsMainContent">
     
         {/* left side */}
 
-        <div className='bg-white p-4 rounded'><Sidebar handleChange={handleChange} handleClick={handleClick}/></div>
+        <div className='JobsLeftRightSide'><Sidebar handleChange={handleChange} handleClick={handleClick}/></div>
 
         {/* job cards */}
 
-        <div className='col-span-2 bg-white p-4 rounded-sm'>
+        <div className='JobsCard'>
           {
              (isLoading) ? <p>Loading...</p> : (result.length > 0) ? <JobsDes result = {result}/> :
              <>
-              <h3 className='text-lg font-bold mb-2'>{result.length} Jobs</h3>
+              <h3 className='JobsCardInner'>{result.length} Jobs</h3>
               <p>No data found</p>
              </>
           }
@@ -140,9 +148,9 @@ const Jobs = () => {
          {/* Pagination here */}
          {
            result.length > 0 ? (
-               <div className='flex justify-center mt-4 space-x-8'>
+               <div className='JobsPagination'>
                  <button onClick={prevPage} disabled={currentPage === 1}  className='hover:underline'>Previous</button>
-                 <span className='mx-2'>Page {currentPage} of {Math.ceil(filteredItems.length / itemsPerPage)}</span>
+                 <span className='JobsCardSpan'>Page {currentPage} of {Math.ceil(filteredItems.length / itemsPerPage)}</span>
                  <button onClick={nextPage} disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)}
                   className='hover:underline'>Next</button>
                </div>
@@ -152,7 +160,7 @@ const Jobs = () => {
 
         {/* right side */}
 
-        <div className='bg-white p-4 rounded'>Right</div>
+        <div className='JobsLeftRightSide'>Right</div>
         
       </div>
     </div>

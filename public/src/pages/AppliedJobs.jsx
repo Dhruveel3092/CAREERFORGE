@@ -2,15 +2,16 @@ import React, { useState , useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import JobsDes from './JobsDes';
 import Card from '../components/Card';
-import { getAllPostedJobsByUserId, host } from "../utils/APIRoutes"; 
+import { getAppliedJobsByUserId, host } from "../utils/APIRoutes"; 
 import axios from 'axios';
-const PostedJobs = () => {
+const AppliedJobs = () => {
   const [currentUser,setCurrentUser] = useState(undefined)
   const [jobs,setJobs] = useState([]);
   const [isLoading,setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const navigate = useNavigate()
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,15 +31,16 @@ const PostedJobs = () => {
     
     fetchData();
   }, []);
-  const getPostedJobsData = async () => {
-    if(currentUser){const res = await axios.get(`${getAllPostedJobsByUserId}/${currentUser._id}`);
+
+  const  getAppliedJobs = async () => {
+    if(currentUser){const res = await axios.get(`${getAppliedJobsByUserId}/${currentUser._id}`);
     console.log(res.data);
     setJobs(res.data);}
   }
 
   useEffect(() => {
     setIsLoading(true)
-    getPostedJobsData();
+    getAppliedJobs();
     setIsLoading(false)
   },[currentUser]);
   
@@ -98,4 +100,4 @@ const result = main(jobs);
   )
 }
 
-export default PostedJobs
+export default AppliedJobs

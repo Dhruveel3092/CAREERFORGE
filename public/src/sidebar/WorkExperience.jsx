@@ -1,11 +1,12 @@
 import React from 'react'
 import InputField from '../components/InputField'
+import '../pages/JobStyle.css';
 
 const WorkExperience = ({handleChange}) => {
   return (
     <div>
         <div>
-      <h4 className='text-lg font-medium mb-2'>Work Experience</h4>
+      <h4 className='EmploymentTypeHeading'>Work Experience</h4>
       <div>
         <label className='sidebar-label-container'>
             <input type='radio' name='test' id='test' value="" onChange={handleChange}/>

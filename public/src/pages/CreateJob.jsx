@@ -36,7 +36,7 @@ const CreateJob = () => {
   }
   const updateJob = async () => {
     setJob(job => {
-      const updatedJob = { ...job, skills: selectedOption , user:currentUser._id };
+      const updatedJob = { ...job, skills: selectedOption , user:currentUser._id ,isApplied:true };
       console.log(updatedJob); 
       postJob(updatedJob);
       return updatedJob;

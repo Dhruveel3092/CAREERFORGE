@@ -4,11 +4,12 @@ import Salary from './Salary'
 import JobPostingData from './JobPostingData'
 import WorkExperience from './WorkExperience'
 import EmploymentType from './EmploymentType'
+import '../pages/JobStyle.css';
 
 const Sidebar = ({handleChange, handleClick}) => {
   return (
-    <div className='space-y-5'>
-      <h3 className='text-lg font-bold mb-2'>Filters</h3>
+    <div style={{marginTop: '1.25rem'}}>
+      <h3 className='EmploymentTypeHeading'>Filters</h3>
       <Location handleChange={handleChange}/>
       <Salary handleChange={handleChange} handleClick={handleClick}></Salary>
       <JobPostingData handleChange={handleChange}></JobPostingData>
