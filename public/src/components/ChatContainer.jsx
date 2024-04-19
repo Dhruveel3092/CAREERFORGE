@@ -28,18 +28,6 @@ export default function ChatContainer({ currentChat, socket ,reArrangeContact}) 
     fetchData();
   }, [currentChat]);
 
-  useEffect(() => {
-    const getCurrentChat = async () => {
-     
-      if (currentChat) {
-        const dat = await axios.get(`${host}/login/sucess`, { withCredentials: true });
-        dat.data.user._id;
-      }
-    };
-    getCurrentChat();
-  }, [currentChat]);
-
-
   const handleSendMsg = async (msg) => {
     const dat = await axios.get(`${host}/login/sucess`, { withCredentials: true });
     const data =dat.data.user;

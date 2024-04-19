@@ -21,9 +21,9 @@ export default function Changepass({id}) {
         if (CheckPassword()) {
           const { password1, password2 } = values;
           const response=await axios.post(`${host}/api/auth/reset-password`,{password1,params});
-     
+            console.log(response.data)
           if (response.data.sta === false) {
-            toast.error(data.msg, toastOptions);
+           alert('User does not Exist with these Email');
           }
           if (response.data.sta === true) {
             navigate("/login");
