@@ -95,9 +95,10 @@ const userSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true,
   }],
   appliedJobs:[{
-    type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true,
+    AppliedJobId:{type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true},
+    ApplicationStatus: {type:String}
+    
   }]
-
 });
 
   userSchema.methods.generateAuthToken= async function(){

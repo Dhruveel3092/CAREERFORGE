@@ -32,10 +32,10 @@ const AppliedJobs = () => {
     fetchData();
   }, []);
 
-  const  getAppliedJobs = async () => {
+  const getAppliedJobs = async () => {
     if(currentUser){const res = await axios.get(`${getAppliedJobsByUserId}/${currentUser._id}`);
-    console.log(res.data);
-    setJobs(res.data);}
+    const jobs = res.data.map(item => item.AppliedJobId);
+    await setJobs(jobs);}
   }
 
   useEffect(() => {
@@ -66,38 +66,37 @@ const AppliedJobs = () => {
      }
     }
 const main = (jobs) => {
-    let postedJobs = jobs;
+    let appliedJobs = jobs;
     const {startIndex,endIndex} = calculatePageRange();
-     postedJobs = postedJobs.slice(startIndex,endIndex);
-    return postedJobs.map((data,i) => <Card key = {i} data = {data} currentUser = {currentUser}></Card>);
+    appliedJobs = appliedJobs.slice(startIndex,endIndex);
+    return appliedJobs.map((data,i) => <Card key = {i} data = {data} currentUser = {currentUser}></Card>);
 }
 const result = main(jobs);
-  return (
-    <div className='bg-[#FAFAFA] px-4 py-12 flex justify-center'> {/* Utilizing flexbox */}
-    {/* job cards */}
-    <div className='col-span-2 bg-white p-4 rounded-sm border'>
-        {
-            (isLoading) ? <p>Loading...</p> : (result.length > 0) ? <JobsDes result={result} /> :
-                <>
-                    <h3 className='text-lg font-bold mb-2'>{result.length} Jobs</h3>
-                    <p>No data found</p>
-                </>
-        }
-
-        {/* Pagination here */}
-        {
-            result.length > 0 ? (
-                <div className='flex justify-center mt-4 space-x-8'>
-                    <button onClick={prevPage} disabled={currentPage === 1} className='hover:underline'>Previous</button>
-                    <span className='mx-2'>Page {currentPage} of {Math.ceil(jobs.length / itemsPerPage)}</span>
-                    <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='hover:underline'>Next</button>
-                </div>
-            ) : ""
-        }
-    </div>
+return (
+  <div className='postedJobsOuterMost'> {/* Utilizing flexbox */}
+  {/* job cards */}
+  <div className='JobsCard'>
+  <h1 className='myAppliedJobs'>My Applied Jobs</h1>
+      {
+          (isLoading) ? <p>Loading...</p> : (result.length > 0) ? <JobsDes result={result} /> :
+              <>
+                  <h3 className='JobsCardInner'>{result.length} Jobs</h3>
+                  <p>No data found</p>
+              </>
+      }
+      {/* Pagination here */}
+      {
+          result.length > 0 ? (
+              <div className='JobsPagination'>
+                  <button onClick={prevPage} disabled={currentPage === 1} className='PreviousButton'>Previous</button>
+                  <span className='mx-2'>Page {currentPage} of {Math.ceil(jobs.length / itemsPerPage)}</span>
+                  <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='hover:underline'>Next</button>
+              </div>
+          ) : ""
+      }
+  </div>
 </div>
-
-  )
+)
 }
 
-export default AppliedJobs
+export default AppliedJobs;

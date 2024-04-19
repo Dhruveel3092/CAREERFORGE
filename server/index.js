@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect( 'mongodb://localhost:27017/project', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

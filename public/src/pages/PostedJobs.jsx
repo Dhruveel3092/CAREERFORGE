@@ -71,22 +71,24 @@ const main = (jobs) => {
 }
 const result = main(jobs);
   return (
-    <div className='bg-[#FAFAFA] px-4 py-12 flex justify-center'> {/* Utilizing flexbox */}
+    <div className='postedJobsOuterMost'> {/* Utilizing flexbox */}
+
     {/* job cards */}
-    <div className='col-span-2 bg-white p-4 rounded-sm border'>
+    <div className='JobsCard'>
+    <h1 className='myAppliedJobs'>My Posted Jobs</h1>
+
         {
             (isLoading) ? <p>Loading...</p> : (result.length > 0) ? <JobsDes result={result} /> :
                 <>
-                    <h3 className='text-lg font-bold mb-2'>{result.length} Jobs</h3>
+                    <h3 className='JobsCardInner'>{result.length} Jobs</h3>
                     <p>No data found</p>
                 </>
         }
-
         {/* Pagination here */}
         {
             result.length > 0 ? (
-                <div className='flex justify-center mt-4 space-x-8'>
-                    <button onClick={prevPage} disabled={currentPage === 1} className='hover:underline'>Previous</button>
+                <div className='JobsPagination'>
+                    <button onClick={prevPage} disabled={currentPage === 1} className='PreviousButton'>Previous</button>
                     <span className='mx-2'>Page {currentPage} of {Math.ceil(jobs.length / itemsPerPage)}</span>
                     <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='hover:underline'>Next</button>
                 </div>
@@ -94,7 +96,6 @@ const result = main(jobs);
         }
     </div>
 </div>
-
   )
 }
 

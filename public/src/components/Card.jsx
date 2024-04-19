@@ -8,17 +8,18 @@ import Swal from 'sweetalert2'
 import '../pages/JobStyle.css';
 
 const Card = ({ data, currentUser }) => {
-  const { _id, companyName, companyLogo, minPrice, maxPrice, salaryType, jobLocation, employmentType, jobPostingDate, description, jobTitle } = data;
+  const { _id, companyName, companyLogo, minPrice, maxPrice, salaryType, jobLocation, employmentType, jobPostingDate, jobDescription, jobTitle } = data;
   const [jobPoster, setJobPoster] = useState(undefined);
   const [image,setImage] = useState(null);
   const navigate = useNavigate();
   const [isApplied,setIsApplied] = useState(undefined);
+  const [ApplicationStatus, setApplicationStatus] = useState("");
 
   const getStatusOfJob = async () => {
     try{
     console.log(currentUser);
     const res = await axios.get(`${getStatusOfJobApplication}/${currentUser._id}/${_id}`);
-    return res.data.status;
+    return res.data;
     }
     catch(error){
       console.log(error)
@@ -38,9 +39,14 @@ const Card = ({ data, currentUser }) => {
         if (currentUser._id) {
           getJobPoster();
           console.log(currentUser._id);
-          const status = await getStatusOfJob();
-          setIsApplied(status);
-          console.log(status);
+          const data = await getStatusOfJob();
+          await console.log(data);
+          await (data.AppliedJobId) ? 
+             (setIsApplied(true))
+             (setApplicationStatus(data.ApplicationStatus) ) :  
+             (setIsApplied(false)) (setApplicationStatus(data.ApplicationStatus)) 
+          await console.log(isApplied);
+          await console.log(ApplicationStatus);
         }
       } catch (error) {
         console.error('Error fetching status of job application:', error);
@@ -121,8 +127,10 @@ async function handleUpload(file) {
             await axios.post(`${addAppliedJob}/${currentUser._id}`,{
               appliedJobId : _id
             })
-            const status = await getStatusOfJob();
-             setIsApplied(status);
+            const data = await getStatusOfJob();
+            await console.log(data)
+            await setIsApplied(true);
+            await setApplicationStatus(data.ApplicationStatus);
         } catch (error) {
           console.error('Error uploading multiple files:', error);
           throw error;
@@ -155,13 +163,15 @@ async function handleUpload(file) {
             <span className='CardProp'><FiDollarSign />{minPrice}-{maxPrice}k</span>
             <span className='CardProp'><FiCalendar />{formattedDate}</span>
           </div>
-          <p className='CardDescription'>{description}</p>
+          <p className='CardDescription'>{jobDescription}</p>
           <div className='ButtonContainer'>
-          {(jobPoster !== currentUser._id) &&
+          {(jobPoster !== currentUser._id) ?
             (isApplied === false ?
-              <button style={applyButtonStyle} onClick={handleClick}>Apply</button> :
-              <button disabled style={appliedBox}>Applied</button>
+              <button className='applyButton' onClick={handleClick}>Apply</button> :
+              <button disabled className='appliedButton'>{ApplicationStatus}</button>
             )
+            : <button  className='viewBtn'>View Applications</button>
+
           }
         </div>
         
@@ -171,24 +181,5 @@ async function handleUpload(file) {
   );
 };
 
-const applyButtonStyle = {
-  backgroundColor: '#3f51b5',
-  color: '#fff',
-  border: '1px solid #3f51b5',
-  borderRadius: '5px',
-  padding: '10px 20px',
-  cursor: 'pointer',
-  display: 'block',
-  margin: 'auto',
-};
-const appliedBox = {
-  backgroundColor: 'green',
-  color: 'white',
-  border: '1px solid #3f51b5',
-  borderRadius: '5px',
-  padding: '10px 20px',
-  display: 'block',
-  margin: 'auto',
-}
 
 export default Card;

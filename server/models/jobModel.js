@@ -27,8 +27,8 @@ const jobSchema = new Schema({
         jobPostingDate: {type:String, required:true},
         experienceLevel: {type:String, required:true},
         employmentType: {type:String, required:true},
-        description: {type:String},
+        jobDescription: {type:String},
         skills: { type: [skillSchema], default: [] },
         applicants : { type : [applicantSchema] }
   });
-   exports.Job = mongoose.model('Job', jobSchema);
+exports.Job = mongoose.model('Job', jobSchema);

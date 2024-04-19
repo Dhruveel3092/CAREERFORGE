@@ -52,7 +52,16 @@ font-weight: 700;
 flex-direction: column; 
 gap: 1rem; 
 align-items: flex-start; 
-margin-bottom: 1rem; /* Adds margin below each .CardSection */
+
+/* justify-content: center; */
+border: #f6f9ff 0.5px solid;
+border-radius: 7px;
+padding-top: 10px;
+padding-right:5px ;
+margin-left: 2rem;
+margin-right: 2rem;
+background-color: #f6f9ff;
+margin-bottom: 2rem; /* Adds margin below each .CardSection */
 @media (min-width: 640px) { 
   flex-direction: row; 
  }
@@ -82,6 +91,7 @@ align-items: center;
 .CardDescription{
     font-size: 1rem;
 line-height: 1.5rem; 
+color: #9CA3AF;
 }
 .BannerOuterDiv{
 padding-left: 1rem;
@@ -104,17 +114,20 @@ padding-right: 6rem;
 font-size: 3rem;
 line-height: 1; 
 font-weight: 700; 
+font-family: "Georgia", serif;
+
 }
 .BannerSubHeading{
     margin-bottom: 2rem; 
 font-size: 1.125rem;
 line-height: 1.75rem; 
-}
+font-family: "Roboto", sans-serif;}
 .BannerFormOuterDiv{
     display: flex; 
 flex-direction: column; 
 gap: 1rem; 
 justify-content: flex-start; 
+  font-family: "Georgia", serif;
 
 
 @media (min-width: 768px) { 
@@ -353,7 +366,6 @@ body{
   flex-direction: column; 
   justify-content: space-between; 
   align-items: center; 
-  
   @media (min-width: 1024px) { 
     flex-direction: row; 
    }}
@@ -363,11 +375,13 @@ body{
   padding-top: 0.375rem;
   padding-bottom: 0.375rem; 
   padding-left: 0.75rem; 
+  width: calc(50% - 0.75rem);
   flex: 1 1 0%; 
   width: 100%; 
   color: #111827; 
   background-color: #ffffff; 
-  
+  border: white;
+  border-radius: 4px;
   @media (min-width: 640px) { 
     font-size: 0.875rem;
   line-height: 1.25rem; 
@@ -391,4 +405,138 @@ line-height: 1.5rem;
 font-size: 1.125rem;
 line-height: 1.75rem; 
 font-weight: 500; 
+}
+.postedJobsOuterMost{
+display: flex; 
+padding-left: 22rem;
+padding-right: 22rem; 
+padding-top: 3rem;
+padding-bottom: 3rem; 
+justify-content: center; 
+align-items: flex-start;
+background: #FAFAFA;
+height: 660px;
+overflow-y: scroll;
+grid-column: span 2 / span 2; 
+}
+.CreateJobOuterMost{
+  padding-left: 1rem;
+padding-right: 1rem; 
+max-width: 1536px; 
+height: 660px;
+overflow-y: scroll;
+@media (min-width: 1280px) { 
+  padding-left: 6rem;
+padding-right: 6rem; 
+ }
+}
+.CreateJobForm{
+  padding-left: 1rem;
+padding-right: 1rem; 
+padding-top: 2.5rem;
+padding-bottom: 2.5rem; 
+background: #FAFAFA;
+
+@media (min-width: 1024px) { 
+  padding-left: 4rem;
+padding-right: 4rem; 
+ }
+}
+.CreateJobFormTag{
+  margin-top: 1.25rem; 
+}
+.CreateJobFlexUnder{
+  width: 100%;
+  margin-right: 0.75rem;
+@media (min-width: 1024px) { 
+  width: 50%; 
+ }
+}
+.CreateJobJobTitle{
+  display: block; 
+margin-bottom: 0.5rem; 
+font-size: 1.125rem;
+line-height: 1.75rem; 
+
+}
+.CreateJobDescription{
+  padding-top: 0.375rem;
+padding-bottom: 0.375rem; 
+padding-left: 0.75rem; 
+width: 600px; 
+border:white
+}
+.CreateJobSubmitButton{
+  display: block; 
+padding-top: 0.5rem;
+padding-bottom: 0.5rem; 
+padding-left: 2rem;
+padding-right: 2rem; 
+margin-top: 3rem; 
+font-weight: 600; 
+color: #ffffff; 
+background-color: #2380cd;
+border: #2380cd;
+border-radius: 5px;
+font-weight: bold;
+}
+.CreateJobSubmitButton:hover{
+  background-color: #0e558f;
+  cursor: pointer;
+}
+.applyButton {
+  background-color: #8304fb;
+  color: #fff;
+  border: 1px solid #8304fb;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.applyButton:hover {
+  background-color: #8B008B;
+}
+
+.appliedButton{
+  background-color: rgb(72, 72, 242);
+  color: white;
+  border: 1px solid #3f51b5;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+}
+.PreviousButton{
+  
+}
+.PreviousButton:hover{
+  text-decoration: underline;
+}
+.myAppliedJobs{
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: "Georgia", serif;
+}
+.viewBtn {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  margin: auto;
+  text-align: center;
+  margin-bottom: 10px;
 }

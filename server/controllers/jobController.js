@@ -11,6 +11,7 @@ const Job = model.Job;
      console.log(job._id)
      const user = await User.findById(id);
      user.postedJobs.push(job._id);
+
      await user.save();
      await job.save();
      return res.json(job);
@@ -127,28 +128,38 @@ const Job = model.Job;
       const appliedJobId = req.body.appliedJobId;
       const userId = req.params.userId;
       const user = await User.findById(userId);
-      await user.appliedJobs.push(appliedJobId);
+      // Create an object with appliedJobId and ApplicationStatus
+      const application = {
+        AppliedJobId: appliedJobId,
+        ApplicationStatus: "Pending"
+    };
+    // Push the application object into the appliedJobs array
+      await user.appliedJobs.push(application);
       await user.save()
-      console.log(user)
-      return res.json(user);
+      console.log(application)
+      return res.json(application);
      }
      catch(err){
       console.log(err);
       return res.json(err);
      }
    }
-   module.exports.getAppliedJobsByUserId = async (req,res) => {
-     try{const userId = req.params.userId;
-     const user = await User.findById(userId).populate([{
-       path: 'appliedJobs',
-       model: 'Job'
-     }]);
-     return res.json(user.appliedJobs);}
-     catch(err){
-      console.log(err)
-      return res.json(err);
-     }
-   }
+   module.exports.getAppliedJobsByUserId = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId).populate('appliedJobs.AppliedJobId');
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        return res.json(user.appliedJobs);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
    module.exports.getStatusOfJobApplication = async (req, res) => {
        try {
@@ -163,16 +174,17 @@ const Job = model.Job;
            }
    
            // Check if the user's appliedJobs array contains the jobId
-           const jobIndex = user.appliedJobs.findIndex(appliedJob => String(appliedJob) === jobId);
+           const jobIndex = user.appliedJobs.findIndex(appliedJob => String(appliedJob.AppliedJobId) === jobId);
    
            if (jobIndex !== -1) {
-               return res.json({ status: true }); // Job found
+               return res.json(user.appliedJobs[jobIndex]); // Job found
            } else {
-               return res.json({ status: false }); // Job not found
+               return res.json({ AppliedJobId: null,ApplicationStatus: "Apply" }); // Job not found
            }
-       } catch(error) {
-           console.log(error);
-           return res.status(500).json({ error: 'Internal Server Error' });
-       }
-   };
+          } 
+          catch(error) {
+             console.log(error);
+             return res.status(500).json({ error: 'Internal Server Error' });
+          }
+        };
    

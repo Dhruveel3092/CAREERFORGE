@@ -65,15 +65,15 @@ const CreateJob = () => {
     { value: "Redux", label: "Redux" }
   ];
   return (
-    <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
+    <div className="CreateJobOuterMost ">
       {/* form */}
-      <div className="bg-[#FAFAFA] py-10 px-4 lg:px-16">
+      <div className="CreateJobForm">
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="CreateJobFormTag">
           {/* 1st row */}
           <div className="create-job-flex">
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job title</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Job title</label>
               <input
                 type="text"
                 name = "jobTitle"
@@ -82,8 +82,8 @@ const CreateJob = () => {
                 className="create-job-input"
               />
             </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Company name</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Company name</label>
               <input
                 type="text"
                 placeholder="Ex: Microsoft"
@@ -97,8 +97,8 @@ const CreateJob = () => {
 
           {/* 2nd row */}
           <div className="create-job-flex">
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Minimum Salary</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Minimum Salary</label>
               <input
                 type="text"
                 placeholder="$20k"
@@ -108,8 +108,8 @@ const CreateJob = () => {
                 className="create-job-input"
               />
             </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Maximum Salary</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Maximum Salary</label>
               <input
                 type="text"
                 placeholder="$120k"
@@ -123,8 +123,8 @@ const CreateJob = () => {
 
           {/* 3rd row */}
           <div className="create-job-flex">
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Salary type</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Salary type</label>
               <select className="create-job-input" name="salaryType" onChange={handleChange}>
                 <option value="">Choose your salary</option>
                 <option value="Hourly">Hourly</option>
@@ -132,8 +132,8 @@ const CreateJob = () => {
                 <option value="Yearly">Yearly</option>
               </select>
             </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Location</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Job Location</label>
               <input
                 type="text"
                 placeholder="Ex: New-York"
@@ -147,8 +147,8 @@ const CreateJob = () => {
 
           {/* 4th row */}
           <div className="create-job-flex">
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Posting Date</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Job Posting Date</label>
               <input
                 type="Date"
                 placeholder="Ex: 2024-03-23"
@@ -158,8 +158,8 @@ const CreateJob = () => {
                 className="create-job-input"
               />
             </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Experience Level</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Experience Level</label>
               <select
                 name="experienceLevel"
                 onChange={handleChange}
@@ -175,7 +175,7 @@ const CreateJob = () => {
 
           {/* 5th row */}
           <div>
-            <label className="block mb-2 text-lg">Required Skill Sets</label>
+            <label className="CreateJobJobTitle">Required Skill Sets</label>
             <CreatableSelect       
               defaultValue={selectedOption}
               onChange = {setSelectedOption}
@@ -188,8 +188,8 @@ const CreateJob = () => {
 
           {/* 6th row */}
           <div className="create-job-flex">
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Company Logo</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Company Logo</label>
               <input
                 type="url"
                 placeholder="Paste your company logo URL: https://weLive.com/img1"
@@ -199,8 +199,8 @@ const CreateJob = () => {
                 className="create-job-input"
               />
             </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Employment Type</label>
+            <div className="CreateJobFlexUnder">
+              <label className="CreateJobJobTitle">Employment Type</label>
               <select
                 name="employmentType"
                 onChange={handleChange}
@@ -215,10 +215,10 @@ const CreateJob = () => {
           </div>
 
           {/* 7th row */}
-          <div className="w-full">
-            <label className="block mb-2 text-lg">Job Description</label>
+          <div style={{width:100}}>
+            <label className="CreateJobJobTitle">Job Description</label>
             <textarea
-              className="w-full pl-3 py-1.5 focus:outline-none placeholder:text-gray-700"
+              className="CreateJobDescription"
               rows={6}
               placeholder="Job Description"
               
@@ -229,8 +229,8 @@ const CreateJob = () => {
           </div>
 
           {/* Last row */}
-          <div className="w-full">
-            <label className="block mb-2 text-lg">Job Posted By</label>
+          <div style={{width:100}}>
+            <label className="CreateJobJobTitle">Job Posted By</label>
             <input
               type="email"
               placeholder="your email"
@@ -243,8 +243,7 @@ const CreateJob = () => {
 
           <input
             type="submit"
-            className="block mt-12 bg-blue text-white font-semibold px-8 py-2
-           rounded-sm-cursor-pointer"
+            className="CreateJobSubmitButton"
           />
         </form>
       </div>
