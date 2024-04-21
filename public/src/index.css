@@ -6,18 +6,22 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 body,
 button,
 input {
   font-family: "Josefin Sans", sans-serif;
+  color: black;
 }
 
 body {
+  background-color: #242527;
   max-height: 100vh;
   max-width: 100vw;
   overflow: hidden;
+  border: 1px solid #222831;
 }
 
 .Toastify__toast-theme--dark {

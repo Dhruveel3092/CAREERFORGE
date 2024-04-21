@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import img1 from "../assets/homepage.jpg";
 import img2 from "../assets/all.jpg";
 import img3 from "../assets/res.jpg"
+import { useNavigate } from "react-router-dom";
 import 'animate.css/animate.css';
 import { useInView } from 'react-intersection-observer';
 import AboutUs from "./AboutUs"
@@ -12,6 +13,7 @@ import  Footer  from './Footer';
 import './Front.css'
 
 const Front = () => {
+  const navigate = useNavigate();
   const pageStyle = {
     background: '#251B37',
     minHeight: '100vh',
@@ -19,7 +21,7 @@ const Front = () => {
     flexDirection: 'row',
     alignItems: 'center',
   };
-
+  const [currentUser, setCurrentUser] = useState(undefined);
   const [ref1, inView1] = useInView({
     triggerOnce: true,
     rootMargin: '-100px 0px',
@@ -35,13 +37,32 @@ const Front = () => {
     rootMargin: '-100px 0px',
   });
 
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
+       if(response.data.user) setCurrentUser(response.data.user);
+        // console.log("current",currentUser)
+        // console.log("response",response.data.user)
+      
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+
+    };
+
+    
+    fetchData();
+  }, []);
+
   return (
     <>
     <Element name="Front">
       <nav className='navb'>
-       <Link to='/Front' className='link-na'>Home</Link>
-       <Link to='/login' className='link-na'>Sign-up</Link>
-       <Link to='/register' className='link-na'>Sign-in</Link>
+       <Link to='/' className='link-na'>Home</Link>
+       <Link to='/login' className='link-na'>Sign-in</Link>
+       <Link to='/register' className='link-na'>Sign-up</Link>
       </nav>
       <div style={pageStyle}>
         <div className="container-ext">

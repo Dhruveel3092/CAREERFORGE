@@ -146,7 +146,6 @@ const StyledPosts = styled.div`
   }
 
   /* Additional styling for the content */
-  // background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+   border: 1px solid #242527;
+   border-radius: 8px;
 `;

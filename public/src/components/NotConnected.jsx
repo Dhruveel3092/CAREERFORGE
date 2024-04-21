@@ -9,7 +9,7 @@ import { Space, Spin } from "antd";
 import Topbar from "../components/Topbar/index";
 
 function NotConnected( ) {
-  const [currentUser,setCurrentUser]=useState([]);
+  const [currentUser,setCurrentUser]=useState(undefined);
     const [users,setUsers]=useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -65,7 +65,7 @@ function NotConnected( ) {
     <Topbar currentUser={currentUser} />
     <Connect>
     <div className="connections-main">
-        {users && users.map((user)=>{    
+        {(users.length==0) ? (<h1 style={{color:"white"}}>All user are already connected :)</h1>) : users.map((user)=>{    
             return <ConnectedUser user={user} getCurrentUser={getCurrentUser}>
 
             </ConnectedUser>
@@ -109,20 +109,20 @@ const Connect = styled.div`
   padding-top:40px;
   padding-bottom:70px;
   text-align: center;
-
-  border: 1px solid #bbbbbb;
-  background-color: white;
+  background-color: #242527;
   border-radius: 10px;
-  max-height: 700px; /* Set maximum height */
+  height: 100vh; /* Set maximum height */
   overflow-y: auto; /* Enable vertical scrolling */
     .grid-child {
-      border: 1px solid #bbbbbb;
+      border: 1px solid #4f5051aa;
       width: 250px;
       height: 330px;
       margin: 10px;
       padding: 10px;
       display: flex;
-  
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      color:white;
+      background-color: #31363F;
       align-items: center;
       flex-direction: column;
       border-radius: 10px;

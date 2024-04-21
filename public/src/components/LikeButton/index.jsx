@@ -151,10 +151,10 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
             {reacted === "Mind_Blowing" && <img src={mind_blown} className="icon" />}
             </>
           ) : (
-            <AiOutlineLike size={30} />
+            <AiOutlineLike  size={30} />
           )}
 
-          <p className={`black ${reacted ? reacted : ''}`} >{ reacted ? `${reacted}` : "Like"}</p>
+          <p className={`white ${reacted ? reacted : ''}`} >{ reacted ? `${reacted}` : "Like"}</p>
 
           {currentUser && <div className="hover-icons">
             <img src={like} className="icon" onClick = {(e)=>handleReaction("Like",e)} size={30} />
@@ -178,11 +178,11 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
           {
             <AiOutlineComment
               size={30}
-              color={showCommentBox ? "#0a66c2" : "#212121"}
+              color={showCommentBox ? "#0a66c2" : "white"}
             />
           }
 
-          <p className={showCommentBox ? "blue" : "black"}>Comments</p>
+          <p className={showCommentBox ? "blue" : "white"}>Comments</p>
         </div>
         {
           copyLinkNotification ?

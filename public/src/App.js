@@ -23,9 +23,9 @@ import Front from "./pages/Front";
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes >
         <Route path="/register" element={<Register />} />
-        <Route path="/Front" element={<Front />} />
+        <Route path="/" element={<Front />} />
         <Route path="/login" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<SearchBar />} />  

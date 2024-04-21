@@ -441,7 +441,7 @@ export default function CreateResume() {
                                         <div class = "cv-form-row cv-form-row-skills">
                                             <div class = "form-elem">
                                                 <label for = "" class = "form-label">Skill</label>
-                                                <input name = "skill" type = "text" class = "form-control skill" id = ""  
+                                                <input name = "skill" type = "text" class = "form-control" id = ""  
                                                 onChange={ (e)=>{
                                                     acc.skill=e.target.value
                                                     setach([]);

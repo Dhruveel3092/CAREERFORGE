@@ -80,9 +80,9 @@ export default function Login() {
     <>
       <FormContainer>
       <nav className='navb'>
-       <Link to='/Front' className='link-na'>Home</Link>
-       <Link to='/login' className='link-na'>Sign-up</Link>
-       <Link to='/register' className='link-na'>Sign-in</Link>
+       <Link to='/' className='link-na'>Home</Link>
+       <Link to='/login' className='link-na'>Sign-in</Link>
+       <Link to='/register' className='link-na'>Sign-up</Link>
       </nav>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
         

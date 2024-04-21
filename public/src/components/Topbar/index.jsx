@@ -170,7 +170,7 @@ export default function Topbar( { currentUser } ) {
   }, [currentUser]);
 
   return (<>
-    <div className="topbar-main">
+    <div className="top-main">
       <div className="react-icons">
       <img src={app_logo} alt="app_logo" className="app-logo" onClick={()=>navigate("/home")}/>
         <div className="icon-container">

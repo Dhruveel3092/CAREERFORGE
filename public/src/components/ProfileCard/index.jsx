@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import PostsCard from "../PostsCard";
 import FileUploadModal from "../FileUploadModal";
+import styled from "styled-components";
 import axios from "axios";
 import { HiOutlinePencil } from "react-icons/hi";
 import { getProfileData, getSignature , setAvatarImage , addSkillAPI, addEducationAPI, addExperienceAPI } from "../../utils/APIRoutes";
@@ -18,6 +19,7 @@ import EducationAddModal from "../EducationAddModal";
 import Education from "../Education";
 import ExperienceAddModal from "../ExperienceAddModal";
 import Experience from "../Experience";
+import { Container } from "@mui/material";
 
 export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurrentUser } ){
     const [user,setUser] = useState(undefined);
@@ -471,3 +473,8 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
       </>
     );
 }
+
+
+
+
+ 

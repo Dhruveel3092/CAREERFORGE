@@ -54,9 +54,10 @@ export default SearchBar;
 const StyledSearchBarContainer = styled.div`
   position: relative;
   width: 250px;
+
   height: 380px; /* Adjusted height for 6 full buttons + half button + title */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px black;
 `;
 
 const StyledCloseButton = styled.button`
