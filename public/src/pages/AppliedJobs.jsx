@@ -4,6 +4,8 @@ import JobsDes from './JobsDes';
 import Card from '../components/Card';
 import { getAppliedJobsByUserId, host } from "../utils/APIRoutes"; 
 import axios from 'axios';
+import styled from "styled-components";
+import Topbar from '../components/Topbar';
 const AppliedJobs = () => {
   const [currentUser,setCurrentUser] = useState(undefined)
   const [jobs,setJobs] = useState([]);
@@ -73,6 +75,11 @@ const main = (jobs) => {
 }
 const result = main(jobs);
 return (
+  <StyledHome>
+  <Top>
+    <Topbar currentUser={currentUser}/>
+  </Top>
+  <StyledPosts>
   <div className='postedJobsOuterMost'> {/* Utilizing flexbox */}
   {/* job cards */}
   <div className='JobsCard'>
@@ -96,7 +103,45 @@ return (
       }
   </div>
 </div>
+</StyledPosts>
+    </StyledHome>
 )
 }
+const StyledHome = styled.div`
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+`;
 
+const Top = styled.div`
+  position: sticky;
+  top: 0px;
+  z-index:100;
+`
+
+const StyledPosts = styled.div`
+  flex: 1;
+  padding: 10px;
+
+  /* Webkit browsers (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+    border-radius: 8px;
+  }
+
+  /* Additional styling for the content */
+  // background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+`;
 export default AppliedJobs;

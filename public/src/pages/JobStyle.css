@@ -23,6 +23,7 @@ background-color: #ffffff;
     padding: 1rem; 
 grid-column: span 2 / span 2; 
 border-radius: 0.125rem; 
+width: 80%;
 background-color: #ffffff; 
 }
 .JobsCardInner{
@@ -414,17 +415,16 @@ padding-top: 3rem;
 padding-bottom: 3rem; 
 justify-content: center; 
 align-items: flex-start;
-background: #FAFAFA;
 height: 660px;
-overflow-y: scroll;
+
+background: #FAFAFA;
 grid-column: span 2 / span 2; 
 }
 .CreateJobOuterMost{
   padding-left: 1rem;
 padding-right: 1rem; 
 max-width: 1536px; 
-height: 660px;
-overflow-y: scroll;
+
 @media (min-width: 1280px) { 
   padding-left: 6rem;
 padding-right: 6rem; 

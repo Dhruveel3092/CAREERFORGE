@@ -15,7 +15,8 @@ export default function JobsCard ({jobId, applicant ,currentUser ,allApplicants,
     const getStatusOfJob = async () => {
       try{
       console.log(currentUser);
-      const res = await axios.get(`${getStatusOfJobApplication}/${applicant.applicantIdid}/${jobId}`);
+      console.log(applicant);
+      const res = await axios.get(`${getStatusOfJobApplication}/${applicant.applicantId._id}/${jobId}`);
       return res.data;
       }
       catch(error){
@@ -44,7 +45,7 @@ export default function JobsCard ({jobId, applicant ,currentUser ,allApplicants,
     };
   
     fetchStatusOfJob();
-  }, [currentUser._id, jobStatus]); // Dependency array includes currentUser._id and isApplied
+  }, [currentUser._id, jobStatus]); 
   
 
     const handleReject = async () => {

@@ -4,6 +4,9 @@ import CreatableSelect from "react-select/creatable";
 import axios from "axios";
 import { host } from "../utils/APIRoutes"; 
 import { addJobAPI } from "../utils/APIRoutes";
+import Topbar from "../components/Topbar";
+import styled from "styled-components";
+
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [job,setJob] = useState({skills:[]});
@@ -53,7 +56,19 @@ const CreateJob = () => {
      updateJob(); // updateJob is calling postJob
   };
   
+  const getCurrentDate = ()=> {
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
+    const year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + 1;
+    let day = currentDate.getDate();
 
+    // Ensure month and day are in double digits
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+
+    return `${year}-${month}-${day}`;
+  }
   const options = [
     { value: "JavaScript", label: "JavaScript" },
     { value: "C++", label: "C++" },
@@ -65,7 +80,13 @@ const CreateJob = () => {
     { value: "Redux", label: "Redux" }
   ];
   return (
+<StyledHome>
+        <Top>
+          <Topbar currentUser={currentUser}/>
+        </Top>
+        <StyledPosts>
     <div className="CreateJobOuterMost ">
+       
       {/* form */}
       <div className="CreateJobForm">
 
@@ -156,6 +177,8 @@ const CreateJob = () => {
                 id = "jobPostingDate"
                 onChange={handleChange}
                 className="create-job-input"
+                min={getCurrentDate()}
+
               />
             </div>
             <div className="CreateJobFlexUnder">
@@ -227,28 +250,55 @@ const CreateJob = () => {
                 onChange={handleChange}
             ></textarea>
           </div>
-
-          {/* Last row */}
-          <div style={{width:100}}>
-            <label className="CreateJobJobTitle">Job Posted By</label>
-            <input
-              type="email"
-              placeholder="your email"
-              name = "jobPostedBy"
-                id = "jobPostedBy"
-                onChange={handleChange}
-              className="create-job-input"
-            />
-          </div>
-
           <input
             type="submit"
             className="CreateJobSubmitButton"
+            style={{display: 'block', margin: '2rem auto 0', fontSize:'18px'}}
           />
         </form>
       </div>
     </div>
+    </StyledPosts>
+    </StyledHome>
   );
 };
 
 export default CreateJob;
+
+        
+const StyledHome = styled.div`
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+`;
+
+const Top = styled.div`
+  position: sticky;
+  top: 0px;
+  z-index:100;
+`
+
+const StyledPosts = styled.div`
+  flex: 1;
+  padding: 10px;
+
+  /* Webkit browsers (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+    border-radius: 8px;
+  }
+
+  /* Additional styling for the content */
+  // background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+`;
