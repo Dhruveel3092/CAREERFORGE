@@ -95,9 +95,8 @@ const userSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true,
   }],
   appliedJobs:[{
-    AppliedJobId:{type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true},
-    ApplicationStatus: {type:String}
-    
+    appliedJobId:{type:mongoose.Schema.Types.ObjectId, ref:'Job',required:true},
+    applicationStatus: {type:String}
   }]
 });
 

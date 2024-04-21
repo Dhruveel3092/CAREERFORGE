@@ -19,6 +19,7 @@ import Jobs from "./pages/Jobs";
 import CreateJob from "./pages/CreateJob";
 import PostedJobs from "./pages/PostedJobs";
 import AppliedJobs from "./pages/AppliedJobs";
+import ApplicantsDetails from "./pages/ApplicantsDetails";
 export default function App() {
   return (
     <BrowserRouter>
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/post-job" element={<CreateJob />}/>
         <Route path="/allPostedJobs" element={<PostedJobs/>}/>
         <Route path="/allAppliedJobs" element={<AppliedJobs/>}/>
+        <Route path="/applicantDetails/:jobId" element={<ApplicantsDetails/>}/>
         
       </Routes>
     </BrowserRouter>

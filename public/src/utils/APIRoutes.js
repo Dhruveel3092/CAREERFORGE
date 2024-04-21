@@ -49,3 +49,5 @@ export const addApplicantDetails = `${host}/api/addApplicantDetails`;
 export const addAppliedJob = `${host}/api/addAppliedJob`;
 export const getAppliedJobsByUserId = `${host}/api/getAppliedJobsByUserId`;
 export const getStatusOfJobApplication = `${host}/api/getStatusOfJobApplication`;
+export const getApplicantsDetails = `${host}/api/getApplicantsDetails`;
+export const setApplicationStatus = `${host}/api/setApplicationStatus`;

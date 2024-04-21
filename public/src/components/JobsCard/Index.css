@@ -1,0 +1,215 @@
+.jobs-card {
+    width: 730px;
+    min-height: auto;
+    background-color: whitesmoke;
+    margin-top: 30px;
+    border: 1px solid #b7b7b7;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    .post-image-wrapper {
+      display: flex;
+      padding: 15px;
+      gap: 10px;
+    }
+    .user-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .job-image-wrapper {
+      display: flex;
+      padding: 15px;
+      gap: 10px;
+      position: relative;
+      align-items: center;
+    }
+    .profile-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  
+    .name {
+      font-family: system-ui, sans-serif;
+      font-size: 18px;
+      color: #212121;
+      font-weight: 600;
+      margin: 0px 0 0 0px;
+      cursor: pointer;
+      transition: background-color 0.7s ease;
+      margin-right: auto;
+    }
+    .name:hover {
+      color: #2980b9; /* change color on hover */
+      text-decoration: underline;
+    }
+ 
+    .headline {
+      font-family: system-ui, sans-serif;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.6);
+      font-weight: 500;
+      margin: 0px 0 0 0px;
+      cursor: pointer;
+    }
+   
+  
+    .status {
+      text-align: left;
+      margin: 10px 20px 0 20px;
+      font-family: Inter, sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.9);
+    }
+    .status ol,
+    .status ul{
+      margin-left: 30px;
+    }
+  }
+  
+  .action-container {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    display: flex;
+    top: 10px;
+    .action-icon {
+      color: #474747;
+      padding: 10px;
+    }
+  
+    .action-icon:hover {
+      color: #000000;
+      background-color: #b7b7b7;
+      padding: 10px;
+      border-radius: 50%;
+    }
+  }
+  
+  /* .post-image {
+    cursor: pointer;
+    width: 100%;
+  } */
+  
+  .modal {
+    margin-top: 30px;
+  }
+  
+  .jobs-card .status {
+    word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
+    overflow-wrap: break-word; /* Similar to word-wrap, added for better compatibility */
+    max-width: 100%; /* Limit the maximum width of the text */
+  }
+  
+  
+  .slider-image {
+    width: 100%;
+    height: auto;
+  }
+  
+ 
+  
+  /* Your own default Slick Carousel styles */
+  
+  /* Hide the dots */
+  .slick-dots {
+    display: none !important;
+  }
+  
+  /* Styles for the arrow icons with LinkedIn-like design */
+  .slick-prev,
+  .slick-next {
+    font-size: 0; /* Hide text */
+    color: transparent; /* Hide text */
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    background-color: rgba(0, 0, 0, 0); /* Background color for buttons (LinkedIn blue) */
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .slick-prev {
+    left: 5px; /* Adjust left position for prev button */
+  }
+  
+  .slick-next {
+    right: 5px; /* Adjust right position for next button */
+  }
+  
+  .slick-prev::before {
+    content: '\003C'; /* Unicode left arrow character for prev */
+    font-size: 40px; /* Adjust arrow size */
+    color: #ffffff; /* Arrow color (white) */
+  }
+  
+  .slick-next::before {
+    content: '\003E'; /* Unicode right arrow character for next */
+    font-size: 40px; /* Adjust arrow size */
+    color: #ffffff; /* Arrow color (white) */
+  }
+  
+  .slick-prev:hover::before,
+  .slick-next:hover::before {
+    color: #6d6b6b; /* Change arrow color on hover (black) */
+    /* Add any additional styles for hover effect */
+  }
+  
+  .slick-disabled {
+    display: none !important;
+  }
+  .buttons{
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  .resumeButton{
+    background-color: #0906a8;
+    color: #fff;
+    border: 1px solid #0906a8;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-left: 3rem;
+  }
+  .AcceptButton{
+    background-color: #119f26;
+    color: #fff;
+    border: 1px solid #119f26;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 9rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .RejectButton{
+    background-color: #ef130c;
+    color: #fff;
+    border: 1px solid #ef130c;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-left: 2rem;
+  }

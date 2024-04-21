@@ -34,8 +34,8 @@ const AppliedJobs = () => {
 
   const getAppliedJobs = async () => {
     if(currentUser){const res = await axios.get(`${getAppliedJobsByUserId}/${currentUser._id}`);
-    const jobs = res.data.map(item => item.AppliedJobId);
-    await setJobs(jobs);}
+    console.log(res.data);
+    setJobs(res.data);}
   }
 
   useEffect(() => {
@@ -66,10 +66,10 @@ const AppliedJobs = () => {
      }
     }
 const main = (jobs) => {
-    let appliedJobs = jobs;
+    let appliedJobs = jobs
     const {startIndex,endIndex} = calculatePageRange();
     appliedJobs = appliedJobs.slice(startIndex,endIndex);
-    return appliedJobs.map((data,i) => <Card key = {i} data = {data} currentUser = {currentUser}></Card>);
+    return appliedJobs.map((data,i) => <Card key = {i} data = {data.appliedJobId} currentUser = {currentUser}></Card>);
 }
 const result = main(jobs);
 return (

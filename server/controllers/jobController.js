@@ -113,10 +113,10 @@ const Job = model.Job;
       const resumeUrl = req.body.fileUrl;
      
       const job = await Job.findById(jobPostId);
-       await job.applicants.push({userId : userId, resumeLink: resumeUrl});
+       await job.applicants.push({applicantId : userId, resumeLink: resumeUrl ,applicationStatus:"Pending"});
        await job.save();
        console.log(job)
-      res.json(job);
+       return res.json(job);
      }
      catch(err){
       console.log(err)
@@ -130,8 +130,8 @@ const Job = model.Job;
       const user = await User.findById(userId);
       // Create an object with appliedJobId and ApplicationStatus
       const application = {
-        AppliedJobId: appliedJobId,
-        ApplicationStatus: "Pending"
+        appliedJobId: appliedJobId,
+        applicationStatus: "Pending"
     };
     // Push the application object into the appliedJobs array
       await user.appliedJobs.push(application);
@@ -147,7 +147,7 @@ const Job = model.Job;
    module.exports.getAppliedJobsByUserId = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const user = await User.findById(userId).populate('appliedJobs.AppliedJobId');
+        const user = await User.findById(userId).populate('appliedJobs.appliedJobId');
         
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -174,12 +174,12 @@ const Job = model.Job;
            }
    
            // Check if the user's appliedJobs array contains the jobId
-           const jobIndex = user.appliedJobs.findIndex(appliedJob => String(appliedJob.AppliedJobId) === jobId);
+           const jobIndex = user.appliedJobs.findIndex(appliedJob => String(appliedJob.appliedJobId) === jobId);
    
            if (jobIndex !== -1) {
                return res.json(user.appliedJobs[jobIndex]); // Job found
            } else {
-               return res.json({ AppliedJobId: null,ApplicationStatus: "Apply" }); // Job not found
+               return res.json({ appliedJobId: null,applicationStatus: "Apply" }); // Job not found
            }
           } 
           catch(error) {
@@ -187,4 +187,64 @@ const Job = model.Job;
              return res.status(500).json({ error: 'Internal Server Error' });
           }
         };
-   
+   module.exports.getApplicantsDetails = async (req,res) => {
+     try{
+      const jobId = await req.params.jobId;
+     const job =  await Job.findById(jobId).populate('applicants.applicantId')
+     await console.log(job.applicants);
+     if(job)
+     return res.json(job.applicants);
+    else 
+      return res.status(404);
+    }
+    catch(err){
+      res.json(err);
+    }
+   }
+
+ module.exports.setApplicationStatus = async (req,res) => {
+  try {
+    const jobId = req.params.jobId;
+    const userId = req.params.userId;
+    const applicationStatus = req.body.applicationStatus;
+
+    // Find the user by ID
+    const user = await User.findById(userId).populate('appliedJobs');
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Find the index of the applied job in the appliedJobs array
+    const appliedJobIndex = user.appliedJobs.findIndex(appliedJob => String(appliedJob.appliedJobId) === jobId);
+
+    if (appliedJobIndex === -1) {
+        return res.status(404).json({ error: 'Applied job not found' });
+    }
+
+    // Update the application status of the found applied job
+    user.appliedJobs[appliedJobIndex].applicationStatus = applicationStatus;
+
+    // Save the updated user document
+    await user.save();
+    
+    const job = await Job.findById(jobId).populate('applicants');
+
+    const applicantIndex = job.applicants.findIndex(applicant => String(applicant.applicantId) === userId);
+    if(applicantIndex == -1){
+      return res.status(404).json("Applicant not found");
+    }
+    job.applicants[applicantIndex].applicationStatus = applicationStatus;
+    
+    await job.save();
+
+    return res.status(200).json({user,job});
+} catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
+}
+};
+    
+    
+
+ 

@@ -41,20 +41,21 @@ const Card = ({ data, currentUser }) => {
           console.log(currentUser._id);
           const data = await getStatusOfJob();
           await console.log(data);
-          await (data.AppliedJobId) ? 
+          await (data.appliedJobId) ? 
              (setIsApplied(true))
-             (setApplicationStatus(data.ApplicationStatus) ) :  
-             (setIsApplied(false)) (setApplicationStatus(data.ApplicationStatus)) 
+             (setApplicationStatus(data.applicationStatus) ) :  
+             (setIsApplied(false)) (setApplicationStatus(data.applicationStatus)) 
           await console.log(isApplied);
           await console.log(ApplicationStatus);
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error fetching status of job application:', error);
       }
     };
   
     fetchStatusOfJob();
-  }, [currentUser._id, isApplied]); // Dependency array includes currentUser._id and isApplied
+  }, [currentUser._id, ApplicationStatus, isApplied]); // Dependency array includes currentUser._id and isApplied
   
 
 
@@ -122,7 +123,7 @@ async function handleUpload(file) {
             fileUrl=filesUrl;
             await axios.post(`${addApplicantDetails}/${_id}`,{
               userId : currentUser._id,
-              fileUrl : fileUrl
+              fileUrl : filesUrl
             });
             await axios.post(`${addAppliedJob}/${currentUser._id}`,{
               appliedJobId : _id
@@ -130,7 +131,7 @@ async function handleUpload(file) {
             const data = await getStatusOfJob();
             await console.log(data)
             await setIsApplied(true);
-            await setApplicationStatus(data.ApplicationStatus);
+            await setApplicationStatus(data.applicationStatus);
         } catch (error) {
           console.error('Error uploading multiple files:', error);
           throw error;
@@ -168,12 +169,16 @@ async function handleUpload(file) {
           {(jobPoster !== currentUser._id) ?
             (isApplied === false ?
               <button className='applyButton' onClick={handleClick}>Apply</button> :
-              <button disabled className='appliedButton'>{ApplicationStatus}</button>
+              <button disabled className='appliedButton'   
+              style={{
+                backgroundColor: ApplicationStatus === 'Accepted' ? 'green' : (ApplicationStatus === 'Rejected' ? 'red' : 'rgb(72, 72, 242)')
+              }}  >     {ApplicationStatus}  
+                  </button>
             )
-            : <button  className='viewBtn'>View Applications</button>
+            : <button  className='viewBtn' onClick={()=>navigate(`/applicantDetails/${_id}`)}>View Applications</button>
 
           }
-        </div>
+        </div>-
         
         </div>
       </div>

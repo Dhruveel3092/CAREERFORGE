@@ -13,6 +13,8 @@ router.get('/getAllJobs',jobController.getAllJobs)
 .post("/addApplicantDetails/:jobPostId",jobController.addApplicantDetails)
 .post("/addAppliedJob/:userId",jobController.addAppliedJob)
 .get("/getAppliedJobsByUserId/:userId",jobController.getAppliedJobsByUserId)
-.get("/getStatusOfJobApplication/:userId/:jobId",jobController.getStatusOfJobApplication);
+.get("/getStatusOfJobApplication/:userId/:jobId",jobController.getStatusOfJobApplication)
+.get("/getApplicantsDetails/:jobId",jobController.getApplicantsDetails)
+.post("/setApplicationStatus/:jobId/:userId", jobController.setApplicationStatus)
 
 module.exports = router;

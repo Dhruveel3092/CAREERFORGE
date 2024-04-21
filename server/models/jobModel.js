@@ -1,3 +1,4 @@
+const { application } = require('express');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 function validateMaxPrice(value) {
@@ -9,8 +10,9 @@ const skillSchema = new Schema({
     label: { type: String, required: true }
   });
   const applicantSchema = new Schema({
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    resumeLink: { type: String, required: true }
+    applicantId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    resumeLink: { type: String, required: true },
+    applicationStatus:{type:String , default:"Pending"}
   })
 const jobSchema = new Schema({
         user : {type:mongoose.Schema.Types.ObjectId, ref:"User", required:'true'},
@@ -24,7 +26,7 @@ const jobSchema = new Schema({
         },
         salaryType: {type:String, required:true},
         jobLocation: {type:String, default:"Anywhere"},
-        jobPostingDate: {type:String, required:true},
+        jobPostingDate: {type:String, required:true },
         experienceLevel: {type:String, required:true},
         employmentType: {type:String, required:true},
         jobDescription: {type:String},
