@@ -30,8 +30,8 @@ export default function Post() {
       //  console.log("current",currentUser)
       //  console.log("response",response.data.user)
     } catch (error) {
-      console.log(error)
       navigate("/login")
+      console.log(error)
     }
 
     };  

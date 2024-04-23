@@ -222,9 +222,44 @@ export default function Topbar( { currentUser } ) {
                   New Request
                 </MenuItem>
               </Menu>
+
         <div className="icon-container">
-          <BsBriefcase size={30} className="react-icon" onClick={()=>navigate("/createResume")}/>
-          <span className="icon-name">Jobs</span>
+          <BsBriefcase size={30} className="react-icon" onClick={handleMenuOpen}/>
+                <span className="icon-name">Jobs</span>
+          <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/job-portal"
+                >
+                  Start search
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/post-job"
+                >
+                  Post a Job
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/allPostedJobs"
+                >
+                 My Posted Jobs
+                </MenuItem>
+                <MenuItem
+                  onClick={handleNavAndClose}
+                  component={Link}
+                  to="/allAppliedJobs"
+                >
+                  My Applied Jobs
+                </MenuItem>
+              </Menu>
         </div>
         <div className="icon-container">
 

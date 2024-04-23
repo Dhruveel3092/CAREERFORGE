@@ -19,7 +19,11 @@ import CreateResume from "./components/CreateResume";
 import Changepass from "./components/Changepass";
 import Front from "./pages/Front";
 
-
+import Jobs from "./pages/Jobs";
+import CreateJob from "./pages/CreateJob";
+import PostedJobs from "./pages/PostedJobs";
+import AppliedJobs from "./pages/AppliedJobs";
+import ApplicantsDetails from "./pages/ApplicantsDetails";
 export default function App() {
   return (
     <BrowserRouter>
@@ -41,7 +45,13 @@ export default function App() {
         <Route path="/allPosts/:username/:userId" element={<AllPosts />} />
         <Route path="/allSkills/:username/:userId" element={<AllSkills />}/>
         <Route path="/allEducation/:username/:userId" element={<AllEducation />}/>
-        <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>
+        <Route path="/allExperience/:username/:userId" element={<AllExperience />}/>  
+        <Route path="/job-portal" element={<Jobs />}/>
+        <Route path="/post-job" element={<CreateJob />}/>
+        <Route path="/allPostedJobs" element={<PostedJobs/>}/>
+        <Route path="/allAppliedJobs" element={<AppliedJobs/>}/>
+        <Route path="/applicantDetails/:jobId" element={<ApplicantsDetails/>}/>
+        
       </Routes>
     </BrowserRouter>
   );

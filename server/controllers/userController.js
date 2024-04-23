@@ -251,7 +251,6 @@ exports.sendconnect = async (req, res) => {
   console.log(data);
   res.status(200).json(data);
 
-
   const newUser = data.newUser;
   const otheruser = data.otheruser;
   const receiver = await User.findOne({ email: otheruser });
