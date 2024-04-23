@@ -9,6 +9,7 @@ import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import './JobStyle.css'
 import axios  from 'axios';
+import JobsRightSection from '../components/JobsRightSection'
 const Jobs = () => {
 
   const [isLoading,setIsLoading] = useState(true)
@@ -167,7 +168,7 @@ const Jobs = () => {
 
         {/* right side */}
 
-        <div className='JobsLeftRightSide'>Right</div>
+        <div className='JobsLeftRightSide'><JobsRightSection/></div>
         
       </div>
     </div>

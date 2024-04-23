@@ -6,7 +6,7 @@ import { host } from "../utils/APIRoutes";
 import { addJobAPI } from "../utils/APIRoutes";
 import Topbar from "../components/Topbar";
 import styled from "styled-components";
-
+import '../pages/JobStyle.css'
 const CreateJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [job,setJob] = useState({skills:[]});
