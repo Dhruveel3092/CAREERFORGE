@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import {FiMapPin, FiSearch} from 'react-icons/fi'
 import '../pages/JobStyle.css';
-const Banner = ({query,handleInputChange}) => {
+const Banner = ({titlequery,handleTitleChange,locationquery,handleLocationChange}) => {
 
   return (
     <div className='BannerOuterDiv'>
-      <h1 className='BannerHeading'>Find your <span style={{color:'#0000D0'}}>new Job</span> today</h1>
+      <h1 className='BannerHeading'>Find your <span style={{color:'white'}}>new Job</span> today</h1>
       <p className='BannerSubHeading'>Thousands of jobs in the computer, engineering 
         and technology sectors are wating for you</p>
 
@@ -13,21 +13,23 @@ const Banner = ({query,handleInputChange}) => {
         <div className='BannerFormOuterDiv'>
 
             <div className='BannerInputField'>
-                <input type="text" name='title' id='title' placeholder='What position are you looking for?'className='BannerJobtitleSearch'
-                onChange={handleInputChange}
-                value={query}
+                <input type="text" name='jobTitle' id='jobTitle' placeholder='What position are you looking for?'className='BannerJobtitleSearch'
+                onChange={handleTitleChange}
+                value={titlequery}
+                 
                 />
-                <FiSearch className='BannerIcon'/>           
+                  <FiSearch className='BannerIcon'/>        
             </div>
 
             <div className='BannerLocationSerachInputField'>
-                <input type="text" name='title' id='title' placeholder='Location'className='BannerloactionSearch'
-                onChange={handleInputChange}
+                <input type="text" name='jobLocation' id='jobLocation' placeholder='Location'className='BannerloactionSearch'
+                onChange={handleLocationChange}
+                value={locationquery}
                 />
                 <FiMapPin className='BannerIcon'/>           
             </div>
             
-            <button type='submit' className='BannerSubmit'>Search</button>
+            {/* <button type='submit' className='BannerSubmit'>Search</button> */}
         </div>
      </form>
 

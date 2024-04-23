@@ -16,7 +16,8 @@ const Jobs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [selectedCategory,setSelectedCategory] = useState(null)
-  const [query,setQuery] = useState("")
+  const [titlequery,setTitleQuery] = useState("")
+  const [locationquery,setLocationQuery] = useState("")
   const [currentUser,setCurrentUser] = useState(undefined)
   const [jobs,setJobs] = useState([])
   const navigate = useNavigate()
@@ -44,14 +45,25 @@ const Jobs = () => {
   
   
 
-  const handleInputChange = (event) => {
-      setQuery(event.target.value)
+  const handleTitleChange = (event) => {
+    setTitleQuery(event.target.value);
+  }
+  const handleLocationChange = (event) => {
+    setLocationQuery(event.target.value);
   }
   const getJobs = async () => {
     const res = await axios.get(`${getJobsAPI}`);
     console.log(res.data);
     setJobs(res.data);
   }
+  // ----------filter jobs by title-------------
+  
+  const filteredItems1 = jobs.filter((job)=>job.jobTitle.toLowerCase().indexOf(titlequery.toLowerCase()) !== -1);
+  const filteredItems2 = jobs.filter((job) => job.jobLocation.toLowerCase().indexOf(locationquery.toLowerCase()) !== -1) ;
+  console.log(filteredItems1,filteredItems2);
+  const filteredItems = filteredItems1.filter((job1) => {
+    return filteredItems2.some((job2) => job2 === job1);
+});
   useEffect(() => {
     if(currentUser){
       console.log(currentUser);
@@ -61,9 +73,6 @@ const Jobs = () => {
   },[currentUser])
   // console.log(jobs)
 
-  // ----------filter jobs by title-------------
-  
-  const filteredItems = jobs.filter((job)=>job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   
   // ----------filtering based on radio buttons-----------
   const handleChange = (event)=>{
@@ -97,9 +106,9 @@ const Jobs = () => {
      }
     }
     // ----------main function----------
-    const filteredData = (jobs,selected, query) => {
+    const filteredData = (jobs,selected, titlequery, locationquery) => {
       let filteredJobs = jobs;
-    if(query){
+    if(titlequery || locationquery){
       filteredJobs = filteredItems
     }
     if(selected){
@@ -124,7 +133,7 @@ const Jobs = () => {
     
   
 
-   const result = filteredData(jobs,selectedCategory,query);
+   const result = filteredData(jobs,selectedCategory,titlequery,locationquery);
   
 
   return (
@@ -134,7 +143,7 @@ const Jobs = () => {
         </Top>
         <StyledPosts>
     <div className="Banner">
-      <Banner query={query} handleInputChange={handleInputChange} />  
+      <Banner titlequery={titlequery} handleTitleChange={handleTitleChange} locationquery = {locationquery} handleLocationChange={handleLocationChange} />  
       {/* Main content */}
       <div className="JobsMainContent">
     
@@ -157,10 +166,10 @@ const Jobs = () => {
          {
            result.length > 0 ? (
                <div className='JobsPagination'>
-                 <button onClick={prevPage} disabled={currentPage === 1}  className='hover:underline'>Previous</button>
+                 <button onClick={prevPage} disabled={currentPage === 1}  className='PreviousButton'>Previous</button>
                  <span className='JobsCardSpan'>Page {currentPage} of {Math.ceil(filteredItems.length / itemsPerPage)}</span>
                  <button onClick={nextPage} disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)}
-                  className='hover:underline'>Next</button>
+                  className='PreviousButton'>Next</button>
                </div>
            ) : ""
          }

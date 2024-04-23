@@ -10,10 +10,9 @@ const JobsRightSection = () => {
     <div>
       <div>
         <h3 className='rightHeading'> <FaRocket/>Get Notified Faster</h3>
-        <p className='rightSectionDetails'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta facere dolor repellat minus similique cumque iusto laudantium eum adipisci vero ex illum, dignissimos rem quisquam modi neque delectus? Cupiditate, nisi.</p>
+        <p className='rightSectionDetails'>Crafting a compelling resume is a pivotal step towards securing your desired position. A well-structured resume not only showcases your skills and experiences but also serves as your first impression on potential employers.</p>
         <button className="CreateJobSubmitButton" onClick={()=>{navigate("/createResume")}} style={{display: 'block', margin: '2rem auto 0', fontSize:'15px' , backgroundColor:'purple', color:'white' , border:'blue' , borderRadius:'10px'}} >Create Your resume</button>
         <div className='rightSectionButtonDiv'>
-
         </div>
       </div>
     </div>

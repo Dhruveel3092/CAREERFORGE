@@ -10,6 +10,8 @@ import 'animate.css/animate.css';
 import { useInView } from 'react-intersection-observer';
 import AboutUs from "./AboutUs"
 import  Footer  from './Footer';
+import axios from 'axios'
+import { host } from '../utils/APIRoutes';
 import './Front.css'
 
 const Front = () => {
