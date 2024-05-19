@@ -3,6 +3,7 @@
 padding-right: 1rem; 
 grid-template-columns: repeat(4, minmax(0, 1fr)); 
 gap: 2rem; 
+color: white;
 
 
 @media (min-width: 768px) { 
@@ -16,15 +17,18 @@ padding-right: 6rem;
 .JobsLeftRightSide{
 padding: 1rem; 
 border-radius: 0.25rem; 
-background-color: #ffffff; 
+background-color: #31363F;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
 .JobsCard{
+  color:white;
     padding: 1rem; 
 grid-column: span 2 / span 2; 
 border-radius: 0.125rem; 
 width: 100%;
-background-color: #ffffff; 
+background-color: #31363f;
+box-shadow: 0 4px 8px 0 rgba(12, 10, 10, 0.755), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .JobsCardInner{
     margin-bottom: 0.5rem; 
@@ -42,7 +46,10 @@ justify-content: center;
 margin-right: 0.5rem; 
 }
 .JobsDes{
-    margin-bottom: 0.5rem; 
+  color:white;
+  background-color: #31363f;
+
+  margin-bottom: 0.5rem; 
 font-size: 1.125rem;
 line-height: 1.75rem; 
 font-weight: 700; 
@@ -54,13 +61,14 @@ gap: 1rem;
 align-items: flex-start; 
 
 /* justify-content: center; */
-border: #f6f9ff 0.5px solid;
+
 border-radius: 7px;
 padding-top: 10px;
 padding-right:5px ;
 margin-left: 2rem;
 margin-right: 2rem;
-background-color: #f6f9ff;
+background-color: #1a1a1c7a;
+box-shadow: 0 4px 8px 0 rgba(20, 7, 7, 0.855), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 margin-bottom: 2rem; /* Adds margin below each .CardSection */
 @media (min-width: 640px) { 
   flex-direction: row; 
@@ -318,7 +326,7 @@ body{
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: #eee;
+  background-color: rgb(226, 217, 217);
   border-radius: 50%;
 }
 
@@ -363,10 +371,13 @@ body{
 .create-job-flex{
   display: flex; 
   flex-direction: column; 
+  row-gap: 0.5rem; 
   justify-content: space-between; 
   align-items: center; 
   @media (min-width: 1024px) { 
     flex-direction: row; 
+   
+
    }}
 
 .create-job-input{
@@ -415,6 +426,7 @@ line-height: 1.75rem;
 font-weight: 500; 
 }
 .postedJobsOuterMost{
+  border:1px solid #242527;
 display: flex; 
 padding-left: 22rem;
 padding-right: 22rem; 
@@ -422,13 +434,19 @@ padding-top: 3rem;
 padding-bottom: 3rem; 
 justify-content: center; 
 align-items: flex-start;
-background: #FAFAFA;
+background-color: #242527;
 grid-column: span 2 / span 2; 
 }
 .CreateJobOuterMost{
-  padding-left: 1rem;
-padding-right: 1rem; 
-max-width: 1536px; 
+ padding-left: 2rem;
+padding-right: 2rem; 
+max-width: 70%;
+margin:0 auto; 
+background-color: #31363F;
+box-shadow: 0 4px 8px 0 rgba(12, 10, 10, 0.755), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+color:white;
+
 
 @media (min-width: 1280px) { 
   padding-left: 6rem;
@@ -440,7 +458,7 @@ padding-right: 6rem;
 padding-right: 1rem; 
 padding-top: 2.5rem;
 padding-bottom: 2.5rem; 
-background: #FAFAFA;
+background-color: #31363F;
 
 @media (min-width: 1024px) { 
   padding-left: 4rem;
@@ -486,7 +504,7 @@ border-radius: 5px;
 font-weight: bold;
 }
 .CreateJobSubmitButton:hover{
-  background-color: #0e558f;
+  background-color: #141414;
   cursor: pointer;
 }
 .applyButton {
@@ -538,9 +556,11 @@ background-color: rgb(240, 238, 238);
 color: rgb(8, 0, 0);
 border: blue;
 border-radius: 4px;
+
 }
 .PreviousButton:hover{
-  text-decoration: underline;
+  color:rgb(236, 229, 229);
+  background-color: rgb(16, 15, 15);
 }
 .myAppliedJobs{
   margin-bottom: 2rem;
@@ -575,9 +595,26 @@ border-radius: 4px;
   margin-bottom: 1rem; 
 font-size: 1rem;
 line-height: 1.5rem; 
-color: #323232;
+color: #e4dfdf;
 }
 .rightSectionButtonDiv{
   margin-top: 1rem; 
 width: 100%; 
+}
+.CreaSubmitButton{
+  margin: 2rem auto 0; 
+  font-size:15px ;
+  padding: 15px;
+   background-color:purple;
+    color:white;
+    border:blue ;
+   border-radius: 10px;
+}
+.CreaSubmitButton:hover{
+ 
+   background-color:rgb(65, 12, 65);
+    color:white;
+    cursor:pointer;
+    border:blue ;
+   border-radius: 10px;
 }

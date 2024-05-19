@@ -6,6 +6,7 @@ import { getAppliedJobsByUserId, host } from "../utils/APIRoutes";
 import axios from 'axios';
 import styled from "styled-components";
 import Topbar from '../components/Topbar';
+import './JobStyle.css'
 const AppliedJobs = () => {
   const [currentUser,setCurrentUser] = useState(undefined)
   const [jobs,setJobs] = useState([]);
@@ -96,8 +97,8 @@ return (
           result.length > 0 ? (
               <div className='JobsPagination'>
                   <button onClick={prevPage} disabled={currentPage === 1} className='PreviousButton'>Previous</button>
-                  <span className='mx-2'>Page {currentPage} of {Math.ceil(jobs.length / itemsPerPage)}</span>
-                  <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='hover:underline'>Next</button>
+                  <span className='JobsCardSpan'>Page {currentPage} of {Math.ceil(jobs.length / itemsPerPage)}</span>
+                  <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='PreviousButton'>Next</button>
               </div>
           ) : ""
       }
@@ -140,7 +141,6 @@ const StyledPosts = styled.div`
 
   /* Additional styling for the content */
   // background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 8px;
 
 `;

@@ -109,6 +109,7 @@ const result = main(jobs);
 }
 const StyledHome = styled.div`
   flex-direction: column;
+  
   height: 100vh;
   overflow-y: auto;
 `;
@@ -120,28 +121,28 @@ const Top = styled.div`
 `
 
 const StyledPosts = styled.div`
-  flex: 1;
-  padding: 10px;
+flex: 1;
+padding: 10px;
 
-  /* Webkit browsers (Chrome, Safari) */
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #3498db;
-    border-radius: 8px;
-  }
+/* Webkit browsers (Chrome, Safari) */
+&::-webkit-scrollbar {
+  width: 12px;
+}
 
-  &::-webkit-scrollbar-track {
-    background-color: #ecf0f1;
-    border-radius: 8px;
-  }
-
-  /* Additional styling for the content */
-  // background-color: #fff;
-  border: 1px solid #ddd;
+&::-webkit-scrollbar-thumb {
+  background-color: #3498db;
   border-radius: 8px;
+}
 
+&::-webkit-scrollbar-track {
+  background-color: #ecf0f1;
+  border-radius: 8px;
+}
+
+/* Additional styling for the content */
+// background-color: #fff;
+border: 1px solid #242527;
+border-radius: 8px;
 `;
 export default PostedJobs;

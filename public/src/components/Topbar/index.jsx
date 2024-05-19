@@ -32,7 +32,7 @@ export default function Topbar( { currentUser } ) {
   const [modalOpen,setModalOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState({btn:false,btn1:false});
   const [filteredData, setFilteredData] = useState(undefined);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
@@ -42,14 +42,14 @@ export default function Topbar( { currentUser } ) {
 
 
   const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl({[event.target.id] : event.currentTarget});
   }; 
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleMenuClose = (e) => {
+    setAnchorEl({[e.target.name] : false});
   };
-  function handleNavAndClose() {
-    handleMenuClose();
+  function handleNavAndClose(e) {
+    handleMenuClose(e);
   }
 
 
@@ -191,31 +191,32 @@ export default function Topbar( { currentUser } ) {
           <span className="icon-name">Home</span>
         </div>
         <div className="icon-container">
-          <AiOutlineUserSwitch size={30} className="react-icon" onClick={handleMenuOpen} />
+          <AiOutlineUserSwitch size={30} className="react-icon" id="btn" onClick={handleMenuOpen} />
           <span className="icon-name">Connections</span>
         </div>
         
         <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
+
+                anchorEl={anchorEl.btn}
+                open={Boolean(anchorEl.btn)}
                 onClose={handleMenuClose}
               >
                 <MenuItem
-                  onClick={handleNavAndClose}
+                  onClick={(e)=>handleNavAndClose}
                   component={Link}
                   to="/connections/connection"
                 >
                   Connections
                 </MenuItem>
                 <MenuItem
-                  onClick={handleNavAndClose}
+                  onClick={(e)=>handleNavAndClose}
                   component={Link}
                   to="/connections/addfriend"
                 >
                   Add friend
                 </MenuItem>
                 <MenuItem
-                  onClick={handleNavAndClose}
+                  onClick={(e)=>handleNavAndClose}
                   component={Link}
                   to="/pending"
                 >
@@ -224,11 +225,11 @@ export default function Topbar( { currentUser } ) {
               </Menu>
 
         <div className="icon-container">
-          <BsBriefcase size={30} className="react-icon" onClick={handleMenuOpen}/>
+          <BsBriefcase size={30} className="react-icon" id="btn1" onClick={handleMenuOpen}/>
                 <span className="icon-name">Jobs</span>
           <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
+                anchorEl={anchorEl.btn1}
+                open={Boolean(anchorEl.btn1)}
                 onClose={handleMenuClose}
               >
                 <MenuItem
