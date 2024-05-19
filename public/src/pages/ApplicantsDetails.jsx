@@ -8,7 +8,7 @@ import JobsCard from '../components/JobsCard/Index';
 const ApplicantsDetails = () => {
     const {jobId} = useParams();
     const [currentUser,setCurrentUser] = useState(undefined);
-    const [allApplicants, setAllApplicants] = useState(undefined);
+    const [allApplicants, setAllApplicants] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
@@ -50,13 +50,13 @@ const ApplicantsDetails = () => {
         <StyledPosts>
         <div className="all-posts">
           <div className="username-posts">Applicants</div>
-          {allApplicants!==undefined && allApplicants.map((applicant) => {
+          {(allApplicants.length===0) ? (<h1>No Applicants</h1>) : (allApplicants.map((applicant) => {
             return (
                 <div key={applicant.id}>
                     <JobsCard jobId={jobId} applicant={applicant} currentUser={currentUser} allApplicants={allApplicants} setAllApplicants={setAllApplicants}/>
                 </div>
             );
-          })}
+          }))}
         </div>
        </StyledPosts>
     </StyledHome>

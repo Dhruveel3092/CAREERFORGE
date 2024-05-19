@@ -55,16 +55,18 @@ line-height: 1.75rem;
 font-weight: 700; 
 }
 .CardSection{
-    display: flex; 
+display: flex; 
 flex-direction: column; 
 gap: 1rem; 
+margin:0 10px;
+
 align-items: flex-start; 
 
 /* justify-content: center; */
 
 border-radius: 7px;
 padding-top: 10px;
-padding-right:5px ;
+padding-right: 20px ;
 margin-left: 2rem;
 margin-right: 2rem;
 background-color: #1a1a1c7a;
@@ -84,7 +86,7 @@ line-height: 1.75rem;
 font-weight: 600;
 }
 .CardPropsDiv{
-    display: flex; 
+  display: flex; 
 margin-bottom: 0.5rem; 
 flex-wrap: wrap; 
 gap: 0.5rem; 
@@ -97,7 +99,9 @@ gap: 0.5rem;
 align-items: center; 
 }
 .CardDescription{
-    font-size: 1rem;
+  word-wrap: break-word;
+font-size: 1rem;
+width: 100%;
 line-height: 1.5rem; 
 color: #9CA3AF;
 }
@@ -602,7 +606,6 @@ color: #e4dfdf;
 width: 100%; 
 }
 .CreaSubmitButton{
-  margin: 2rem auto 0; 
   font-size:15px ;
   padding: 15px;
    background-color:purple;
@@ -611,10 +614,13 @@ width: 100%;
    border-radius: 10px;
 }
 .CreaSubmitButton:hover{
- 
    background-color:rgb(65, 12, 65);
     color:white;
     cursor:pointer;
     border:blue ;
    border-radius: 10px;
+}
+
+.ficard{
+  width:100%;
 }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const model  = require('../models/jobModel')
+const model  = require('../models/jobModel');
 const User = require("../models/userModel");
+const nodemailer = require("nodemailer");
 const Job = model.Job;
 
 // API
@@ -8,7 +9,7 @@ const Job = model.Job;
   try{
      const job = new Job(req.body);
      const id = req.body.user;
-     console.log(job._id)
+    
      const user = await User.findById(id);
      user.postedJobs.push(job._id);
 
@@ -23,7 +24,7 @@ const Job = model.Job;
   module.exports.getAllJobs = async (req,res)=>{
     try{
       const jobs = await Job.find();
-      console.log(jobs)
+    
       res.json(jobs);
     }
     catch(err){
@@ -81,7 +82,7 @@ const Job = model.Job;
           model: 'Job',
         }
       );
-      console.log(user.postedJobs);
+     
       return res.json(user.postedJobs);
     }catch( error )
     {
@@ -95,7 +96,7 @@ const Job = model.Job;
       if (jobPoster) {
         // Access the user field from the document
         const user = jobPoster.user;
-        console.log(user);
+        
         return res.json(user);
       } else {
         // Handle case when no document is found
@@ -115,7 +116,6 @@ const Job = model.Job;
       const job = await Job.findById(jobPostId);
        await job.applicants.push({applicantId : userId, resumeLink: resumeUrl ,applicationStatus:"Pending"});
        await job.save();
-       console.log(job)
        return res.json(job);
      }
      catch(err){
@@ -136,7 +136,7 @@ const Job = model.Job;
     // Push the application object into the appliedJobs array
       await user.appliedJobs.push(application);
       await user.save()
-      console.log(application)
+     
       return res.json(application);
      }
      catch(err){
@@ -191,7 +191,6 @@ const Job = model.Job;
      try{
       const jobId = await req.params.jobId;
      const job =  await Job.findById(jobId).populate('applicants.applicantId')
-     await console.log(job.applicants);
      if(job)
      return res.json(job.applicants);
     else 
@@ -245,6 +244,55 @@ const Job = model.Job;
 }
 };
     
+module.exports.jobemail= async (req,res)=>{
+  try {
+    const id=req.params.id;
+    const job = await Job.findById(id); 
+    const em=job.user;
+    const user=await User.findById(em);
+    const cus=req.body.current;
+    console.log(user.email,"recieveremail");
+    console.log(cus,"appliername");
+     
+      if(user){
+
+      var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          port:465,
+          secure:true,
+          auth: {
+            user: 'krishnamorker2021@gmail.com',
+            pass: 'tahd pher pfkz ehla',
+            tls:{
+              rejectUnauthorized:true
+             }
+          }
+        });
+        
+        var mailOptions = {
+          from: 'SNAPPY',
+          to: user.email,
+          subject: 'JOB APPLICATION',
+          text: `User name : ${cus} has applied for the job which you have posted on CarrerForge.`,
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      return res.json({ sta: true, em });
+      }else{
+        return res.json({ sta: false, em });
+      }
+
+  } catch (error) {
+      res.status(401).send(error)
+  }
+  
+}
     
 
  

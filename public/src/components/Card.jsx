@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiCalendar, FiClock, FiDollarSign, FiMapPin } from 'react-icons/fi';
-import { host, getJobPosterById, getSignature, addApplicantDetails, addAppliedJob, getStatusOfJobApplication } from "../utils/APIRoutes";
+import { host, getJobPosterById, getSignature, addApplicantDetails, addAppliedJob, getStatusOfJobApplication ,jobemail } from "../utils/APIRoutes";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -38,15 +38,15 @@ const Card = ({ data, currentUser }) => {
       try {
         if (currentUser._id) {
           getJobPoster();
-          console.log(currentUser._id);
-          const data = await getStatusOfJob();
-          await console.log(data);
-          await (data.appliedJobId) ? 
+         // console.log(currentUser._id);
+          const datak = await getStatusOfJob();
+          //await console.log(data);
+          await (datak.appliedJobId) ? 
              (setIsApplied(true))
-             (setApplicationStatus(data.applicationStatus) ) :  
-             (setIsApplied(false)) (setApplicationStatus(data.applicationStatus)) 
-          await console.log(isApplied);
-          await console.log(ApplicationStatus);
+             (setApplicationStatus(datak.applicationStatus) ) :  
+             (setIsApplied(false)) (setApplicationStatus(datak.applicationStatus)) 
+          //await console.log(isApplied);
+          //await console.log(ApplicationStatus);
         }
       } 
       catch (error) {
@@ -59,7 +59,7 @@ const Card = ({ data, currentUser }) => {
   
 
 
-  const showFileInputModal = () => {
+  const showFileInputModal = async() => {
     Swal.fire({
       title: 'Select PDF File',
       html: `
@@ -76,6 +76,7 @@ const Card = ({ data, currentUser }) => {
         }
         return file;
       }
+    
     }).then((result) => {
       if (result.isConfirmed) {
         const file = result.value;
@@ -119,6 +120,7 @@ async function handleUpload(file) {
     let fileUrl;
         try {
             const { timestamp:imgTimestamp, signature : imgSignature} = await getSignatureForUpload('images');
+            await axios.post(`${jobemail}/${data._id}`,{current:currentUser.username});
             const filesUrl = await uploadFile(file.type.split("/")[0],imgTimestamp,imgSignature,file);
             fileUrl=filesUrl;
             await axios.post(`${addApplicantDetails}/${_id}`,{
@@ -128,10 +130,10 @@ async function handleUpload(file) {
             await axios.post(`${addAppliedJob}/${currentUser._id}`,{
               appliedJobId : _id
             })
-            const data = await getStatusOfJob();
-            await console.log(data)
-            await setIsApplied(true);
-            await setApplicationStatus(data.applicationStatus);
+            const datak = await getStatusOfJob();   
+           
+             setIsApplied(true);
+             setApplicationStatus(datak.applicationStatus);
         } catch (error) {
           console.error('Error uploading multiple files:', error);
           throw error;
@@ -139,8 +141,9 @@ async function handleUpload(file) {
         console.log(fileUrl)
 }
   
-  const handleClick = () => {
-    showFileInputModal();
+  const handleClick = async() => {
+    //console.log(currentUser.username);
+    await showFileInputModal();
   }
   
   const dateObject = new Date(jobPostingDate);
@@ -155,14 +158,14 @@ async function handleUpload(file) {
     <section >
       <div className='CardSection'>
         <img src={companyLogo} alt='' />
-        <div>
+        <div className='ficard'>
           <h4 className='CardCompanyName'>{companyName}</h4>
           <h3 className='CardJobTitle'>{jobTitle}</h3>
           <div className='CardPropsDiv'>
             <span className='CardProp'><FiMapPin />{jobLocation}</span>
             <span className='CardProp'><FiClock />{employmentType}</span>
             <span className='CardProp'><FiDollarSign />{minPrice}-{maxPrice}k</span>
-            <span className='CardProp'><FiCalendar />{formattedDate}</span>
+            <span className='CardProp'><FiCalendar />{formattedDate}</span> 
           </div>
           <p className='CardDescription'>{jobDescription}</p>
           <div className='ButtonContainer'>
@@ -178,7 +181,7 @@ async function handleUpload(file) {
             : <button  className='viewBtn' onClick={()=>navigate(`/applicantDetails/${_id}`)}>View Applications</button>
 
           }
-        </div>-
+        </div>
         
         </div>
       </div>
