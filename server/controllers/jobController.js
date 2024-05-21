@@ -114,7 +114,7 @@ const Job = model.Job;
       const resumeUrl = req.body.fileUrl;
      
       const job = await Job.findById(jobPostId);
-       await job.applicants.push({applicantId : userId, resumeLink: resumeUrl ,applicationStatus:"Pending"});
+        job.applicants.push({applicantId : userId, resumeLink: resumeUrl ,applicationStatus:"Pending"});
        await job.save();
        return res.json(job);
      }
@@ -200,7 +200,18 @@ const Job = model.Job;
       res.json(err);
     }
    }
-
+module.exports.deleteApplicant = async (req,res) => {
+  try{
+    const jobId = req.params.jobId;
+    const userId = req.params.userId;
+    const job = await Job.findById(jobId).populate('applicants')
+    const remainingApplicants = job.applicants.filter(applicantId => applicantId !== userId);
+    return res.json(remainingApplicants);
+  }
+  catch(err){
+    return res.json(err).status(400);
+  }
+}
  module.exports.setApplicationStatus = async (req,res) => {
   try {
     const jobId = req.params.jobId;
@@ -227,17 +238,25 @@ const Job = model.Job;
     // Save the updated user document
     await user.save();
     
-    const job = await Job.findById(jobId).populate('applicants');
-
-    const applicantIndex = job.applicants.findIndex(applicant => String(applicant.applicantId) === userId);
+    const job = await Job.findById(jobId)
+    .populate({
+      path: 'applicants',
+      populate: {
+        path: 'applicantId',
+        model: 'User'
+      }
+    });
+    const applicantIndex = job.applicants.findIndex(applicant => String(applicant.applicantId._id) === userId);
     if(applicantIndex == -1){
       return res.status(404).json("Applicant not found");
     }
     job.applicants[applicantIndex].applicationStatus = applicationStatus;
     
+    
+    const _id = job.applicants[applicantIndex]._id;
+    job.applicants.pull(_id);
     await job.save();
-
-    return res.status(200).json({user,job});
+    return res.status(200).json(job.applicants);
 } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal Server Error' });
@@ -293,6 +312,61 @@ module.exports.jobemail= async (req,res)=>{
   }
   
 }
-    
 
- 
+module.exports.jobconemail= async (req,res)=>{
+  try {
+    const id=req.params.id;
+    const job = await Job.findById(id); 
+    console.log("I am in jobconemail");
+    const user=req.body.current;
+    const mess=req.body.mess;
+    const em=`Your job application for the company ${job.companyName} has been ${mess}.`;
+     console.log(user.email,"receiver email");
+     console.log(em,"mess");
+      if(user){
+
+      var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          port:465,
+          secure:true,
+          auth: {
+            user: 'krishnamorker2021@gmail.com',
+            pass: 'tahd pher pfkz ehla',
+            tls:{
+              rejectUnauthorized:true
+             }
+          }
+        });
+        if(mess=="Accepted"){
+        var mailOptions = {
+          from: 'SNAPPY',
+          to: user.email,
+          subject: 'JOB APPLICATION',
+          text: em+" Company will further contact you by their officail Email. We wish bright future for you :) ",
+        };
+      }else{
+        var mailOptions = {
+          from: 'SNAPPY',
+          to: user.email,
+          subject: 'JOB APPLICATION',
+          text: em +" Don't Give up we have other applications Try for it.",
+        };
+      }
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      return res.json({ sta: true, em });
+      }else{
+        return res.json({ sta: false, em });
+      }
+
+  } catch (error) {
+      res.status(401).send(error)
+  }
+  
+}

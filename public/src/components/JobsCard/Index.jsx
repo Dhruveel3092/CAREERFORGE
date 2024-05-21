@@ -5,8 +5,8 @@ import './Index.css';
 import Login_Modal from "../Login_Modal";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { setApplicationStatus, getStatusOfJobApplication } from "../../utils/APIRoutes";
-export default function JobsCard ({jobId, applicant ,currentUser ,allApplicants, setAllApplicants}) {
+import { setApplicationStatus, getStatusOfJobApplication, jobconemail } from "../../utils/APIRoutes";
+export default function JobsCard ({jobId, setAllApplicants, applicant ,currentUser ,allApplicants}) {
     const navigate = useNavigate();
     const [loginModal,setLoginModal] = useState(false);
     const [jobStatus,setJobStatus] = useState("");
@@ -27,7 +27,11 @@ export default function JobsCard ({jobId, applicant ,currentUser ,allApplicants,
       await axios.post(`${setApplicationStatus}/${jobId}/${applicant.applicantId._id}`, {
         applicationStatus: "Accepted"
       });
-      await setJobStatus("Accepted");
+      await axios.post(`${jobconemail}/${jobId}`, {
+        mess: "Accepted",
+        current:applicant.applicantId,
+      });
+       setJobStatus("Accepted");
     };
     useEffect(() => {
     const fetchStatusOfJob = async () => {
@@ -36,7 +40,7 @@ export default function JobsCard ({jobId, applicant ,currentUser ,allApplicants,
           console.log(currentUser._id);
           const data = await getStatusOfJob();
           setJobStatus(data.applicationStatus)
-          await console.log(jobStatus);
+           console.log(jobStatus);
         }
       } 
       catch (error) {
@@ -49,10 +53,16 @@ export default function JobsCard ({jobId, applicant ,currentUser ,allApplicants,
   
 
     const handleReject = async () => {
-      await axios.post(`${setApplicationStatus}/${jobId}/${applicant.applicantId._id}`,{
+      const res = await axios.post(`${setApplicationStatus}/${jobId}/${applicant.applicantId._id}`,{
         applicationStatus : "Rejected"
       });
-      await setJobStatus("Rejected");
+      await axios.post(`${jobconemail}/${jobId}`, {
+        mess: "Rejected",
+        current:applicant.applicantId,
+      });
+       setJobStatus("Rejected");
+       console.log(res.data);
+       setAllApplicants(res.data);
     }
     
 

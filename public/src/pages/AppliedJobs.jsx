@@ -70,9 +70,14 @@ const AppliedJobs = () => {
     }
 const main = (jobs) => {
     let appliedJobs = jobs
+    // console.log(appliedJobs)
     const {startIndex,endIndex} = calculatePageRange();
     appliedJobs = appliedJobs.slice(startIndex,endIndex);
-    return appliedJobs.map((data,i) => <Card key = {i} data = {data.appliedJobId} currentUser = {currentUser}></Card>);
+   
+    return appliedJobs.map((data,i) =>
+      (data.appliedJobId !== null) ?
+      <Card key = {i} data = {data.appliedJobId} currentUser = {currentUser}></Card> : <></>
+    );
 }
 const result = main(jobs);
 return (

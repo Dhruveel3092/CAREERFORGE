@@ -4,7 +4,7 @@ import Banner from '../components/Banner'
 import Card from '../components/Card'
 import JobsDes from './JobsDes'
 import Sidebar from '../sidebar/Sidebar'
-import { getJobsAPI , host } from '../utils/APIRoutes'
+import { getJobsAPI , host, getAppliedJobsByUserId, getAllPostedJobsByUserId } from '../utils/APIRoutes'
 import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import './JobStyle.css'
@@ -20,6 +20,7 @@ const Jobs = () => {
   const [locationquery,setLocationQuery] = useState("")
   const [currentUser,setCurrentUser] = useState(undefined)
   const [jobs,setJobs] = useState([])
+  
   const navigate = useNavigate()
 
   
@@ -52,10 +53,40 @@ const Jobs = () => {
     setLocationQuery(event.target.value);
   }
   const getJobs = async () => {
-    const res = await axios.get(`${getJobsAPI}`);
-    console.log(res.data);
-    setJobs(res.data);
-  }
+    try {
+      // Fetch all jobs
+      const res = await axios.get(`${getJobsAPI}`);
+      const allJobs = res.data;
+      console.log(allJobs);
+      
+      // Fetch applied jobs by user
+      const res2 = await axios.get(`${getAppliedJobsByUserId}/${currentUser._id}`);
+      const appliedJobs = res2.data;
+      console.log(appliedJobs);
+
+      // Fetch posted jobs by user
+      const res3 = await axios.get(`${getAllPostedJobsByUserId}/${currentUser._id}`);
+      const postedJobs = res3.data;
+      console.log(postedJobs);
+
+      // Filter out the applied jobs from all jobs
+      const remainingJobsWithPosted = await allJobs.filter(job =>
+        !appliedJobs.some(appliedJob => appliedJob.appliedJobId._id === job._id)
+      );
+
+      // Filter out the posted jobs from all jobs
+
+      const remainingJobs = await remainingJobsWithPosted.filter(job =>
+         !postedJobs.some(postedJob => postedJob._id === job._id)
+        );
+      // Set the remaining jobs
+      setJobs(remainingJobs);
+      console.log(remainingJobs);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
+  
   // ----------filter jobs by title-------------
   
   const filteredItems1 = jobs.filter((job)=>job.jobTitle.toLowerCase().indexOf(titlequery.toLowerCase()) !== -1);

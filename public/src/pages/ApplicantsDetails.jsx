@@ -30,9 +30,9 @@ const ApplicantsDetails = () => {
       useEffect(()=>{
          const fetchData = async () =>  {
             const {data} = await axios.get(`${getApplicantsDetails}/${jobId}`);
-            await setAllApplicants(data);
+             setAllApplicants(data);
 
-            await console.log(data);
+             console.log(data);
          }
          fetchData();
 
@@ -53,7 +53,7 @@ const ApplicantsDetails = () => {
           {(allApplicants.length===0) ? (<h1>No Applicants</h1>) : (allApplicants.map((applicant) => {
             return (
                 <div key={applicant.id}>
-                    <JobsCard jobId={jobId} applicant={applicant} currentUser={currentUser} allApplicants={allApplicants} setAllApplicants={setAllApplicants}/>
+                    <JobsCard jobId={jobId} setAllApplicants={setAllApplicants} applicant={applicant} currentUser={currentUser} allApplicants={allApplicants} />
                 </div>
             );
           }))}
@@ -96,7 +96,5 @@ const StyledPosts = styled.div`
 
   /* Additional styling for the content */
   // background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
 `;
 export default ApplicantsDetails

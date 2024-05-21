@@ -97,7 +97,7 @@ const result = main(jobs);
                 <div className='JobsPagination'>
                     <button onClick={prevPage} disabled={currentPage === 1} className='PreviousButton'>Previous</button>
                     <span className='mx-2'>Page {currentPage} of {Math.ceil(jobs.length / itemsPerPage)}</span>
-                    <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='hover:underline'>Next</button>
+                    <button onClick={nextPage} disabled={currentPage === Math.ceil(jobs.length / itemsPerPage)} className='PreviousButton'>Next</button>
                 </div>
             ) : ""
         }

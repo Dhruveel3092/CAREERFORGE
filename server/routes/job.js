@@ -17,5 +17,6 @@ router.get('/getAllJobs',jobController.getAllJobs)
 .get("/getApplicantsDetails/:jobId",jobController.getApplicantsDetails)
 .post("/jobemail/:id",jobController.jobemail)
 .post("/setApplicationStatus/:jobId/:userId", jobController.setApplicationStatus)
+.post("/jobconemail/:id", jobController.jobconemail)
 
 module.exports = router;

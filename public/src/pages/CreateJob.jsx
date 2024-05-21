@@ -54,6 +54,7 @@ const CreateJob = () => {
   const handleSubmit =  (e) => {
     e.preventDefault();
      updateJob(); // updateJob is calling postJob
+     navigate('/allPostedJobs');
   };
   
   const getCurrentDate = ()=> {

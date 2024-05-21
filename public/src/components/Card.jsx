@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import '../pages/JobStyle.css';
+import Loading from '../assets/loading.gif'
 
 const Card = ({ data, currentUser }) => {
   const { _id, companyName, companyLogo, minPrice, maxPrice, salaryType, jobLocation, employmentType, jobPostingDate, jobDescription, jobTitle } = data;
@@ -13,6 +14,7 @@ const Card = ({ data, currentUser }) => {
   const [image,setImage] = useState(null);
   const navigate = useNavigate();
   const [isApplied,setIsApplied] = useState(undefined);
+  const [isDisable, setIsDisable] = useState(false)
   const [ApplicationStatus, setApplicationStatus] = useState("");
 
   const getStatusOfJob = async () => {
@@ -119,6 +121,7 @@ const uploadFile = async (type,timestamp,signature,file) => {
 async function handleUpload(file) {
     let fileUrl;
         try {
+            setIsDisable(true);
             const { timestamp:imgTimestamp, signature : imgSignature} = await getSignatureForUpload('images');
             await axios.post(`${jobemail}/${data._id}`,{current:currentUser.username});
             const filesUrl = await uploadFile(file.type.split("/")[0],imgTimestamp,imgSignature,file);
@@ -133,6 +136,7 @@ async function handleUpload(file) {
             const datak = await getStatusOfJob();   
            
              setIsApplied(true);
+             setIsDisable(false);
              setApplicationStatus(datak.applicationStatus);
         } catch (error) {
           console.error('Error uploading multiple files:', error);
@@ -171,7 +175,18 @@ async function handleUpload(file) {
           <div className='ButtonContainer'>
           {(jobPoster !== currentUser._id) ?
             (isApplied === false ?
-              <button className='applyButton' onClick={handleClick}>Apply</button> :
+              <button disabled={isDisable} className='applyButton' onClick={handleClick}>
+                {!isDisable ? 'Apply' :
+                <img 
+                  src={Loading} 
+                  alt="loading" 
+                  className="loading"
+                  style={{
+                    width: "30px", // Adjust size as needed
+                    height: "30px", // Adjust size as needed
+                  }}
+                />}
+              </button> :
               <button disabled className='appliedButton'   
               style={{
                 backgroundColor: ApplicationStatus === 'Accepted' ? 'green' : (ApplicationStatus === 'Rejected' ? 'red' : 'rgb(72, 72, 242)')
