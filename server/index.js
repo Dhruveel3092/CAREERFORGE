@@ -15,7 +15,9 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongodb-session')(session)
 const Notification = require('./models/notifiSchema');
+const path = require('path');
 require('./config/passport')(passport);
+
 
 require("dotenv").config();
 const corsOptions ={
@@ -125,6 +127,12 @@ app.get("/check/:id",async(req,res)=>{
 
 app.use("/api/auth", authRoutes);
 app.use("/api", jobRoutes);
+
+app.use(express.static(path.join(__dirname, '/public/build')))
+
+app.get('*',(req,res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 
 const server = app.listen(8080, () =>
