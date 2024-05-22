@@ -84,7 +84,7 @@ const LikeModal = ({ modalOpen, setModalOpen, reactedUsers }) => {
           activeReaction.map((item, index) => (
             <StyledButton key={index} onClick={(e)=>handleClick(e,item?.user?.username)}>
               <img src={item?.user?.avatarImage} alt="Profile" />
-              <div className="userName">{item?.user?.username}</div>
+              <div className="userName userName-984802">{item?.user?.username}</div>
             </StyledButton>
           ))}
       </StyledSuggestions>
@@ -117,6 +117,6 @@ const StyledButton = styled.button`
   }
 
   &:hover {
-    background-color: #f0f0f0; /* Add your desired hover background color */
+    background-color: #4a515e; /* Add your desired hover background color */
   }
 `;
