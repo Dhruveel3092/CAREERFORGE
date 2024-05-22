@@ -289,10 +289,10 @@ module.exports.jobemail= async (req,res)=>{
         });
         
         var mailOptions = {
-          from: 'SNAPPY',
+          from: 'CAREERFORGE',
           to: user.email,
           subject: 'JOB APPLICATION',
-          text: `User name : ${cus} has applied for the job which you have posted on CarrerForge.`,
+          text: `User name : ${cus} has applied for the job which you have posted on CareerForge.`,
         };
         
         transporter.sendMail(mailOptions, function(error, info){
@@ -339,14 +339,14 @@ module.exports.jobconemail= async (req,res)=>{
         });
         if(mess=="Accepted"){
         var mailOptions = {
-          from: 'SNAPPY',
+          from: 'CAREERFORGE',
           to: user.email,
           subject: 'JOB APPLICATION',
           text: em+" Company will further contact you by their officail Email. We wish bright future for you :) ",
         };
       }else{
         var mailOptions = {
-          from: 'SNAPPY',
+          from: 'CAREERFORGE',
           to: user.email,
           subject: 'JOB APPLICATION',
           text: em +" Don't Give up we have other applications Try for it.",

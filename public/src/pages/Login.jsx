@@ -95,7 +95,7 @@ export default function Login() {
         
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>CARRERFORGE</h1>
+            <h1>CAREERFORGE</h1>
           </div>
           <input
             type="text"

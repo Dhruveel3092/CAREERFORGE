@@ -99,7 +99,7 @@ module.exports.forgotpost= async (req,res)=>{
         });
         
         var mailOptions = {
-          from: 'SNAPPY',
+          from: 'CAREERFORGE',
           to: user.email,
           subject: 'Reset Password',
           text: `Thank you for Joining our platform and this is your reset Password Link:${link}`,
