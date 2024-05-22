@@ -164,7 +164,7 @@
 
   .like-container {
     position: relative;
-    margin-top: -5px;
+    margin-top: 0px;
     .reactions-comments-container {
       display: flex;
       justify-content: space-between;
@@ -237,11 +237,11 @@
   cursor: pointer;
 }
 
-.icon:hover{
+/* .icon:hover{
   color: white;
   background-color: #dcdbdb;
   border-radius: 5px;
-}
+} */
 .trash-button{
   position: relative;
   top:4px;

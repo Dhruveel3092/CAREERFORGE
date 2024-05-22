@@ -17,6 +17,7 @@ const SearchModal = ({
   return (
     <div>
       <Modal
+        className="like-mdl"
         title="Search Users"
         centered
         open={modalOpen}
@@ -30,7 +31,7 @@ const SearchModal = ({
         footer={null}
       >
         <input
-          className="modal-input"
+          className="modal-input search-218329"
           placeholder="Search"
           onChange={(event)=>handleInputChange(event)}
           value={query}
@@ -40,7 +41,7 @@ const SearchModal = ({
           filteredData.map((item, index) => (
             <StyledButton key={index} onClick={() => handleButtonClick(item.username)}>
               <img src={item.avatarImage} alt="Profile" />
-              <div className="userName">{item.username}</div>
+              <div className="userName userName-984802">{item.username}</div>
             </StyledButton>
           ))}
       </StyledSuggestions>
@@ -73,6 +74,6 @@ const StyledButton = styled.button`
   }
 
   &:hover {
-    background-color: #f0f0f0; /* Add your desired hover background color */
+    background-color: #4a515e; /* Add your desired hover background color */
   }
 `;

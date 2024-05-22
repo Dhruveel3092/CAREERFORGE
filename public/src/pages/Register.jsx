@@ -6,6 +6,9 @@ import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../utils/APIRoutes";
+import {host} from "../utils/APIRoutes"
+import home from "../assets/home.png";
+import "./Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -22,12 +25,39 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [currentUser, setCurrentUser] = useState(undefined);
 
   // useEffect(() => {
   //   if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
   //     navigate("/home");
   //   }
   // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       // console.log("current",currentUser)
+       // console.log(response,"response")
+        const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
+        console.log(response,"response");
+        if(response.data.sta==1){
+          if(response.data.user) 
+          {
+              setCurrentUser(response.data.user)
+              navigate("/home");
+          }
+        }
+  
+    } catch (error) {
+      console.log(error)
+      navigate("/login")
+    }
+
+    };
+
+    
+    fetchData();
+  }, []);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -82,12 +112,17 @@ export default function Register() {
 
   return (
     <>
-      <FormContainer>
       <nav className='navb'>
        <Link to='/' className='link-na'>Home</Link>
        <Link to='/login' className='link-na'>Sign-in</Link>
        <Link to='/register' className='link-na'>Sign-up</Link>
       </nav>
+      <div className="container-7866">
+        <div class="image-container">
+          <img src={home} alt="login" />
+        </div>
+      <div className="form-container">
+      <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
@@ -118,25 +153,27 @@ export default function Register() {
             onChange={(e) => handleChange(e)}
           />
           <button type="submit">Create User</button>
-          <span>
+          <span className="create-one">
             Already have an account ? <Link to="/login">Login.</Link>
           </span>
         </form>
       </FormContainer>
+      </div>
       <ToastContainer />
+      </div>
     </>
   );
 }
 
 const FormContainer = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 50vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: #c5e6fb;
   .brand {
     display: flex;
     align-items: center;
@@ -146,7 +183,7 @@ const FormContainer = styled.div`
       height: 5rem;
     }
     h1 {
-      color: white;
+      color: black;
       text-transform: uppercase;
     }
   }
@@ -172,20 +209,80 @@ const FormContainer = styled.div`
     }
   }
 
+  .input-container {
+    padding-left: 10px;
+    margin: 0px;
+    border: solid 2px white;
+    border-radius: 0.4rem;
+    background-color: white;
+}
+
+#password{
+  display: flex;
+}
+#password > input{
+  flex: 1;
+}
+#password > a{
+  text-decoration: none;
+  margin-top: 7px;
+  padding-top: 3px;
+  padding-right: 15px;
+  padding-left: 8px;
+  color: rgb(114, 113, 113);
+  font-size: 14px;
+  border-left: 0.1px solid rgb(101, 100, 100);
+  height:25px;
+}
+#password > i{
+  padding-top:12px;
+}
+
+.separator::before, .separator::after {
+  content: "";
+  display: inline-block;
+  height: 1px;
+  background-color:rgb(169, 209, 249);
+  width: 39%;
+}
+.separator::before {
+  margin-right: 10px;
+}
+.separator::after {
+  margin-left: 10px;
+}
+.google-signin-btn:hover{
+  background-color: rgb(10, 19, 139);
+}
+.google:hover{
+  background-color: rgb(10, 19, 139);
+}
+.google{
+  display: flex;
+  gap: 1.5rem;
+  border-radius: 15px;
+  padding: 10px;
+  width: 80%;
+  border: 1px solid;
+  background-color: black;
+  margin: auto;
+  margin-bottom:10px;
+}
+
   form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: rgba(0, 0, 0, 0);
     border-radius: 2rem;
-    padding: 3rem 5rem;
+    padding: 5rem;
   }
   input {
-    background-color: transparent;
+    background-color: white;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: none;
     border-radius: 0.4rem;
-    color: white;
+    color: black;
     width: 100%;
     font-size: 1rem;
     &:focus {
@@ -194,7 +291,7 @@ const FormContainer = styled.div`
     }
   }
   button {
-    background-color: #4e0eff;
+    background-color: black;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -208,7 +305,7 @@ const FormContainer = styled.div`
     }
   }
   span {
-    color: white;
+    color: black;
     text-transform: uppercase;
     a {
       color: #4e0eff;

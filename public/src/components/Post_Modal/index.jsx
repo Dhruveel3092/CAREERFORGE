@@ -51,7 +51,7 @@ const ModalComponent = ({
                 file.type.split("/")[0] === "image" ? (
                   <img
                     key={index}
-                    className="preview-image"
+                    className="preview-img"
                     src={URL.createObjectURL(file)}
                     alt={`postImage-${index}`}
                   />

@@ -274,7 +274,7 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
         <div className="profile-card">
         
             <div className="edit-btn">
-                 {editButton && <HiOutlinePencil className="icon" onClick={onEdit} />}
+            {editButton && <HiOutlinePencil className="icon icn-2" onClick={onEdit} />}
             </div>
           <div className="profile-info">
             <div>
@@ -333,11 +333,11 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
             Skills
             {editButton && <span className="icon-container-2">
               <IoAddSharp 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => setSkillAddModal(true)}
               />
               <HiOutlinePencil 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => navigate(`/allSkills/${user?.username}/${user?._id}`)}
               />
             </span>}
@@ -380,11 +380,11 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
             Education
             {editButton && <span className="icon-container-2">
               <IoAddSharp 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => setEducationAddModal(true)}
               />
               <HiOutlinePencil 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => navigate(`/allEducation/${user?.username}/${user?._id}`)}
               />
             </span>}
@@ -428,11 +428,11 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
             Experience
             {editButton && <span className="icon-container-2">
               <IoAddSharp 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => setExperienceAddModal(true)}
               />
               <HiOutlinePencil 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => navigate(`/allExperience/${user?.username}/${user?._id}`)}
               />
             </span>}

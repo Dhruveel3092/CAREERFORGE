@@ -9,6 +9,8 @@ import { loginRoute } from "../utils/APIRoutes";
 import { FaGoogle } from "react-icons/fa";
 import {host} from "../utils/APIRoutes"
 import  Cookie from 'js-cookie';
+import './Login.css';
+import home from "../assets/home.png";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -78,12 +80,17 @@ export default function Login() {
 
   return (
     <>
-      <FormContainer>
       <nav className='navb'>
        <Link to='/' className='link-na'>Home</Link>
        <Link to='/login' className='link-na'>Sign-in</Link>
        <Link to='/register' className='link-na'>Sign-up</Link>
       </nav>
+    <div className="container-7866">
+      <div class="image-container">
+        <img src={home} alt="login" />
+      </div>
+      <div className="form-container">
+      <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
         
           <div className="brand">
@@ -115,27 +122,29 @@ export default function Login() {
                 <button type="button" class="google-signin-btn" onClick={simulateGoogleSignIn}>Sign in with Google</button>
                 </div>
                 
-          <span>
+          <span className="create-one">
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>
         
       
       </FormContainer>
+      </div>
       <ToastContainer />
+      </div>
     </>
   );
 }
 
 const FormContainer = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 50vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: #c5e6fb;
   .brand {
     display: flex;
     align-items: center;
@@ -145,7 +154,7 @@ const FormContainer = styled.div`
       height: 5rem;
     }
     h1 {
-      color: white;
+      color: black;
       text-transform: uppercase;
     }
   }
@@ -201,7 +210,7 @@ const FormContainer = styled.div`
 .separator {
   text-align: center;
   margin: 2px 0;
-  color: white;
+  color: black;
   position: relative;
   font-weight: 600;
 }
@@ -250,7 +259,7 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: rgba(0, 0, 0, 0);
     border-radius: 2rem;
     padding: 5rem;
   }
@@ -268,7 +277,7 @@ const FormContainer = styled.div`
     }
   }
   button {
-    background-color: #4e0eff;
+    background-color: black;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -282,7 +291,6 @@ const FormContainer = styled.div`
     }
   }
   span {
-    color: white;
     text-transform: uppercase;
     a {
       color: #4e0eff;

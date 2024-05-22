@@ -29,10 +29,16 @@ export default function AllSkills() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
-       if(response.data.user) setCurrentUser(response.data.user);
        // console.log("current",currentUser)
-       // console.log("response",response.data.user)
+       // console.log(response,"response")
+        const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
+        console.log(response,"response");
+        if(response.data.sta==1){
+          if(response.data.user) setCurrentUser(response.data.user);
+        }else{
+          navigate("/login")
+        }
+  
     } catch (error) {
       console.log(error)
       navigate("/login")
@@ -77,7 +83,7 @@ export default function AllSkills() {
             Skills
             {userId == currentUser?._id && <span className="icon-container-2">
               <IoAddSharp 
-                className="icon" 
+                className="icon icn-2" 
                 onClick={() => setSkillAddModal(true)}
               />
               {

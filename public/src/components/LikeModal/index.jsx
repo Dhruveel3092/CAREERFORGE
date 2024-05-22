@@ -43,6 +43,7 @@ const LikeModal = ({ modalOpen, setModalOpen, reactedUsers }) => {
 
   return (
     <Modal
+      className="like-mdl"
       title="Reactions"
       centered
       open={modalOpen}

@@ -18,11 +18,16 @@ function ConnectionsComponent() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${host}/login/sucess`, { withCredentials: true });
-         if(response.data.user) setCurrentUser(response.data.user);
          // console.log("current",currentUser)
-         // console.log("response",response.data.user)
-         setLoading(false);
+         // console.log(response,"response")
+          const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
+          console.log(response,"response");
+          if(response.data.sta==1){
+            if(response.data.user) setCurrentUser(response.data.user);
+          }else{
+            navigate("/login")
+          }
+    
       } catch (error) {
         console.log(error)
         navigate("/login")
