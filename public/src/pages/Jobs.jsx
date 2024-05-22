@@ -31,10 +31,10 @@ const Jobs = () => {
        // console.log("current",currentUser)
        // console.log(response,"response")
         const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
-        console.log(response,"response")
+       // console.log(response,"response")
        if(response.data.user) setCurrentUser(response.data.user);
-        console.log("current",currentUser)
-        console.log("response",response.data.user)
+        //console.log("current",currentUser)
+        //console.log("response",response.data.user)
     } catch (error) {
       console.log(error)
       navigate("/login")

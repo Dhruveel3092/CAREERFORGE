@@ -49,7 +49,8 @@ function ConnectionsComponent() {
       if(currentUser!=undefined)
       {
           const response = await axios.get(`${getConnectedUsers}/${currentUser._id}`);
-          setUsers(response.data);      
+          setUsers(response.data);
+          setLoading(false);      
         }
       }
       fetch();

@@ -17,7 +17,9 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
   const [status, setStatus] = useState("");
   const [currentUserImage,setCurrentUserImage] = useState(undefined);
   const [files,setFiles] = useState([]);
-
+  const jobn=()=>{
+    navigate('/job-portal');
+  }
   useEffect(() => {
     const fetchData = async () => {
       if(currentUser)
@@ -159,7 +161,7 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
           <button className="additional-button" onClick={openModal}>
             <img src={media} alt="" className="icon"/>Media
           </button>
-          <button className="additional-button">    
+          <button className="additional-button" onClick={jobn}>    
             <img src={job} alt="" className="icon"/>Job
           </button>
           <button className="additional-button" onClick={() => setArticleModal(true)}>

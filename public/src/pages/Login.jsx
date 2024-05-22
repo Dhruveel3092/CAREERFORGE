@@ -95,7 +95,7 @@ export default function Login() {
         
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            <h1>CARRERFORGE</h1>
           </div>
           <input
             type="text"
@@ -144,7 +144,7 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #c5e6fb;
+  background-color: #9195F6;
   .brand {
     display: flex;
     align-items: center;

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import app_logo from "../../assets/app_logo.png";
+import app_logo from "../../assets/logo.svg";;
 import axios from 'axios';
 import Logout from "../Logout";
 import { ToastContainer, toast } from 'react-toastify';

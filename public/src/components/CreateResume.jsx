@@ -488,7 +488,7 @@ export default function CreateResume() {
 
                         <div class = "preview-blk">
                             <div class = "preview-blk-title">
-                                <h3 >about</h3>
+                                <h3 class="siz">about</h3>
                             </div>
                             <div  class = "preview-item ">
                                 <div class = "preview-item">
@@ -507,7 +507,7 @@ export default function CreateResume() {
                         <div class = "preview-blk">
                             <div class = "preview-blk-title">
                                 <br />
-                                <h3>Summary</h3>
+                                <h3 class="siz">Summary</h3>
                             </div>
                           
                             <div class = "skills-items preview-blk-list" id = "skills_dsp">
@@ -522,7 +522,7 @@ export default function CreateResume() {
 
                         <div class = "preview-blk">
                             <div class = "preview-blk-title">
-                                <h3>skills</h3>
+                                <h3 class="siz">skills</h3>
                             </div>
                             {Items5.map((acc)=>
                             <div class = "skills-items preview-blk-list" id = "skills_dsp">
@@ -539,7 +539,7 @@ export default function CreateResume() {
                             <p className="v">ACHIEVEMENTS</p>
                             </div>
                             {Items.map((acc)=>
-                                    <div class = "achievements-items preview-blk-list pb-4" id = "achievements_dsp">
+                                    <div class = "achievements-items preview-blk-list" id = "achievements_dsp">
                                      <p class="ach-tit">{acc.achieve_title}</p> 
                                       <p class="disc"> • {acc.achieve_description}</p>
                                     

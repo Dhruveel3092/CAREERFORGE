@@ -31,8 +31,6 @@ export default function Post() {
         console.log(response,"response");
         if(response.data.sta==1){
           if(response.data.user) setCurrentUser(response.data.user);
-        }else{
-          navigate("/login")
         }
   
     } catch (error) {

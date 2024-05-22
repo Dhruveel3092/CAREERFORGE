@@ -31,7 +31,7 @@ module.exports.login = async (req, res, next) => {
     delete user.password;
    const token = await user.generateAuthToken();
     res.cookie("jwt",token,{
-    expires:new Date(Date.now() + 1200000),
+    expires:new Date(Date.now() + 120000000000000),
     httpOnly:false,
    });
     return res.json({ status: true, user });
@@ -859,12 +859,15 @@ module.exports.addReaction = async(req,res,next) => {
     const data = await Post.findOne({_id:postId});
     let sendUserSocket = onlineUsers.get(data.user.toString());
     let u=await User.find({_id:userId});
-
+    console.log(data.user,"data");
+    console.log(u[0]._id,"data");
+    if(!(u[0]._id.equals(data.user))){
     let fg=`${u[0].username} reacted ${reactionType} on your post`;
 
     let newNotification= new Notification({ 'user': data.user, 'message': fg }); 
     await newNotification.save();
     req.app.settings.io.to(sendUserSocket).emit("newNotification", newNotification);
+    }
     data.reactions = data.reactions.filter(reaction => reaction.user != userId);
     data.reactions = [{user:userId,type:reactionType},...data.reactions];
     await data.save();
@@ -896,13 +899,13 @@ module.exports.addComment = async (req,res,next) => {
     const data = await Post.findOne({_id:postId});
     let u=await User.find({_id:userId});
      let sendUserSocket = onlineUsers.get(data.user.toString());
-
+     if(!(u[0]._id.equals(data.user))){
      let fg=`${u[0].username} commented on your post`;
 
      let newNotification= new Notification({ 'user': data.user, 'message': fg }); 
      await newNotification.save();
      req.app.settings.io.to(sendUserSocket).emit("newNotification", newNotification);
-
+     }
     data.comments = [{user:userId,comment:inputComment,timeStamp:timestamp},...data.comments];
     await data.save();
 
