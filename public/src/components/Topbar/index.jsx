@@ -1,18 +1,16 @@
-import React,{useState,useEffect} from "react";
-import { useNavigate } from "react-router-dom";
-import app_logo from "../../assets/logo.svg";;
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import app_logo from "../../assets/logo.svg";
 import axios from 'axios';
 import Logout from "../Logout";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SearchModal from "../Search_Modal";
-import { SearchUsers,setnotifi } from '../../utils/APIRoutes';
-import { Link, useLocation } from "react-router-dom";
+import { SearchUsers, setnotifi, getnotifi } from '../../utils/APIRoutes';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import socket from "../socket";
 import notificationSound from '../ting_iphone.mp3';
-import {getnotifi} from "../../utils/APIRoutes";
 import {
   AiOutlineHome,
   AiOutlineUserSwitch,
@@ -22,7 +20,6 @@ import {
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import "./index.css";
-
 
 toast.configure();
 let n=0;
