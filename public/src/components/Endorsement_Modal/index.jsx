@@ -27,7 +27,7 @@ const EndorsementModal = ({ endorsementModal, setEndorsementModal, allEndorsemen
       footer={null}
       wrapClassName="custom-modal"
     >
-    <div className="main">
+    <div className="main-675">
       <hr style={{ backgroundColor: '#b7b7b7', marginTop: '10px' }} />
       <StyledSuggestions>
       {allEndorsements &&
