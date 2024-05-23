@@ -23,7 +23,8 @@ require("dotenv").config();
 const corsOptions ={
   origin: allowedOrigin, 
   credentials:true,            
-  optionSuccessStatus:200
+  optionSuccessStatus:200,
+  sameSite:'none',
 }
 
 app.use(cors(corsOptions));
