@@ -1,5 +1,5 @@
 const allowedOrigin=[
-    'https://careerforge-pearl.vercel.app/parse',
+    'https://careerforge-pearl.vercel.app',
     'https://careerforge-pearl.vercel.app/parse',
     'https://www.example.com',
     'http://172.31.73.1:3000/',
