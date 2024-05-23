@@ -15,10 +15,10 @@ const allowedOrigin=[
     'careersync.free.nf',
     'http://careersync.free.nf',
     'http://socketrmn1.epizy.com',
-    "https://careerforge-pearl.vercel.app/api/auth/reset-password/",
-    "https://careerforge-pearl.vercel.app/changepass/",
-    "https://careerforge-pearl.vercel.app/api/auth/reset-password",
-    "https://careerforge-pearl.vercel.app/changepass",
+    'https://careerforge-pearl.vercel.app/api/auth/reset-password/parse',
+    'https://careerforge-pearl.vercel.app/changepass/parse',
+    'https://careerforge-pearl.vercel.app/api/auth/reset-password',
+    'https://careerforge-pearl.vercel.app/changepass',
     'https://careerforge-pearl.vercel.app/api/auth/google/callback',
 ]
 module.exports=allowedOrigin
