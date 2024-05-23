@@ -59,7 +59,7 @@ app.use(passport.session());
 app.get("/login/sucess",async(req,res)=>{
   try {
     //console.log("i am here");
-    
+
     const token=req.cookies.jwt;
     let islog=0;
     if(token){
@@ -69,8 +69,8 @@ app.get("/login/sucess",async(req,res)=>{
       if(e.token==token) islog=1;
     });
     req.user=user;
-  
-    //console.log(req,"lkklk");
+    console.log(req.user)
+    console.log(req,"lkklk");
     res.status(200).json({sta:islog,user:req.user})
     }
 } catch (error) {
