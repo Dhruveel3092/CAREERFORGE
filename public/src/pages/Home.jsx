@@ -29,6 +29,7 @@ export default function Home() {
       try {
        // console.log("current",currentUser)
        // console.log(response,"response")
+       console.log("fetchind Data")
         const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
         console.log(response,"response");
         if(response.data.sta==1){

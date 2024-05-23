@@ -27,9 +27,9 @@ export default function Login() {
   useEffect(() => {
     const ch = async () => {
       let h=Cookie.get('jwt');
+      console.log(h)
       
-      
-   const response=await axios.get(`http://localhost:8080/check/${h}`,{withCredentials:true});
+   const response=await axios.get(`${host}/check/${h}`,{withCredentials:true});
    console.log(response.data,"login")
    if(response.data.chk==true){
   
@@ -56,7 +56,6 @@ export default function Login() {
   };
 
   const simulateGoogleSignIn= async ()=>{
-   
      window.open("http://localhost:8080/api/auth/google","_self");
 
   }
@@ -68,7 +67,7 @@ export default function Login() {
       const { data } = await axios.post(loginRoute, {
         username,
         password,
-      },{withCredentials: true});
+      },{withCredentials:true});
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }

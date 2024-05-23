@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.912b45de.css",
+    "main.js": "/static/js/main.7f223bd8.js",
+    "static/media/res.jpg": "/static/media/res.bce4a526f95dfc12ac4a.jpg",
+    "static/media/robot.gif": "/static/media/robot.0617a41936621e9697cd.gif",
+    "static/media/all.jpg": "/static/media/all.13fdb1da89a42bbc32b6.jpg",
+    "static/media/home.png": "/static/media/home.7eb45ddadc199bf44c83.png",
+    "static/media/mind_blown.png": "/static/media/mind_blown.4173ada170a6bdfaacf2.png",
+    "static/media/ting_iphone.mp3": "/static/media/ting_iphone.1333203aaa5f0805a950.mp3",
+    "static/media/loading.gif": "/static/media/loading.a1a996746e5e48352c81.gif",
+    "static/media/celebration.png": "/static/media/celebration.80d113654ed2fd86d623.png",
+    "static/media/media.png": "/static/media/media.2eb0a7cadbc45b8ee9b4.png",
+    "static/media/link_copy.png": "/static/media/link_copy.e3bf4f1d9b3c10e11739.png",
+    "static/media/homepage.jpg": "/static/media/homepage.012ee1f715a77914025e.jpg",
+    "static/media/article.png": "/static/media/article.4ab2cf7f7917643c02cb.png",
+    "static/media/like.png": "/static/media/like.ffb26543fec418c7e568.png",
+    "static/media/tick.png": "/static/media/tick.5a938d5b1610e0998da8.png",
+    "static/media/endorsement.png": "/static/media/endorsement.c82336f012a45bac4a1f.png",
+    "static/media/app_logo.png": "/static/media/app_logo.6892b3ae328c7a1e055f.png",
+    "static/media/logo.svg": "/static/media/logo.ccfbd90732828204fa6989c0f15638c0.svg",
+    "index.html": "/index.html",
+    "main.912b45de.css.map": "/static/css/main.912b45de.css.map",
+    "main.7f223bd8.js.map": "/static/js/main.7f223bd8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.912b45de.css",
+    "static/js/main.7f223bd8.js"
+  ]
+}
