@@ -140,10 +140,14 @@ const server = app.listen(8080, () =>
   console.log(`Server started on 8080`)
 ); 
 
+app.get("/",(req,res)=>{
+  res.send("Server is working successfully !")
+})
+
 
 const io = socket(server, {
   cors: {
-    origin: allowedOrigin,
+    origin: "*",
     credentials: true,
   },
 });
