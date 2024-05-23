@@ -28,7 +28,7 @@ export default function Login() {
     const ch = async () => {
       let h=Cookie.get('jwt');
       console.log(h)
-      
+    if(h!=undefined){
    const response=await axios.get(`${host}/check/${h}`,{withCredentials:true});
    console.log(response.data,"login")
    if(response.data.chk==true){
@@ -36,6 +36,7 @@ export default function Login() {
     navigate("/home");
    }
   }
+}
   ch();
   }, []);
 
