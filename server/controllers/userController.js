@@ -32,7 +32,7 @@ module.exports.login = async (req, res, next) => {
    const token = await user.generateAuthToken();
     res.cookie("jwt",token,{
     expires:new Date(Date.now() + 120000000000000),
-    httpOnly:false,
+    httpOnly:true
    });
     return res.json({ status: true, user });
   
@@ -63,6 +63,8 @@ module.exports.register = async (req, res, next) => {
   res.cookie("jwt",token,{
     expires:new Date(Date.now() + 1200000),
     httpOnly:false,
+    secure: true,
+    sameSite: 'None'
    });
    
    
