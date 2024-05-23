@@ -96,7 +96,7 @@ router.delete("/deleteExperience/:userId/:experienceId",deleteExperience);
 router.put("/updateExperience/:userId/:experienceId",updateExperience);
 router.get("/google",passport.authenticate("google",{scope:["profile","email"]}));
 router.get("/google/callback",passport.authenticate("google",{
-    failureRedirect:"http://localhost:3000/login"
+    failureRedirect:"https://careerforge-pearl.vercel.app/login"
 }),
 async (req, res) => {
  //  console.log("hii")
@@ -109,7 +109,7 @@ async (req, res) => {
     expires:new Date(Date.now() + 1200000),
     httpOnly:false,
    });
-  res.redirect('http://localhost:3000/home')
+  res.redirect('https://careerforge-pearl.vercel.app/home')
 })
 
 module.exports = router;

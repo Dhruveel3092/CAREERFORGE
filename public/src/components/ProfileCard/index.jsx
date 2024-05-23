@@ -215,10 +215,13 @@ export default function ProfileCard( { onEdit , currentUser ,guestUser ,setCurre
         toast.error(data.message , toastOptions);
       // console.log(data);
       // setAllSkills(data.user.skills);
-      setAllSkills([{
-        skillName:inputSkill,
-        endorsements:[]
-      },...allSkills])
+      else
+      {
+        setAllSkills([{
+          skillName:inputSkill,
+          endorsements:[]
+        },...allSkills])
+      }
       setInputSkill('');
       setSkillAddModal(false);
     }

@@ -137,7 +137,7 @@ module.exports.resetpass=async (req,res)=>{
        const user=await User.findOne({_id:id});
        const secret=user.password+process.env.Secret_Key;
       const payload=jwt.verify(token,secret);
-      res.redirect(`http://localhost:3000/changepass/${id}`);
+      res.redirect(`https://careerforge-pearl.vercel.app/changepass/${id}`);
 
   } catch (error) {
       res.send(error.message);

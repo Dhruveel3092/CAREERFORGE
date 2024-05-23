@@ -98,6 +98,7 @@ const CreateJob = () => {
               <label className="CreateJobJobTitle">Job title</label>
               <input
                 type="text"
+                placeholder="Ex: Senior Software Engineer"
                 name = "jobTitle"
                 id = "jobTitle"
                 onChange={handleChange}

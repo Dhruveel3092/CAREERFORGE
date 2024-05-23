@@ -104,7 +104,7 @@ export default function LikeButton({ currentUser, userId, postId , reactedUsers 
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/posts/${postId}`);
+    navigator.clipboard.writeText(`https://careerforge-pearl.vercel.app/posts/${postId}`);
     setCopyLinkNotification(true);
     setTimeout(() => {
       setCopyLinkNotification(false);

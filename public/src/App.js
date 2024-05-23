@@ -32,7 +32,7 @@ export default function App() {
         <Route path="/" element={<Front />} />
         <Route path="/login" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/search" element={<SearchBar />} />  
+        {/* <Route path="/search" element={<SearchBar />} />   */}
         <Route path="/home" element={<Home />} />
         <Route path="/createResume" element={<CreateResume />} />
         <Route path="/forgotpassword" element={<Forgotpass />} />
