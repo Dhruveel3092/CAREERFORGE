@@ -20,12 +20,13 @@ require('./config/passport')(passport);
 
 
 require("dotenv").config();
-const corsOptions ={
-  origin: allowedOrigin, 
-  credentials:true,            
-  optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+// const corsOptions ={
+//   origin: allowedOrigin, 
+//   credentials:true,            
+//   optionSuccessStatus:200
+// }
+
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
