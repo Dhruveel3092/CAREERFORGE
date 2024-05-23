@@ -14,6 +14,6 @@ const allowedOrigin=[
     'careersync.free.nf',
     'http://careersync.free.nf',
     'http://socketrmn1.epizy.com',
-    'http://localhost:3000/api/auth/google/callback',
+    'https://careerforge-pearl.vercel.app/api/auth/google/callback',
 ]
 module.exports=allowedOrigin

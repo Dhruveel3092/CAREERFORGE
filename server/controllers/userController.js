@@ -87,7 +87,7 @@ module.exports.forgotpost= async (req,res)=>{
       const secret=user.password+process.env.Secret_Key;
       console.log(secret);
       const toke= jwt.sign({email:user.email},secret,{expiresIn: '15m'});
-      const link=`http://localhost:8080/api/auth/reset-password/${user._id}/${toke}`;
+      const link=`${host}api/auth/reset-password/${user._id}/${toke}`;
 
       var transporter = nodemailer.createTransport({
           service: 'gmail',
