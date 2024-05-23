@@ -58,9 +58,10 @@ app.use(passport.session());
 
 app.get("/login/sucess",async(req,res)=>{
   try {
-    //console.log("i am here");
+    console.log("i am here");
 
     const token=req.cookies.jwt;
+    console.log(token)
     let islog=0;
     if(token){
     const verifyuser= jwt.verify(token,process.env.Secret_Key);
