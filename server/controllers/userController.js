@@ -32,7 +32,9 @@ module.exports.login = async (req, res, next) => {
    const token = await user.generateAuthToken();
     res.cookie("jwt",token,{
     expires:new Date(Date.now() + 120000000000000),
-    httpOnly:true
+    httpOnly:true,
+    sameSite:'none',
+    secure:true
    });
     return res.json({ status: true, user });
   
