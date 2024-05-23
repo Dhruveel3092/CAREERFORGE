@@ -54,7 +54,9 @@
   
     /* Additional buttons styles */
     .additional-buttons {
+      
       display: flex;
+      flex-direction: row;
       justify-content: space-around;
       align-items: center; /* Center items vertically */
       width: 70%; /* Increased width */
