@@ -62,12 +62,12 @@ module.exports.register = async (req, res, next) => {
     delete user.password;
     const token = await user.generateAuthToken();
 
-  res.cookie("jwt",token,{
-    expires:new Date(Date.now() + 1200000),
-    httpOnly:false,
-    secure: true,
-    sameSite: 'None'
-   });
+    res.cookie("jwt",token,{
+      expires:new Date(Date.now() + 120000000000000),
+      httpOnly:true,
+      sameSite:'none',
+      secure:true
+     });
    
    
     return res.json({ status: true, user });
@@ -87,7 +87,7 @@ module.exports.forgotpost= async (req,res)=>{
       const secret=user.password+process.env.Secret_Key;
       console.log(secret);
       const toke= jwt.sign({email:user.email},secret,{expiresIn: '15m'});
-      const link=`${host}api/auth/reset-password/${user._id}/${toke}`;
+      const link=`https://careerforge-pearl.vercel.app/api/auth/reset-password/${user._id}/${toke}`;
 
       var transporter = nodemailer.createTransport({
           service: 'gmail',
