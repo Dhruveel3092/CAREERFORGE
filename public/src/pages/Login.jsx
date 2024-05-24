@@ -57,7 +57,7 @@ export default function Login() {
   };
 
   const simulateGoogleSignIn= async ()=>{
-     window.open(`{host}/api/auth/google`,"_self");
+     window.open(`${host}/api/auth/google`,"_self");
 
   }
 

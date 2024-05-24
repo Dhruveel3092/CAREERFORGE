@@ -94,9 +94,7 @@ router.delete("/deleteSkill/:userId/:skillId",deleteSkill);
 router.delete("/deleteEducation/:userId/:educationId",deleteEducation);
 router.delete("/deleteExperience/:userId/:experienceId",deleteExperience);
 router.put("/updateExperience/:userId/:experienceId",updateExperience);
-router.get("/google",(req,res,next)=>{
-  console.log("pohoch gaya");
-},passport.authenticate("google",{scope:["profile","email"]}));
+router.get("/google",passport.authenticate("google",{scope:["profile","email"]}));
 router.get("/google/callback",passport.authenticate("google",{
     failureRedirect:"https://careerforge-pearl.vercel.app/login"
 }),
@@ -106,7 +104,7 @@ async (req, res) => {
   //console.log(user)
   const token = await user.generateAuthToken();
 
- // console.log(token) 
+ // console.log(token)
   res.cookie("jwt",token,{
     expires:new Date(Date.now() + 1200000),
     httpOnly:false,
