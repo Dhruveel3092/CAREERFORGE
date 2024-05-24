@@ -107,7 +107,9 @@ async (req, res) => {
  // console.log(token)
   res.cookie("jwt",token,{
     expires:new Date(Date.now() + 1200000),
-    httpOnly:false,
+    httpOnly:true,
+    sameSite:'none',
+    secure:true
    });
   res.redirect('https://careerforge-pearl.vercel.app/home')
 })
