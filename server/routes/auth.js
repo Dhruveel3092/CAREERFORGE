@@ -106,7 +106,7 @@ async (req, res) => {
   //console.log(user)
   const token = await user.generateAuthToken();
 
- // console.log(token)
+ // console.log(token) 
   res.cookie("jwt",token,{
     expires:new Date(Date.now() + 1200000),
     httpOnly:false,
