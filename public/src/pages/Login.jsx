@@ -23,32 +23,6 @@ export default function Login() {
     theme: "dark",
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-       // console.log("current",currentUser)
-       // console.log(response,"response")
-        const response = await axios.get(`${host}/login/sucess`, {withCredentials: true});
-        console.log(response,"response");
-        if(response.data.sta==1){
-          if(response.data.user) 
-          {
-              setCurrentUser(response.data.user)
-              navigate("/home");
-          }
-        }
-  
-    } catch (error) {
-      console.log(error)
-      navigate("/login")
-    }
-
-    };
-
-    
-    fetchData();
-  }, []);
-
 
   useEffect(() => {
     const ch = async () => {
