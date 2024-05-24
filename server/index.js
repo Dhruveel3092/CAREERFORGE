@@ -62,7 +62,7 @@ app.get("/login/sucess",async(req,res)=>{
   try {
    
     const token=req.cookies.jwt;
-    //console.log(token)
+    console.log(token,"toke");
     let islog=0;
     if(token){
     const verifyuser= jwt.verify(token,process.env.Secret_Key);
