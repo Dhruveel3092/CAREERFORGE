@@ -110,7 +110,7 @@ export default function PostsCard({ posts ,currentUser ,allPosts ,setAllPosts}) 
       </div>
 
       <div className="status">
-        <p dangerouslySetInnerHTML={{ __html: showMore ? posts.description : `${posts.description.slice(0, 210)}` }} />
+        <p dangerouslySetInnerHTML={{ __html: showMore ? posts.description : `${posts.description.slice(0, 210)}` }} className="discription-19398"/>
         {posts.description.length > 210 && !showMore && (
           <p className="see-more-btn"><span className="see-more-btn-text" onClick={()=>setShowMore(true)}>...see more</span></p>
         )}

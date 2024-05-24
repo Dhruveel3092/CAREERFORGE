@@ -158,7 +158,7 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
         }
 
         <div className="additional-buttons" style={{display:'flex'}}>
-          <button className="additional-button" style={{justifyContent:'center'}} onClick={openModal}>
+          <button className="additional-button" style={{justifyContent:'center',display:'flex'}} onClick={openModal}>
             <img src={media} alt="" className="icon"/>Media
           </button>
           <button className="additional-button" onClick={jobn}>    
