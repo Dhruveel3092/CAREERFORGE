@@ -94,8 +94,8 @@ module.exports.forgotpost= async (req,res)=>{
           port:465,
           secure:true,
           auth: {
-            user: 'krishnamorker2021@gmail.com',
-            pass: 'tahd pher pfkz ehla',
+            user: 'carrerforge@gmail.com',
+            pass: 'qljo pqbl dkfz pevs',
             tls:{
               rejectUnauthorized:true
              }
