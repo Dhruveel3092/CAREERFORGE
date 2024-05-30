@@ -18,7 +18,7 @@ export default function PostStatus( {currentUser , allPosts , setAllPosts} ) {
   const [currentUserImage,setCurrentUserImage] = useState(undefined);
   const [files,setFiles] = useState([]);
   const jobn=()=>{
-    navigate('/job-portal');
+    navigate('/post-job');
   }
   useEffect(() => {
     const fetchData = async () => {
