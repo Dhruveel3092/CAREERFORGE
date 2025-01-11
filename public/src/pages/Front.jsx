@@ -92,7 +92,7 @@ const Front = () => {
               <div className="flex-1 ">
               <h1 className="text-4xl	">Your career growth is our priority</h1>
 
-                <p>"Welcome to our Proffesional community where you can build your professional Profile, share your experience and achievements. Connect with professionals, build your digital resume, and explore opportunities in a vibrant community. Elevate your career journey with us!"</p>
+                <p>"Welcome to our Professional community where you can build your professional Profile, share your experience and achievements. Connect with professionals, build your digital resume, and explore opportunities in a vibrant community. Elevate your career journey with us!"</p>
               </div>
             </motion.div>
             <motion.div className="div-img animate__animated animate__fadeInLeft">
