@@ -75,7 +75,7 @@ const Front = () => {
       </nav>
       <div style={pageStyle}>
         <div className="container-ext">
-          <h1 className="container-h1">Welcome to the our Proffesional Community</h1>
+          <h1 className="container-h1">Welcome to the our Professional Community</h1>
       
           <div className="motion-div">
             <motion.div className="div-img animate__animated animate__fadeInRight ">
