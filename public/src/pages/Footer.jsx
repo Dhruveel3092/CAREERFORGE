@@ -181,7 +181,6 @@ const Footer = () => {
       </a>
     </li>
   </ul>
-  <p>©2021 Nadine Coelho | All Rights Reserved</p>
 </footer>
      
     </div>
