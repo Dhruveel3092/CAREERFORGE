@@ -10,7 +10,7 @@ import {host} from "../utils/APIRoutes"
 import home from "../assets/home.png";
 import "./Register.css";
 
-export default function ffRegister() {
+export default function Register() {
   const navigate = useNavigate();
   const toastOptions = {
     position: "bottom-right",
